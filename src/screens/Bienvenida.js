@@ -1,7 +1,10 @@
-import { StyleSheet, Text, View, Image, Button, TouchableHighlight } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableHighlight } from "react-native";
 import React from "react";
 import colors from "../styles/colors";
+import { useNavigation } from "@react-navigation/native";
 const Bienvenida = () => {
+
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -15,7 +18,7 @@ const Bienvenida = () => {
                 <View style={styles.content}>
                     <Image style={styles.image} source={require('../../assets/img-bienvenida.png')}></Image>
                     <Text style={styles.description}>Encuentra técnicos confiables cerca de ti</Text>
-                    <TouchableHighlight style={styles.button} onPress={() => alert('ctm')}>
+                    <TouchableHighlight style={styles.button} onPress={() => navigation.navigate('Login')}>
                         <Text style={styles.textButton}>COMENZAR</Text>
                     </TouchableHighlight>
                 </View>
