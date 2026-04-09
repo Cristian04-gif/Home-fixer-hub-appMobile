@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createStaticNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
-import colors from './src/styles/colors';
+import colors from './src/styles/const/colors';
 import Login from './src/screens/Login';
 import Bienvenida from './src/screens/Bienvenida';
 import Registro from './src/screens/Registro';

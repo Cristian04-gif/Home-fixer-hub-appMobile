@@ -1,9 +1,12 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native'
 import React, { useState } from 'react'
-import BarraProgresoRegistro from './BarraProgresoRegistro'
-import colors from '../styles/colors'
+// components
 import RegistroPaso1 from './RegistroPaso1'
 import RegistroPaso2 from './RegistroPaso2'
+import BarraProgresoRegistro from '../components/BarraProgresoRegistro'
+// styles
+import styles from '../styles/RegisterStyle'
+
 const Registro = () => {
     const [paso, setPaso] = useState(1);
     const [esValido, setEsValido] = useState(false)
@@ -53,29 +56,3 @@ const Registro = () => {
 
 export default Registro
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: colors.primary,
-    },
-    body: {
-        flex: 1,
-        backgroundColor: colors.background,
-        alignItems: 'center',
-        //justifyContent: 'center',
-        borderTopRightRadius: 40,
-        borderTopLeftRadius: 40,
-        width: '100%'
-    },
-    btnSeguiente: {
-        position: 'absolute',
-        bottom: 60,
-        backgroundColor: colors.primary,
-        width: '80%',
-        height: 60,
-        borderRadius: 15,
-        justifyContent: 'center',
-        alignItems: 'center',
-
-    }
-})

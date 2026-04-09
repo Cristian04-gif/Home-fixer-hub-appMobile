@@ -2,8 +2,12 @@ import { StyleSheet, Text, View, TextInput, Image, Pressable, Animated } from 'r
 import React, { useState, useEffect } from 'react'
 import { Dropdown } from 'react-native-element-dropdown';
 import Checkbox from 'expo-checkbox';
-import colors from '../styles/colors';
-import SwitchTypeUser from './SwitchTypeUser';
+//componets
+import SwitchTypeUser from '../components/SwitchTypeUser';
+// styles
+import styles from '../styles/RegistroPaso1Style';
+import colors from '../styles/const/colors';
+
 
 const PAISES = [
     { name: 'Peru', value: 'PE', icon: require('../../assets/logo-peru.png') },
@@ -94,57 +98,3 @@ const RegistroPaso1 = ({ onValid, data }) => {
 
 export default RegistroPaso1
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-
-    },
-    body: {
-        flex: 1,
-        backgroundColor: colors.background,
-        alignItems: 'center',
-        //justifyContent: 'center',
-        borderTopRightRadius: 40,
-        borderTopLeftRadius: 40,
-    },
-    section: {
-        width: '90%',
-        padding: 20,
-        gap: 5,
-    },
-    textLabel: {
-        fontSize: 25,
-        color: '#000',
-        fontWeight: '600'
-    },
-    textInput: {
-        fontSize: 25,
-        borderWidth: 1,
-        borderRadius: 10,
-        borderColor: colors.border,
-    },
-    codeNumber: {
-        flexDirection: 'row',
-        width: '100%',
-        borderWidth: 1,
-        borderColor: colors.border,
-        borderRadius: 10,
-    },
-    dropdown: {
-        padding: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRightWidth: 1,
-        borderColor: colors.border
-    },
-    item: {
-        padding: 10,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    checkbox: {
-        width: 25,
-        height: 25
-    },
-
-})

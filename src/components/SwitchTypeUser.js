@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Animated, Pressable } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
-import colors from '../styles/colors';
+import colors from '../styles/const/colors';
+
 const SwitchTypeUser = ({ onTypeChange, initialType }) => {
     const [userType, setUserType] = useState('');
     const animValue = useRef(new Animated.Value(0)).current;
@@ -8,7 +9,7 @@ const SwitchTypeUser = ({ onTypeChange, initialType }) => {
     const moverSwitch = (tipo) => {
         setUserType(tipo);
         onTypeChange(tipo);
-        
+
         // 2. Ejecutamos la animación hacia el nuevo valor
         Animated.timing(animValue, {
             toValue: tipo === 'cliente' ? 0 : 1,

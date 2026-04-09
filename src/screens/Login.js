@@ -1,9 +1,15 @@
-import { StyleSheet, Text, View, Pressable, Animated, TextInput, Image, TouchableOpacity } from 'react-native'
-import React, { useState, useRef } from 'react'
-import colors from '../styles/colors';
-import Entypo from '@expo/vector-icons/Entypo';
+import { StyleSheet, Text, View, Pressable, TextInput, Image, TouchableOpacity } from 'react-native'
+import React, { useState, useRef } from 'react';
 import { useNavigation } from "@react-navigation/native";
-import SwitchTypeUser from './SwitchTypeUser';
+// simbolos
+import Entypo from '@expo/vector-icons/Entypo';
+import Fontisto from '@expo/vector-icons/Fontisto';
+// components
+import SwitchTypeUser from '../components/SwitchTypeUser';
+// styles
+import styles from '../styles/LoginStyle';
+import colors from '../styles/const/colors';
+
 const REDES_LOGIN = [
     { name: 'Google', icon: require('../../assets/logo-google.png') },
     { name: 'Facebook', icon: require('../../assets/logo-facebook.png') },
@@ -12,32 +18,13 @@ const REDES_LOGIN = [
 
 const Login = () => {
     const navigation = useNavigation();
-    //const [userType, setUserType] = useState('cliente');
+    const [typeUser, setTypeUser] = useState('cliente');
     const [passwordVisible, setPasswordVisible] = useState(false)
     const passwordRef = useRef(null);
-    // 1. Creamos la variable animada (0 = izquierda, 1 = derecha)
-    const animValue = useRef(new Animated.Value(0)).current;
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const fomrComplet = email.length > 0 && password.length > 0;
-
-    /*const moverSwitch = (tipo) => {
-        setUserType(tipo);
-        // 2. Ejecutamos la animación hacia el nuevo valor
-        Animated.timing(animValue, {
-            toValue: tipo === 'cliente' ? 0 : 1,
-            duration: 250, // Duración de la transición
-            useNativeDriver: true, // Para que sea ultra fluido
-        }).start();
-    };
-
-    // 3. Mapeamos el valor 0-1 a la distancia en píxeles
-    const deslizamiento = animValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: [2, 210], // Ajusta estos números según el ancho de tu switch
-    });*/
 
     const verContraseña = () => {
         setPasswordVisible(!passwordVisible);
@@ -49,10 +36,11 @@ const Login = () => {
 
     }
 
+
     return (
         <View style={styles.container}>
             <View style={styles.body}>
-                <SwitchTypeUser></SwitchTypeUser>
+                <SwitchTypeUser initialType={typeUser} onTypeChange={(tipo) => setTypeUser(tipo)}></SwitchTypeUser>
 
                 <View style={styles.form}>
                     <View style={{ gap: 10 }}>
@@ -64,7 +52,9 @@ const Login = () => {
                         <View style={styles.password}>
                             <TextInput ref={passwordRef} style={styles.input} secureTextEntry={true} placeholder='Contraseña' value={password} onChangeText={setPassword}></TextInput>
                             <TouchableOpacity onPress={() => verContraseña()} style={styles.eyeButton}>
-                                <Entypo name="eye-with-line" size={25} color="black" />
+                                {passwordVisible && <Entypo name="eye-with-line" size={25} color="black" /> || <Fontisto name="eye" size={24} color="black" />}
+
+
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -101,89 +91,3 @@ const Login = () => {
 
 export default Login
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: colors.primary,
-    }, body: {
-        flex: 1,
-        backgroundColor: colors.background,
-        alignItems: 'center',
-        //justifyContent: 'center',
-        borderTopRightRadius: 40,
-        borderTopLeftRadius: 40,
-    },
-    //switch
-
-    //form
-    form: {
-        width: '90%',
-        gap: 20,
-        margin: 40,
-        marginTop: 50
-    },
-    textForm: {
-        fontSize: 25,
-        fontWeight: '700'
-    },
-    input: {
-        width: '100%',
-        borderWidth: 1,
-        height: 60,
-        borderRadius: 10,
-        fontSize: 25
-    },
-    password: {
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    eyeButton: {
-        position: 'absolute',
-        right: 15
-    },
-
-    //login redes
-    redesLogin: {
-        width: '90%',
-        alignItems: 'center',
-        padding: 20
-    },
-    redes: {
-        marginTop: 30,
-        marginBottom: 10,
-        flexDirection: 'row',
-        gap: 30
-    },
-    botonRedSocial: {
-        padding: 10,
-        borderWidth: 2,
-        borderRadius: 10,
-        borderColor: colors.cardBg
-    },
-    redesIcon: {
-        width: 60,
-        height: 60
-    },
-
-    //logs
-    logs: {
-        width: '90%',
-        alignItems: 'center',
-        padding: 20,
-        marginTop: 30
-    },
-    btnLogin: {
-        backgroundColor: colors.primary,
-        width: '100%',
-        height: 60,
-        borderRadius: 15,
-        justifyContent: 'center'
-    },
-    register: {
-        marginTop: 20,
-        flexDirection: 'row',
-        padding: 20,
-        gap: 5,
-
-    }
-})
