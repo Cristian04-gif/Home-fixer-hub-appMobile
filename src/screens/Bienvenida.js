@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, ScrollView, TouchableHighlight, useWindowDimensions } from "react-native";
+import { Text, View, Image, ScrollView, TouchableHighlight, useWindowDimensions } from "react-native";
 import React from "react";
 import styles from "../styles/BienvenidaStyle";
 import { useNavigation } from "@react-navigation/native";

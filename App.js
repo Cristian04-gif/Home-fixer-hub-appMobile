@@ -6,6 +6,7 @@ import colors from './src/styles/const/colors';
 import Login from './src/screens/Login';
 import Bienvenida from './src/screens/Bienvenida';
 import Registro from './src/screens/Registro';
+import Home from './src/screens/Home';
 const RootStack = createNativeStackNavigator({
     screens: {
         Welcome: {
@@ -27,7 +28,18 @@ const RootStack = createNativeStackNavigator({
             }
         },
         Register:{
-            screen: Registro
+            screen: Registro,
+            options:{
+                title: 'Registro',
+                headerTintColor: '#fff',
+                headerTitleAlign: 'center',
+                headerStyle:{
+                    backgroundColor: colors.primary,
+                }
+            }
+        },
+        Home: {
+            screen: Home,
         }
     },
 });

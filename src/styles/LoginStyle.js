@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native"
 import colors from "./const/colors"
-
+import fonts from "./const/fonts";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
         //justifyContent: 'center',
         borderTopRightRadius: 40,
         borderTopLeftRadius: 40,
+        paddingTop: 40
     },
     //switch
 
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
         marginTop: 50
     },
     textForm: {
-        fontSize: 25,
+        fontSize: fonts.default,
         fontWeight: '700'
     },
     input: {
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         height: 60,
         borderRadius: 10,
-        fontSize: 25
+        fontSize: fonts.default
     },
     password: {
         flexDirection: 'row',

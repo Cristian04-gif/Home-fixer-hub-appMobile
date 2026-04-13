@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, Image, Pressable, Animated } from 'react-native'
+import { Text, View, TextInput, Image, Pressable, Animated } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { Dropdown } from 'react-native-element-dropdown';
 import Checkbox from 'expo-checkbox';
@@ -10,25 +10,27 @@ import colors from '../styles/const/colors';
 
 
 const PAISES = [
-    { name: 'Peru', value: 'PE', icon: require('../../assets/logo-peru.png') },
-    { name: 'Argentina', value: 'AR', icon: require('../../assets/logo-argentina.png') }
+    { name: 'Peru', value: '+51 ', icon: require('../../assets/logo-peru.png') },
+    { name: 'Argentina', value: '+54 ', icon: require('../../assets/logo-argentina.png') }
 ]
 const RegistroPaso1 = ({ onValid, data }) => {
 
-    const [value, setValue] = useState(data.country || 'PE');
+    const [value, setValue] = useState(data.country || '+51 ');
+
     const [isChecked, setChecked] = useState(false);
     const [name, setName] = useState(data.name || '');
+    const [lastName, setLastName] = useState(data.lastName || '');
     const [numberPhone, setNumberPhone] = useState(data.numberPhone || '');
     const [email, setEmail] = useState(data.email || '');
     const [typeUser, setTypeUser] = useState(data.typeUser || 'cliente');
 
     useEffect(() => {
-        const esValido = name.length > 0 && numberPhone.length > 0 && email.includes('@') && isChecked;
-        onValid(esValido, { name, numberPhone, email, country: value, typeUser:  typeUser})
+        const esValido = name.length > 0 && lastName.length > 0 && numberPhone.length > 0 && email.includes('@') && isChecked;
+        onValid(esValido, { name, lastName, numberPhone: value+numberPhone, email, typeUser: typeUser })
 
-    }, [name, numberPhone, email, isChecked, value, typeUser])
+    }, [name, lastName, numberPhone, email, typeUser, isChecked])
 
-    
+
 
     const renderItem = item => {
         return (
@@ -43,12 +45,17 @@ const RegistroPaso1 = ({ onValid, data }) => {
             <View style={styles.body}>
                 <SwitchTypeUser initialType={typeUser} onTypeChange={(tipo) => setTypeUser(tipo)}></SwitchTypeUser>
                 <View style={styles.section}>
-                    <Text style={styles.textLabel}>Nombre completo</Text>
-                    <TextInput style={styles.textInput} value={name} onChangeText={setName} placeholder='Nombre completo'></TextInput>
+                    <Text style={styles.label}>Nombre</Text>
+                    <TextInput style={styles.input} value={name} onChangeText={setName} placeholder='Nombre'></TextInput>
                 </View>
 
                 <View style={styles.section}>
-                    <Text style={styles.textLabel}>Numero de celular</Text>
+                    <Text style={styles.label}>Apellido</Text>
+                    <TextInput style={styles.input} value={lastName} onChangeText={setLastName} placeholder='Apellido'></TextInput>
+                </View>
+
+                <View style={styles.section}>
+                    <Text style={styles.label}>Numero de celular</Text>
                     <View style={styles.codeNumber}>
 
                         <Dropdown
@@ -75,8 +82,8 @@ const RegistroPaso1 = ({ onValid, data }) => {
                 </View>
 
                 <View style={styles.section}>
-                    <Text style={styles.textLabel}>Correo electronico</Text>
-                    <TextInput style={styles.textInput} placeholder='Correo Electronico' inputMode='email' value={email} onChangeText={setEmail} ></TextInput>
+                    <Text style={styles.label}>Correo electronico</Text>
+                    <TextInput style={styles.input} placeholder='Correo Electronico' inputMode='email' value={email} onChangeText={setEmail} ></TextInput>
                 </View>
 
                 <View style={styles.section}>

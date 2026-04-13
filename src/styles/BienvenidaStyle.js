@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import colors from "./const/colors";
+import fonts from './const/fonts';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
     },
     title: {
         color: '#fff',
-        fontSize: 30,
+        fontSize: fonts.title,
         fontWeight: '400',
         marginTop: 20,
     },
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     },
     name: {
         color: colors.primary,
-        fontSize: 40,
+        fontSize: fonts.title,
         fontWeight: '700',
     },
     content: {
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
         height: 350
     },
     description: {
-        fontSize: 30,
+        fontSize: fonts.description,
         textAlign: 'center',
         width: 300,
         paddingTop: 20,
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     },
     textButton: {
         color: colors.background,
-        fontSize: 20,
+        fontSize: fonts.default,
         fontWeight: '500'
     }
 });

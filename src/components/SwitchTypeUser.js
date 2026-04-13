@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Animated, Pressable } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
 import colors from '../styles/const/colors';
-
+import fonts from '../styles/const/fonts';
 const SwitchTypeUser = ({ onTypeChange, initialType }) => {
     const [userType, setUserType] = useState('');
     const animValue = useRef(new Animated.Value(0)).current;
@@ -46,7 +46,7 @@ export default SwitchTypeUser
 
 const styles = StyleSheet.create({
     switch: {
-        marginTop: 40,
+        marginTop: 10,
         flexDirection: 'row',
         width: '90%',
         height: 60,
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     txt: {
         fontWeight: '600',
         color: '#000',
-        fontSize: 25,
+        fontSize: fonts.default,
     },
     txtActive: {
         color: '#FFF'

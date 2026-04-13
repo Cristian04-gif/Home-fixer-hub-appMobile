@@ -26,30 +26,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderColor: colors.border,
         width: '100%'
-    },
-    codeNumber: {
-        flexDirection: 'row',
-        width: '100%',
-        borderWidth: 1,
-        borderColor: colors.border,
-        borderRadius: 10,
-    },
-    dropdown: {
-        padding: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRightWidth: 1,
-        borderColor: colors.border
-    },
-    item: {
-        padding: 10,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    checkbox: {
-        width: 25,
-        height: 25
-    },
+    }
 
 })
 

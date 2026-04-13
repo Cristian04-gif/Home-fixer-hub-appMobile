@@ -10,13 +10,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.background,
         alignItems: 'center',
-        //justifyContent: 'center',
         borderTopRightRadius: 40,
         borderTopLeftRadius: 40,
-        width: '100%'
+        
     },
     btnSeguiente: {
-        position: 'absolute',
         bottom: 60,
         backgroundColor: colors.primary,
         width: '80%',
@@ -24,7 +22,6 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         justifyContent: 'center',
         alignItems: 'center',
-
     }
 })
 

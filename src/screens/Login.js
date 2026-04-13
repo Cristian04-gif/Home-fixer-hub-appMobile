@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View, Pressable, TextInput, Image, TouchableOpacity } from 'react-native'
+import { Text, View, Pressable, TextInput, Image } from 'react-native'
 import React, { useState, useRef } from 'react';
 import { useNavigation } from "@react-navigation/native";
 // simbolos
 import Entypo from '@expo/vector-icons/Entypo';
-import Fontisto from '@expo/vector-icons/Fontisto';
 // components
 import SwitchTypeUser from '../components/SwitchTypeUser';
 // styles
@@ -40,7 +39,7 @@ const Login = () => {
     return (
         <View style={styles.container}>
             <View style={styles.body}>
-                <SwitchTypeUser initialType={typeUser} onTypeChange={(tipo) => setTypeUser(tipo)}></SwitchTypeUser>
+                <SwitchTypeUser style={styles.switch} initialType={typeUser} onTypeChange={(tipo) => setTypeUser(tipo)}></SwitchTypeUser>
 
                 <View style={styles.form}>
                     <View style={{ gap: 10 }}>
@@ -51,11 +50,9 @@ const Login = () => {
                         <Text style={styles.textForm}>Contraseña</Text>
                         <View style={styles.password}>
                             <TextInput ref={passwordRef} style={styles.input} secureTextEntry={true} placeholder='Contraseña' value={password} onChangeText={setPassword}></TextInput>
-                            <TouchableOpacity onPress={() => verContraseña()} style={styles.eyeButton}>
-                                {passwordVisible && <Entypo name="eye-with-line" size={25} color="black" /> || <Fontisto name="eye" size={24} color="black" />}
-
-
-                            </TouchableOpacity>
+                            <Pressable onPress={() => verContraseña()} style={styles.eyeButton}>
+                                {passwordVisible && <Entypo name="eye-with-line" size={24} color="black"/> || <Entypo name="eye" size={24} color="black" />}
+                            </Pressable>
                         </View>
                     </View>
 
