@@ -5,15 +5,18 @@ import Checkbox from 'expo-checkbox';
 //componets
 import SwitchTypeUser from '../components/SwitchTypeUser';
 // styles
-import styles from '../styles/RegistroPaso1Style';
-import colors from '../styles/const/colors';
-
+import { createStyles } from '../styles/RegistroPaso1Style';
+import colors from '../utils/colors';
+import { useResponsive } from '../utils/useResponsive';
 
 const PAISES = [
     { name: 'Peru', value: '+51 ', icon: require('../../assets/logo-peru.png') },
     { name: 'Argentina', value: '+54 ', icon: require('../../assets/logo-argentina.png') }
 ]
 const RegistroPaso1 = ({ onValid, data }) => {
+
+    const responsive = useResponsive();
+    const styles = createStyles(responsive);
 
     const [value, setValue] = useState(data.country || '+51 ');
 
@@ -26,7 +29,7 @@ const RegistroPaso1 = ({ onValid, data }) => {
 
     useEffect(() => {
         const esValido = name.length > 0 && lastName.length > 0 && numberPhone.length > 0 && email.includes('@') && isChecked;
-        onValid(esValido, { name, lastName, numberPhone: value+numberPhone, email, typeUser: typeUser })
+        onValid(esValido, { name, lastName, numberPhone: value + numberPhone, email, typeUser: typeUser })
 
     }, [name, lastName, numberPhone, email, typeUser, isChecked])
 
@@ -44,7 +47,7 @@ const RegistroPaso1 = ({ onValid, data }) => {
         <View style={styles.container}>
             <View style={styles.body}>
                 <SwitchTypeUser initialType={typeUser} onTypeChange={(tipo) => setTypeUser(tipo)}></SwitchTypeUser>
-                <View style={styles.section}>
+                <View style={[styles.section,{marginTop: 30*responsive.scale}]}>
                     <Text style={styles.label}>Nombre</Text>
                     <TextInput style={styles.input} value={name} onChangeText={setName} placeholder='Nombre'></TextInput>
                 </View>
@@ -72,7 +75,7 @@ const RegistroPaso1 = ({ onValid, data }) => {
                             renderLeftIcon={() => {
                                 const selectedCountry = PAISES.find(p => p.value === value);
                                 return selectedCountry ? (
-                                    <Image source={selectedCountry.icon} style={{ width: 40, height: 40 }} />
+                                    <Image source={selectedCountry.icon} style={{ width: 40 * responsive.scale, height: 40 * responsive.scale }} />
                                 ) : null;
                             }}
                         />
@@ -87,14 +90,19 @@ const RegistroPaso1 = ({ onValid, data }) => {
                 </View>
 
                 <View style={styles.section}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 15 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 15 * responsive.scale }}>
                         <Checkbox
                             style={styles.checkbox}
                             value={isChecked}
                             onValueChange={setChecked}
                             color={isChecked ? colors.success : undefined} // El azul de tu app
                         />
-                        <Text style={{ fontSize: 25 }}>Acepto los <Pressable><Text style={{ fontSize: 25, color: colors.primary }}>Términos y condiciones</Text></Pressable></Text>
+                        <View style={styles.labelCheckBox}>
+                            <Text style={styles.textLabelCheckBox}>Acepto los</Text>
+                            <Pressable>
+                                <Text style={[styles.textLabelCheckBox, {color: colors.primary}]}>Términos y condiciones</Text>
+                            </Pressable>
+                        </View>
                     </View>
                 </View>
 

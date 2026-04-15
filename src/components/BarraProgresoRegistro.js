@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import colors from '../styles/const/colors'
+import colors from '../utils/colors'
 
 const Cliente = props => {
     return (

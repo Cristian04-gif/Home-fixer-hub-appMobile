@@ -1,12 +1,16 @@
-import { Text, View, TextInput, Pressable } from 'react-native'
+import { Text, View, TextInput, Pressable, ScrollView } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
 import Checkbox from 'expo-checkbox';
 import Entypo from '@expo/vector-icons/Entypo';
 //styles
-import styles from '../styles/RegistroPaso2Style';
-import colors from '../styles/const/colors';
-
+import { createStyles } from '../styles/RegistroPaso2Style';
+import colors from '../utils/colors';
+import { useResponsive } from '../utils/useResponsive';
 const RegistroPaso2 = ({ onValid, data, typeUser }) => {
+
+    const responsive = useResponsive();
+    const styles = createStyles(responsive);
+
     const [isChecked, setChecked] = useState(false);
 
     const [dni, setDni] = useState(data.dni || '')
@@ -37,7 +41,7 @@ const RegistroPaso2 = ({ onValid, data, typeUser }) => {
     const verificarContrasena = (contrasena) => {
         // 1. Calculamos los nuevos valores basándonos en TODA la cadena
         const nuevasCondiciones = {
-            longitud: contrasena.length >= 12 && contrasena.length <= 14,
+            longitud: contrasena.length >= 12,
             mayus: /[A-Z]/.test(contrasena),
             minus: /[a-z]/.test(contrasena),
             num: /\d/.test(contrasena),
@@ -46,7 +50,6 @@ const RegistroPaso2 = ({ onValid, data, typeUser }) => {
 
         // 2. Actualizamos el estado de un solo golpe
         setPasswordConditions(nuevasCondiciones);
-        console.log("condiciones: " +nuevasCondiciones);
         return Object.values(nuevasCondiciones).every(valor => valor === true);
     };
 
@@ -67,6 +70,7 @@ const RegistroPaso2 = ({ onValid, data, typeUser }) => {
 
     return (
         <View style={styles.container}>
+
             <View style={styles.body}>
 
                 <View style={styles.section}>
@@ -90,21 +94,20 @@ const RegistroPaso2 = ({ onValid, data, typeUser }) => {
                     {!isPassowrdEqueal && <Text style={[!isPassowrdEqueal && { color: '#f00' }]}>No coincide con la contraseña ingresada</Text>}
                 </View>
 
-                {typeUser === 'tecnico' && <View style={styles.section}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 15 }}>
-                        <Checkbox
-                            style={styles.checkbox}
-                            value={isChecked}
-                            onValueChange={setChecked}
-                            color={isChecked ? colors.success : undefined} // El azul de tu app
-                        />
-                        <Text style={{ fontSize: 25 }}>Soy un tecnico profecional (validacion requerida)</Text>
-                    </View>
+                {typeUser === 'tecnico' && <View style={[styles.section, { flexDirection: 'row', alignItems: 'center', padding: 0, margin: 0 }]}>
+
+                    <Checkbox
+                        style={styles.checkbox}
+                        value={isChecked}
+                        onValueChange={setChecked}
+                        color={isChecked ? colors.success : undefined} // El azul de tu app
+                    />
+                    <Text style={{ fontSize: responsive.font(22) }}>Soy un tecnico profecional (validacion requerida)</Text>
                 </View>}
 
                 <View style={styles.section}>
                     <Text style={styles.subtitleConditions}>Requisitos de contraseña:</Text>
-                    <View >
+                    <View>
                         <Text style={[styles.conditions, passwordConditions.longitud && styles.conditionFulfilled]}> - Longitud de 12 a 14 caracteres</Text>
                         <Text style={[styles.conditions, passwordConditions.mayus && styles.conditionFulfilled]}> - Uso de mayusculas </Text>
                         <Text style={[styles.conditions, passwordConditions.minus && styles.conditionFulfilled]}> - Uso de minusculas</Text>

@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
-import colors from "./const/colors";
-import fonts from "./const/fonts";
-const styles = StyleSheet.create({
+import colors from "../utils/colors";
+
+export const createStyles = ({ scale, font }) => StyleSheet.create({
     container: {
         flex: 1,
         width: '100%'
@@ -13,21 +13,38 @@ const styles = StyleSheet.create({
     },
     section: {
         width: '90%',
-        padding: 15,
-        gap: 5,
+        padding: 15 * scale,
+        gap: 5 * scale,
     },
     label: {
-        fontSize: fonts.default,
+        fontSize: font(22),
         fontWeight: '600'
     },
     input: {
-        fontSize: fonts.default,
-        borderWidth: 1,
-        borderRadius: 10,
+        fontSize: font(22),
+        borderWidth: scale,
+        borderRadius: 10 * scale,
         borderColor: colors.border,
         width: '100%'
+    },
+    transportList: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: 20 * scale,
+        marginTop: 20 * scale
+    },
+    transport: {
+        width: "45%",
+        height: 100 * scale,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 10 * scale,
+        borderWidth: 1
+    },
+    labelTransport: {
+        fontSize: font(22),
+        fontWeight: '600'
     }
-
 })
-
-export default styles;

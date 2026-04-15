@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
-import colors from "./const/colors";
+import colors from "../utils/colors";
 
-const styles = StyleSheet.create({
+export const createStyles = ({scale, font}) =>  StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.primary,
@@ -10,19 +10,17 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.background,
         alignItems: 'center',
-        borderTopRightRadius: 40,
-        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40 * scale,
+        borderTopLeftRadius: 40 * scale,
         
     },
     btnSeguiente: {
         bottom: 60,
         backgroundColor: colors.primary,
         width: '80%',
-        height: 60,
-        borderRadius: 15,
+        height: 55 * scale,
+        borderRadius: 15  * scale,
         justifyContent: 'center',
         alignItems: 'center',
     }
 })
-
-export default styles;

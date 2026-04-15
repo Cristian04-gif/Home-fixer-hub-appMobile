@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
-import colors from "./const/colors";
-import fonts from "./const/fonts";
-const styles = StyleSheet.create({
+import colors from "../utils/colors";
+
+export const createStyles = ({ scale, font }) => StyleSheet.create({
     container: {
         flex: 1,
         width: '100%'
@@ -13,44 +13,46 @@ const styles = StyleSheet.create({
     },
     section: {
         width: '90%',
-        padding: 15,
-        gap: 5,
+        padding: 5 * scale,
+        gap: 5 * scale,
     },
     label: {
-        fontSize: fonts.default,
+        fontSize: font(22),
         fontWeight: '600'
     },
     input: {
-        fontSize: fonts.default,
-        borderWidth: 1,
-        borderRadius: 10,
+        fontSize: font(22),
+        borderWidth: scale,
+        borderRadius: 10 * scale,
         borderColor: colors.border,
         width: '100%'
     },
     codeNumber: {
         flexDirection: 'row',
         width: '100%',
-        borderWidth: 1,
+        borderWidth: scale,
         borderColor: colors.border,
-        borderRadius: 10,
+        borderRadius: 10 * scale,
     },
     dropdown: {
-        padding: 10,
+        paddingLeft: 10 * scale,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRightWidth: 1,
+        borderRightWidth: scale,
         borderColor: colors.border
     },
     item: {
-        padding: 10,
+        padding: 10 * scale,
         alignItems: 'center',
         justifyContent: 'center'
     },
     checkbox: {
-        width: 25,
-        height: 25
+        width: 25 * scale,
+        height: 25 * scale,
+
     },
+    textLabelCheckBox: {
+        fontSize: font(20)
+    }
 
 })
-
-export default styles;

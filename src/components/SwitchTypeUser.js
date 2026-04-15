@@ -1,7 +1,9 @@
-import { StyleSheet, Text, View, Animated, Pressable } from 'react-native'
+import { Text, View, Animated, Pressable } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
-import colors from '../styles/const/colors';
-import fonts from '../styles/const/fonts';
+
+
+import { useResponsive } from "../utils/useResponsive";
+import { createStyles } from '../styles/SwitchTypeUserStyles';
 const SwitchTypeUser = ({ onTypeChange, initialType }) => {
     const [userType, setUserType] = useState('');
     const animValue = useRef(new Animated.Value(0)).current;
@@ -10,20 +12,19 @@ const SwitchTypeUser = ({ onTypeChange, initialType }) => {
         setUserType(tipo);
         onTypeChange(tipo);
 
-        // 2. Ejecutamos la animación hacia el nuevo valor
         Animated.timing(animValue, {
             toValue: tipo === 'cliente' ? 0 : 1,
-            duration: 250, // Duración de la transición
-            useNativeDriver: true, // Para que sea ultra fluido
+            duration: 250,
+            useNativeDriver: true,
         }).start();
     };
 
+    const responsive = useResponsive();
+    const styles = createStyles(responsive);
 
-
-    // 3. Mapeamos el valor 0-1 a la distancia en píxeles
     const deslizamiento = animValue.interpolate({
         inputRange: [0, 1],
-        outputRange: [2, 210], // Ajusta estos números según el ancho de tu switch
+        outputRange: [2, 170 * responsive.scale],
     });
     return (
         <View style={styles.switch}>
@@ -44,36 +45,3 @@ const SwitchTypeUser = ({ onTypeChange, initialType }) => {
 
 export default SwitchTypeUser
 
-const styles = StyleSheet.create({
-    switch: {
-        marginTop: 10,
-        flexDirection: 'row',
-        width: '90%',
-        height: 60,
-        backgroundColor: '#E5E7E9',
-        borderRadius: 50,
-        position: 'relative',
-    },
-    activeIndicator: {
-        position: 'absolute',
-        top: 0,
-        left: -2,
-        width: '50%',
-        height: '100%',
-        backgroundColor: colors.primary,
-        borderRadius: 50,
-    },
-    btn: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    txt: {
-        fontWeight: '600',
-        color: '#000',
-        fontSize: fonts.default,
-    },
-    txtActive: {
-        color: '#FFF'
-    },
-})

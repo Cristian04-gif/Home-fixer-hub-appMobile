@@ -6,8 +6,9 @@ import Entypo from '@expo/vector-icons/Entypo';
 // components
 import SwitchTypeUser from '../components/SwitchTypeUser';
 // styles
-import styles from '../styles/LoginStyle';
-import colors from '../styles/const/colors';
+import { useResponsive } from "../utils/useResponsive";
+import { createStyles } from '../styles/LoginStyle';
+import colors from '../utils/colors';
 
 const REDES_LOGIN = [
     { name: 'Google', icon: require('../../assets/logo-google.png') },
@@ -35,6 +36,8 @@ const Login = () => {
 
     }
 
+    const responsive = useResponsive();
+    const styles = createStyles(responsive);
 
     return (
         <View style={styles.container}>
@@ -42,16 +45,16 @@ const Login = () => {
                 <SwitchTypeUser style={styles.switch} initialType={typeUser} onTypeChange={(tipo) => setTypeUser(tipo)}></SwitchTypeUser>
 
                 <View style={styles.form}>
-                    <View style={{ gap: 10 }}>
+                    <View style={{ gap: 10 * responsive.scale }}>
                         <Text style={styles.textForm}>Correo Electronico</Text>
                         <TextInput style={styles.input} inputMode='email' placeholder='Correo' value={email} onChangeText={setEmail}></TextInput>
                     </View>
-                    <View style={{ gap: 10 }}>
+                    <View style={{ gap: 10 * responsive.scale }}>
                         <Text style={styles.textForm}>Contraseña</Text>
                         <View style={styles.password}>
                             <TextInput ref={passwordRef} style={styles.input} secureTextEntry={true} placeholder='Contraseña' value={password} onChangeText={setPassword}></TextInput>
                             <Pressable onPress={() => verContraseña()} style={styles.eyeButton}>
-                                {passwordVisible && <Entypo name="eye-with-line" size={24} color="black"/> || <Entypo name="eye" size={24} color="black" />}
+                                {passwordVisible && <Entypo name="eye-with-line" size={24} color="black" /> || <Entypo name="eye" size={24} color="black" />}
                             </Pressable>
                         </View>
                     </View>
@@ -59,7 +62,7 @@ const Login = () => {
                 </View>
 
                 <View style={styles.redesLogin}>
-                    <Text style={{ fontSize: 25 }}>O iniciar sesión con:</Text>
+                    <Text style={{ fontSize: responsive.font(22) }}>O iniciar sesión con:</Text>
                     <View style={styles.redes}>
                         {REDES_LOGIN.map((item) => {
                             return (
@@ -69,16 +72,16 @@ const Login = () => {
                             )
                         })}
                     </View>
-                    <Text style={{ fontSize: 25, color: colors.primary, marginTop: 30 }}>¿Olvidaste tu contraseña?</Text>
+                    <Text style={{ fontSize: responsive.font(22), color: colors.primary, marginTop: 20 * responsive.scale }}>¿Olvidaste tu contraseña?</Text>
                 </View>
 
                 <View style={styles.logs}>
                     <Pressable disabled={fomrComplet} style={[styles.btnLogin, !fomrComplet && { backgroundColor: '#ccc' }]}>
-                        <Text style={{ textAlign: 'center', color: colors.background, fontSize: 25 }}>INICIAR SESIÓN</Text>
+                        <Text style={{ textAlign: 'center', color: colors.background, fontSize: responsive.font(22) }}>INICIAR SESIÓN</Text>
                     </Pressable>
                     <View style={styles.register}>
-                        <Text style={{ fontSize: 25 }}>¿No tienes cuenta?</Text>
-                        <Pressable onPress={() => navigation.navigate('Register')}><Text style={{ fontSize: 25, color: colors.primary }}>Registrate</Text></Pressable>
+                        <Text style={{ fontSize: responsive.font(22) }}>¿No tienes cuenta?</Text>
+                        <Pressable onPress={() => navigation.navigate('Register')}><Text style={{ fontSize: responsive.font(22), color: colors.primary }}>Registrate</Text></Pressable>
                     </View>
                 </View>
             </View>

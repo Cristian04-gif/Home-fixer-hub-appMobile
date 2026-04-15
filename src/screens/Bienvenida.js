@@ -1,10 +1,14 @@
 import { Text, View, Image, ScrollView, TouchableHighlight, useWindowDimensions } from "react-native";
 import React from "react";
-import styles from "../styles/BienvenidaStyle";
 import { useNavigation } from "@react-navigation/native";
 
+import { useResponsive } from "../utils/useResponsive";
+import { createStyles } from '../styles/BienvenidaStyle';
 const Panel = () => {
     const navigation = useNavigation();
+
+    const responsive = useResponsive();
+    const styles = createStyles(responsive);
     return (
         <View style={styles.container}>
             <View style={styles.header}>

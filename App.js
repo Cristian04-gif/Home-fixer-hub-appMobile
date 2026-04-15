@@ -2,7 +2,8 @@ import * as React from 'react';
 import { createStaticNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
-import colors from './src/styles/const/colors';
+
+import colors from './src/utils/colors';
 import Login from './src/screens/Login';
 import Bienvenida from './src/screens/Bienvenida';
 import Registro from './src/screens/Registro';
@@ -23,8 +24,10 @@ const RootStack = createNativeStackNavigator({
                 headerTintColor: '#fff',
                 headerStyle:{
                     backgroundColor: colors.primary
-
-                }
+                },
+                headerTitleStyle:{
+                    fontSize: 25
+                },
             }
         },
         Register:{
@@ -35,7 +38,10 @@ const RootStack = createNativeStackNavigator({
                 headerTitleAlign: 'center',
                 headerStyle:{
                     backgroundColor: colors.primary,
-                }
+                },
+                headerTitleStyle:{
+                    fontSize: 25
+                },
             }
         },
         Home: {

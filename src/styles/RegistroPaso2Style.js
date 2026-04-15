@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
-import colors from "./const/colors";
-import fonts from "./const/fonts";
-const styles = StyleSheet.create({
+import colors from "../utils/colors";
+
+export const createStyles = ({ scale, font }) => StyleSheet.create({
     container: {
         flex: 1,
         width: '100%'
@@ -13,18 +13,17 @@ const styles = StyleSheet.create({
     },
     section: {
         width: '90%',
-        padding: 15,
-        gap: 5,
-        borderWidth:1
+        padding: 10 * scale,
+        gap: 5 * scale,
     },
     label: {
-        fontSize: fonts.default,
+        fontSize: font(22),
         fontWeight: '600'
     },
     input: {
-        fontSize: fonts.default,
-        borderWidth: 1,
-        borderRadius: 10,
+        fontSize: font(22),
+        borderWidth: scale,
+        borderRadius: 10 * scale,
         borderColor: colors.border,
         width: '100%'
     },
@@ -34,19 +33,17 @@ const styles = StyleSheet.create({
     },
     eyeButton: {
         position: 'absolute',
-        right: 15
+        right: 15 * scale
     },
     subtitleConditions:{
-        fontSize: fonts.default,
+        fontSize: font(22),
         fontWeight: '600'
     },
     conditions:{
-        fontSize: fonts.text,
-        marginTop: 3,
+        fontSize: font(16),
+        marginTop: 3 * scale,
     },
     conditionFulfilled:{
         color: colors.success
     }
 })
-
-export default styles;
