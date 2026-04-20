@@ -37,7 +37,7 @@ const Registro = () => {
     }
 
     const manejarSiguiente = () => {
-        setEsValido(false); // Reset para el paso 2
+        setEsValido(false); 
         setPaso(paso + 1);
     };
     return (

@@ -13,9 +13,6 @@ export const createStyles = ({scale, font}) => StyleSheet.create({
         borderTopLeftRadius: 30 * scale,
         paddingTop: 30 * scale
     },
-    //switch
-
-    //form
     form: {
         width: '90%',
         gap: 10 * scale,
@@ -42,8 +39,6 @@ export const createStyles = ({scale, font}) => StyleSheet.create({
         position: 'absolute',
         right: 15 * scale
     },
-
-    //login redes
     redesLogin: {
         width: '90%',
         alignItems: 'center',
@@ -64,8 +59,6 @@ export const createStyles = ({scale, font}) => StyleSheet.create({
         width: 50 * scale,
         height: 50 * scale
     },
-
-    //logs
     logs: {
         width: '90%',
         alignItems: 'center',

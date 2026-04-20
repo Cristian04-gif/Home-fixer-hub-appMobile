@@ -39,7 +39,6 @@ const RegistroPaso2 = ({ onValid, data, typeUser }) => {
     }
 
     const verificarContrasena = (contrasena) => {
-        // 1. Calculamos los nuevos valores basándonos en TODA la cadena
         const nuevasCondiciones = {
             longitud: contrasena.length >= 12,
             mayus: /[A-Z]/.test(contrasena),
@@ -48,7 +47,6 @@ const RegistroPaso2 = ({ onValid, data, typeUser }) => {
             simbol: /[^a-zA-Z0-9\s]/.test(contrasena)
         };
 
-        // 2. Actualizamos el estado de un solo golpe
         setPasswordConditions(nuevasCondiciones);
         return Object.values(nuevasCondiciones).every(valor => valor === true);
     };

@@ -11,9 +11,9 @@ import Home from './src/screens/Home';
 const RootStack = createNativeStackNavigator({
     screens: {
         Welcome: {
-            screen: Bienvenida, //nombre del componente
+            screen: Bienvenida, 
             options: {
-                headerShown: false // Ocultamos la barra oficial
+                headerShown: false
             }
         },
         Login: {
@@ -51,7 +51,7 @@ const RootStack = createNativeStackNavigator({
 });
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: colors.primary, // El color de tu paleta
+        backgroundColor: colors.primary,
     },
 });
 

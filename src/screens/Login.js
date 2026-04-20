@@ -18,6 +18,7 @@ const REDES_LOGIN = [
 
 const Login = () => {
     const navigation = useNavigation();
+
     const [typeUser, setTypeUser] = useState('cliente');
     const [passwordVisible, setPasswordVisible] = useState(false)
     const passwordRef = useRef(null);
@@ -76,7 +77,7 @@ const Login = () => {
                 </View>
 
                 <View style={styles.logs}>
-                    <Pressable disabled={fomrComplet} style={[styles.btnLogin, !fomrComplet && { backgroundColor: '#ccc' }]}>
+                    <Pressable  onPress={() => navigation.navigate('Home')} disabled={!fomrComplet} style={[styles.btnLogin, !fomrComplet && { backgroundColor: '#ccc' }]}>
                         <Text style={{ textAlign: 'center', color: colors.background, fontSize: responsive.font(22) }}>INICIAR SESIÓN</Text>
                     </Pressable>
                     <View style={styles.register}>

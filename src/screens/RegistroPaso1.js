@@ -71,7 +71,6 @@ const RegistroPaso1 = ({ onValid, data }) => {
                                 setValue(item.value);
                             }}
                             renderItem={renderItem}
-                            // Esto pone la bandera a la izquierda del texto seleccionado
                             renderLeftIcon={() => {
                                 const selectedCountry = PAISES.find(p => p.value === value);
                                 return selectedCountry ? (

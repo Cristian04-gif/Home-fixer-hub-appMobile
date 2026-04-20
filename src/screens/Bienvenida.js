@@ -16,7 +16,7 @@ const Panel = () => {
             </View>
             <View style={styles.body}>
                 <View style={styles.logoContainer}>
-                    <Image style={styles.logo} source={require('../../assets/favicon.png')}></Image>
+                    <Image style={styles.logo} source={require('../../assets/logo-Home-Fixer_Hub.png')}></Image>
                     <Text style={styles.name}>Home Fixer Hub</Text>
                 </View>
                 <View style={styles.content}>
