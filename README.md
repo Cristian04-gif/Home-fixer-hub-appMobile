@@ -100,7 +100,7 @@ npx expo install react-native-screens react-native-safe-area-context
 
 **Directorio:**
 
-    Fixora-appMobile\App.js
+    Home-fixer-hub-appMobile\App.js
 
 ![navigation](./assets/md/navigation.png)
 
