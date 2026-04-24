@@ -1,4 +1,4 @@
-# FIXORA - APLICACION MOBILE
+# HOME FIXER HUB - APLICACION MOVIL
 
 ![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
