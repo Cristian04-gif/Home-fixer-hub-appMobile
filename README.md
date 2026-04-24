@@ -58,13 +58,13 @@ Pertenece al sector de Servicios On-Demand (Economy Gig) y mantenimiento del hog
 ### Clonacion del repositorio
 
 ```bash
-git clone https://github.com/Cristian04-gif/Fixora-appMobile.git
+git clone https://github.com/Cristian04-gif/Home-fixer-hub-appMobile.git
 ```
 
 ### Acceder al directorio
 
 ```bash
-cd Fixora-appMobile
+cd Home-fixer-hub-appMobile
 ```
 
 ### Instalar dependencias
