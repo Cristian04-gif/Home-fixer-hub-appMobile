@@ -35,15 +35,15 @@ export const createStyles = ({ scale, font }) => StyleSheet.create({
         position: 'absolute',
         right: 15 * scale
     },
-    subtitleConditions:{
+    subtitleConditions: {
         fontSize: font(22),
         fontWeight: '600'
     },
-    conditions:{
+    conditions: {
         fontSize: font(16),
         marginTop: 3 * scale,
     },
-    conditionFulfilled:{
+    conditionFulfilled: {
         color: colors.success
     }
 })

@@ -1,64 +1,88 @@
 import * as React from 'react';
-import { createStaticNavigation } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
-
+import { useState, useEffect } from 'react';
 import colors from './src/utils/colors';
 import Login from './src/screens/Login';
 import Bienvenida from './src/screens/Bienvenida';
 import Registro from './src/screens/Registro';
 import Home from './src/screens/Home';
-const RootStack = createNativeStackNavigator({
-    screens: {
-        Welcome: {
-            screen: Bienvenida, 
-            options: {
-                headerShown: false
-            }
-        },
-        Login: {
-            screen: Login,
-            options: {
+import './src/api/Interceptors'
+import { getToken, getRole } from './src/storage/AuthStorage';
+const Stack = createNativeStackNavigator();
+
+function RootStack() {
+
+    const [loading, setLoading] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    useEffect(() => {
+        checkAuth();
+    }, [])
+
+    const checkAuth = async () => {
+
+        const token = await getToken();
+        if (token) {
+            setIsAuthenticated(true);
+        }
+
+        setLoading(false);
+    };
+
+    if (loading) {
+        return null;
+    }
+
+
+    return !isAuthenticated ? (
+        <Stack.Navigator initialRouteName='Welcome'>
+            <Stack.Screen name="Welcome" component={Bienvenida} options={{ headerShown: false }}></Stack.Screen>
+
+            <Stack.Screen name="Login" component={Login} options={{
                 title: 'Inicio de Sesión',
                 headerTitleAlign: 'center',
                 headerTintColor: '#fff',
-                headerStyle:{
+                headerStyle: {
                     backgroundColor: colors.primary
                 },
-                headerTitleStyle:{
+                headerTitleStyle: {
                     fontSize: 25
                 },
-            }
-        },
-        Register:{
-            screen: Registro,
-            options:{
+            }}></Stack.Screen>
+
+            <Stack.Screen name="Register" component={Registro} options={{
                 title: 'Registro',
                 headerTintColor: '#fff',
                 headerTitleAlign: 'center',
-                headerStyle:{
+                headerStyle: {
                     backgroundColor: colors.primary,
                 },
-                headerTitleStyle:{
+                headerTitleStyle: {
                     fontSize: 25
                 },
-            }
-        },
-        Home: {
-            screen: Home,
-        }
-    },
-});
+            }}></Stack.Screen>
+
+            <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}></Stack.Screen>
+        </Stack.Navigator>
+    ) : (
+        <Stack.Navigator initialRouteName='Home'>
+            <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}></Stack.Screen>
+        </Stack.Navigator>
+    );
+}
+
+export default function App() {
+    return (
+        <NavigationContainer>
+            <RootStack></RootStack>
+        </NavigationContainer>
+    )
+}
+
 const styles = StyleSheet.create({
     header: {
         backgroundColor: colors.primary,
     },
 });
-
-const Navigation = createStaticNavigation(RootStack);
-
-
-
-export default function App() {
-    return <Navigation />;
-}

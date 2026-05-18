@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import colors from "../utils/colors";
 
-export const createStyles = ({scale, font}) => 
+export const createStyles = ({ scale, font }) =>
     StyleSheet.create({
         container: {
             flex: 1,
@@ -15,14 +15,14 @@ export const createStyles = ({scale, font}) =>
             height: 50 * scale,
             alignItems: 'center',
             justifyContent: 'center',
-            
+
         },
         title: {
             color: '#fff',
             fontSize: font(25),
             fontWeight: '400',
             marginTop: 20 * scale,
-            
+
         },
         body: {
             flex: 5,
@@ -39,13 +39,13 @@ export const createStyles = ({scale, font}) =>
             alignItems: 'center',
             justifyContent: 'center',
             gap: 10 * scale,
-            
+
         },
         logo: {
             width: 70 * scale,
             height: 70 * scale,
             resizeMode: 'cover',
-            
+
         },
         name: {
             color: colors.primary,
@@ -67,7 +67,7 @@ export const createStyles = ({scale, font}) =>
             fontSize: font(25),
             textAlign: 'center',
             width: 290 * scale,
-            
+
         },
         button: {
             backgroundColor: colors.success,

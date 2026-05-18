@@ -1,6 +1,7 @@
 import { Text, View, Pressable, TextInput, Image } from 'react-native'
 import React, { useState, useRef } from 'react';
 import { useNavigation } from "@react-navigation/native";
+import { Button } from "@react-navigation/elements";
 // simbolos
 import Entypo from '@expo/vector-icons/Entypo';
 // components
@@ -11,9 +12,9 @@ import { createStyles } from '../styles/LoginStyle';
 import colors from '../utils/colors';
 
 const REDES_LOGIN = [
-    { name: 'Google', icon: require('../../assets/logo-google.png') },
-    { name: 'Facebook', icon: require('../../assets/logo-facebook.png') },
-    { name: 'Apple', icon: require('../../assets/apple-logo.png') }
+    { name: 'Google', icon: require('../../assets/img/logo-google.png') },
+    { name: 'Facebook', icon: require('../../assets/img/logo-facebook.png') },
+    { name: 'Apple', icon: require('../../assets/img/apple-logo.png') }
 ]
 
 const Login = () => {
@@ -77,7 +78,7 @@ const Login = () => {
                 </View>
 
                 <View style={styles.logs}>
-                    <Pressable  onPress={() => navigation.navigate('Home')} disabled={!fomrComplet} style={[styles.btnLogin, !fomrComplet && { backgroundColor: '#ccc' }]}>
+                    <Pressable onPress={() => navigation.navigate('Home')} disabled={!fomrComplet} style={[styles.btnLogin, !fomrComplet && { backgroundColor: '#ccc' }]}>
                         <Text style={{ textAlign: 'center', color: colors.background, fontSize: responsive.font(22) }}>INICIAR SESIÓN</Text>
                     </Pressable>
                     <View style={styles.register}>

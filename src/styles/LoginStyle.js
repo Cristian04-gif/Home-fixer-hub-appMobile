@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native"
 import colors from "../utils/colors";
 
-export const createStyles = ({scale, font}) => StyleSheet.create({
+export const createStyles = ({ scale, font }) => StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.primary,
@@ -33,7 +33,7 @@ export const createStyles = ({scale, font}) => StyleSheet.create({
     password: {
         flexDirection: 'row',
         alignItems: 'center',
-        
+
     },
     eyeButton: {
         position: 'absolute',

@@ -3,15 +3,15 @@ import React, { useState, useEffect } from 'react'
 import { Dropdown } from 'react-native-element-dropdown';
 import Checkbox from 'expo-checkbox';
 //componets
-import SwitchTypeUser from '../components/SwitchTypeUser';
+import SwitchTypeUser from './SwitchTypeUser';
 // styles
 import { createStyles } from '../styles/RegistroPaso1Style';
 import colors from '../utils/colors';
 import { useResponsive } from '../utils/useResponsive';
 
 const PAISES = [
-    { name: 'Peru', value: '+51 ', icon: require('../../assets/logo-peru.png') },
-    { name: 'Argentina', value: '+54 ', icon: require('../../assets/logo-argentina.png') }
+    { name: 'Peru', value: '+51 ', icon: require('../../assets/img/logo-peru.png') },
+    { name: 'Argentina', value: '+54 ', icon: require('../../assets/img/logo-argentina.png') }
 ]
 const RegistroPaso1 = ({ onValid, data }) => {
 
@@ -47,7 +47,7 @@ const RegistroPaso1 = ({ onValid, data }) => {
         <View style={styles.container}>
             <View style={styles.body}>
                 <SwitchTypeUser initialType={typeUser} onTypeChange={(tipo) => setTypeUser(tipo)}></SwitchTypeUser>
-                <View style={[styles.section,{marginTop: 30*responsive.scale}]}>
+                <View style={[styles.section, { marginTop: 30 * responsive.scale }]}>
                     <Text style={styles.label}>Nombre</Text>
                     <TextInput style={styles.input} value={name} onChangeText={setName} placeholder='Nombre'></TextInput>
                 </View>
@@ -78,7 +78,7 @@ const RegistroPaso1 = ({ onValid, data }) => {
                                 ) : null;
                             }}
                         />
-                        <TextInput style={{ width: '78%', fontSize: 25 }} value={numberPhone} onChangeText={setNumberPhone} placeholder='Numero' inputMode='tel'></TextInput>
+                        <TextInput style={{ width: '78%' * responsive.scale, fontSize: 25 * responsive.scale }} value={numberPhone} onChangeText={setNumberPhone} placeholder='Numero' inputMode='tel'></TextInput>
                     </View>
 
                 </View>
@@ -99,7 +99,7 @@ const RegistroPaso1 = ({ onValid, data }) => {
                         <View style={styles.labelCheckBox}>
                             <Text style={styles.textLabelCheckBox}>Acepto los</Text>
                             <Pressable>
-                                <Text style={[styles.textLabelCheckBox, {color: colors.primary}]}>Términos y condiciones</Text>
+                                <Text style={[styles.textLabelCheckBox, { color: colors.primary }]}>Términos y condiciones</Text>
                             </Pressable>
                         </View>
                     </View>
