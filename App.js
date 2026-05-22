@@ -8,8 +8,10 @@ import Login from './src/screens/Login';
 import Bienvenida from './src/screens/Bienvenida';
 import Registro from './src/screens/Registro';
 import Home from './src/screens/Home';
+import TechnicianProfile from './src/components/TechnicianProfile';
 import './src/api/Interceptors'
 import { getToken, getRole } from './src/storage/AuthStorage';
+import TechniciansForServices from './src/components/TechniciansForServices';
 const Stack = createNativeStackNavigator();
 
 function RootStack() {
@@ -69,6 +71,29 @@ function RootStack() {
     ) : (
         <Stack.Navigator initialRouteName='Home'>
             <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}></Stack.Screen>
+            <Stack.Screen name="TechnicalForService" component={TechniciansForServices} options={{
+                title: 'Lista de Tecnicos',
+                headerTintColor: '#fff',
+                headerTitleAlign: 'center',
+                headerStyle: {
+                    backgroundColor: colors.primary,
+                },
+                headerTitleStyle: {
+                    fontSize: 25
+                },
+            }}></Stack.Screen>
+            <Stack.Screen name="TechnicianProfile" component={TechnicianProfile} options={{
+                title: 'Perfil de Técnico',
+                headerTintColor: '#fff',
+                headerTitleAlign: 'center',
+                headerStyle: {
+                    backgroundColor: colors.primary,
+                },
+                headerTitleStyle: {
+                    fontSize: 25
+                },
+            }}></Stack.Screen>
+            <Stack.Screen name="Welcome" component={Bienvenida} options={{ headerShown: false }}></Stack.Screen>
         </Stack.Navigator>
     );
 }

@@ -1,21 +1,19 @@
 import api from "./Client";
-import { getToken } from "../storage/AuthStorage";
+import { getToken, logout } from "../storage/AuthStorage";
 api.interceptors.request.use(
 
     async (config) => {
 
         const token = await getToken();
 
+
         if (token) {
+
             config.headers.Authorization =
                 `Bearer ${token}`;
         }
 
         return config;
-    },
-
-    (error) => {
-        return Promise.reject(error);
     }
 );
 
@@ -26,7 +24,8 @@ api.interceptors.response.use(
     async (error) => {
 
         if (error.response?.status === 401) {
-            console.log("No autorizado");
+            console.log("token expirado");
+            await logout();
         }
 
         return Promise.reject(error);

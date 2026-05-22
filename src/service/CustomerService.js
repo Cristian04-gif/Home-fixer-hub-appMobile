@@ -11,6 +11,11 @@ export const getCustomersId = async (id) => {
     return response.data;
 };
 
+export const getCustomersByUserId = async (userId) => {
+    const response = await api.get(`${ENDPOINTS.PROFILE_CUSTOMER}/customer/userId/${userId}`);
+    return response.data;
+};
+
 export const registerCustomer = async (data) => {
     const response = await api.post(`${ENDPOINTS.PROFILE_CUSTOMER}/customer`, data);
     return response.data;

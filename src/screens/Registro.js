@@ -12,10 +12,9 @@ import { createStyles } from "../styles/RegisterStyle";
 import { useResponsive } from "../utils/useResponsive";
 
 //hooks
-import { useFetch } from "../hooks/useFetch";
 import { register } from "../service/AuthService";
 import { registerCustomer } from "../service/CustomerService";
-import { saveToken, saveRole, getToken,getRole } from "../storage/AuthStorage";
+import { saveToken, saveRole, getToken,getRole, saveUserId } from "../storage/AuthStorage";
 import { decodeToken } from "../utils/jwt";
 const Registro = () => {
     const responsive = useResponsive();
@@ -53,19 +52,17 @@ const Registro = () => {
         try {
 
             const registerIdentity = {
-
                 email: dataRegister.email,
                 password: dataRegister.password,
                 role: dataRegister.typeUser,
             };
 
             const dataIdentity = await register(registerIdentity);
-            console.log(dataIdentity)
             await saveToken(dataIdentity.token);
 
             const payload = decodeToken(dataIdentity.token);
-            console.log(payload)
             await saveRole(payload.role);
+            await saveUserId(payload.userId);
             const registerProfile = {
                 name: dataRegister.name,
                 lastName: dataRegister.lastName,

@@ -17,6 +17,9 @@ const REDES_LOGIN = [
     { name: 'Apple', icon: require('../../assets/img/apple-logo.png') }
 ]
 
+import { login } from '../service/AuthService';
+import { logout, saveRole, saveUserId, saveToken } from '../storage/AuthStorage';
+import { decodeToken } from '../utils/jwt';
 const Login = () => {
     const navigation = useNavigation();
 
@@ -36,6 +39,24 @@ const Login = () => {
             })
         }
 
+    }
+
+    const handleLogin = async () => {
+        try {
+            await logout();
+            const requetLogin = { email: email, password: password };
+            const dataLogin = await login(requetLogin);
+
+            await saveToken(dataLogin.token);
+
+            const payload = decodeToken(dataLogin.token);
+            await saveRole(payload.role);
+            await saveUserId(payload.userId);
+
+            navigation.navigate("Home");
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const responsive = useResponsive();
@@ -78,7 +99,7 @@ const Login = () => {
                 </View>
 
                 <View style={styles.logs}>
-                    <Pressable onPress={() => navigation.navigate('Home')} disabled={!fomrComplet} style={[styles.btnLogin, !fomrComplet && { backgroundColor: '#ccc' }]}>
+                    <Pressable onPress={handleLogin} disabled={!fomrComplet} style={[styles.btnLogin, !fomrComplet && { backgroundColor: '#ccc' }]}>
                         <Text style={{ textAlign: 'center', color: colors.background, fontSize: responsive.font(22) }}>INICIAR SESIÓN</Text>
                     </Pressable>
                     <View style={styles.register}>
