@@ -6,15 +6,16 @@ import { Button } from "@react-navigation/elements";
 import RegistroPaso1 from "../components/RegistroPaso1";
 import RegistroPaso2 from "../components/RegistroPaso2";
 import BarraProgresoRegistro from "../components/BarraProgresoRegistro";
-import RegistroPaso3 from "../components/RegistroPaso3";
+import RegistroPaso3Tecnico from "../components/RegistroPaso3Tecnico";
+import UploadProfilePicture from "../components/UploadProfilePicture";
 // styles
 import { createStyles } from "../styles/RegisterStyle";
 import { useResponsive } from "../utils/useResponsive";
 
 //hooks
 import { register } from "../service/AuthService";
-import { registerCustomer } from "../service/CustomerService";
-import { saveToken, saveRole, getToken,getRole, saveUserId } from "../storage/AuthStorage";
+import { registerCustomer, uploadProfilePhoto } from "../service/CustomerService";
+import { saveToken, saveRole, getToken, getRole, saveUserId } from "../storage/AuthStorage";
 import { decodeToken } from "../utils/jwt";
 const Registro = () => {
     const responsive = useResponsive();
@@ -33,7 +34,7 @@ const Registro = () => {
         password: "",
         dni: "",
         visitFee: "",
-        meansTransport: "",
+        photoProfile: null
     });
     const actualizarValidacion = (completed, data) => {
         setEsValido(completed);
@@ -50,7 +51,6 @@ const Registro = () => {
     const handleRegisterCustomer = async () => {
 
         try {
-
             const registerIdentity = {
                 email: dataRegister.email,
                 password: dataRegister.password,
@@ -69,9 +69,10 @@ const Registro = () => {
                 dni: dataRegister.dni,
                 userId: dataIdentity.userId,
             };
-            
-            await registerCustomer(registerProfile);
 
+            const profile = await registerCustomer(registerProfile);
+            console.log(profile)
+            await uploadPhoto(profile.id, dataRegister.photoProfile);
             navigation.replace("Home");
 
         } catch (error) {
@@ -83,6 +84,31 @@ const Registro = () => {
         }
     };
 
+    const uploadPhoto = async (customerId, imageUri) => {
+        console.log("entro a subir la foto")
+        console.log("image ", imageUri)
+        if (!imageUri) {
+            alert("Por favor, selecciona una foto primero")
+            return;
+        }
+
+        const formData = new FormData();
+
+        const filename = imageUri.split("/").pop();
+        const match = /\.(\w+)$/.exec(filename || '');
+        const type = match ? `image/${match[1]}` : `image/jpeg`;
+
+        formData.append('file', {
+            uri: imageUri,
+            name: filename,
+            type: type,
+        })
+        try {
+            await uploadProfilePhoto(customerId, formData);
+        } catch (error) {
+            console.error(error)
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -104,12 +130,20 @@ const Registro = () => {
                     />
                 )}
 
-                {(paso === 2 && dataRegister.typeUser === "cliente" && (
+                {paso === 3 && dataRegister.typeUser === "cliente" ?
+                    <>
+                        <Text style={{ fontSize: responsive.font(22), fontWeight: '600' }}>Foto de perfil</Text>
+                        <UploadProfilePicture onValid={actualizarValidacion} data={dataRegister} typeUser={dataRegister.typeUser}></UploadProfilePicture></>
+
+                    : null}
+
+                {(paso === 3 && dataRegister.typeUser === "cliente") ? (
+                    //subir foto
                     <Pressable
                         disabled={!esValido}
                         style={[
                             styles.btnSeguiente,
-                            !esValido && { backgroundColor: "#ccc" },
+                            !esValido && { backgroundColor: "#ccc" }
                         ]}
                         onPress={handleRegisterCustomer}
                     >
@@ -117,28 +151,15 @@ const Registro = () => {
                             CREAR CUENTA
                         </Text>
                     </Pressable>
-                )) ||
-                    (paso !== 3 && (
-                        <Pressable
-                            disabled={!esValido}
-                            style={[
-                                styles.btnSeguiente,
-                                !esValido && { backgroundColor: "#ccc" },
-                            ]}
-                            onPress={manejarSiguiente}
-                        >
-                            <Text style={{ color: "#fff", fontSize: responsive.font(25) }}>
-                                SIGUIENTE
-                            </Text>
-                        </Pressable>
-                    ))}
+                ) :
+                    null}
 
-                {paso === 3 && (
-                    <RegistroPaso3
+                {(paso === 3 && dataRegister.typeUser == "tecnico") ? (
+                    <RegistroPaso3Tecnico
                         onValid={actualizarValidacion}
                         data={dataRegister}
-                    ></RegistroPaso3>
-                )}
+                    ></RegistroPaso3Tecnico>
+                ) : null}
                 {paso === 3 && dataRegister.typeUser === "tecnico" && (
                     <Pressable
                         disabled={!esValido}
@@ -153,6 +174,21 @@ const Registro = () => {
                         </Text>
                     </Pressable>
                 )}
+                {paso !== 3 ?
+                    (
+                        <Pressable
+                            disabled={!esValido}
+                            style={[
+                                styles.btnSeguiente,
+                                !esValido && { backgroundColor: "#ccc" },
+                            ]}
+                            onPress={manejarSiguiente}
+                        >
+                            <Text style={{ color: "#fff", fontSize: responsive.font(25) }}>
+                                SIGUIENTE
+                            </Text>
+                        </Pressable>
+                    ) : null}
             </View>
         </View>
     );

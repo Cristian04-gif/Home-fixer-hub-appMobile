@@ -5,9 +5,9 @@ import colors from '../utils/colors'
 const Cliente = props => {
     return (
         <View >
-            <Text style={{ textAlign: 'center', fontSize: 25 }}>Paso {props.paso} de 2</Text>
+            <Text style={{ textAlign: 'center', fontSize: 25 }}>Paso {props.paso} de 3</Text>
             <View style={styles.progressBar}>
-                <View style={[styles.progressFill, { width: `${(props.paso / 2) * 100}%` }]}></View>
+                <View style={[styles.progressFill, { width: `${(props.paso / 3) * 100}%` }]}></View>
             </View>
         </View>
     );

@@ -15,19 +15,29 @@ export const createStyles = ({ scale, font }) =>
             justifyContent: 'center',
             alignItems: 'center'
         },
-        list:{
+        list: {
             width: '90%',
-            marginTop: 20*scale,
+            marginTop: 20 * scale,
         },
-        card:{
-            borderWidth:1,
-            marginBottom: 5*scale,
-            borderRadius: 10*scale,
-            padding: 10*scale,
-            borderColor: colors.border
+        card: {
+            borderWidth: 1,
+            marginBottom: 5 * scale,
+            borderRadius: 10 * scale,
+            padding: 10 * scale,
+            borderColor: colors.border,
+            flexDirection: 'row'
         },
-        name:{
-            fontSize: font(17),
+        img: {
+            width: 100 * scale,
+            height: 100 * scale,
+            borderRadius: 50 * scale,
+            marginRight: 20*scale
+        },
+        name: {
+            fontSize: font(20),
             fontWeight: '600'
+        },
+        description:{
+            fontSize: font(13)
         }
     });

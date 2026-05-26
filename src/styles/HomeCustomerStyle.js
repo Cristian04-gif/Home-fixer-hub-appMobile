@@ -11,9 +11,17 @@ export const createStyles = ({ scale, font }) =>
 
         logged: {
             flex: 1,
-            justifyContent: 'center',
+            justifyContent: 'space-evenly',
             alignItems: 'center',
-
+            flexDirection: 'row',
+        },
+        img: {
+            width: 60 * scale,
+            height: 60 * scale,
+            borderRadius: 50 * scale,
+            borderColor: colors.border,
+            borderWidth: 2,
+            marginRight: 5 * scale
         },
         welcomeMessage: {
             color: colors.background,

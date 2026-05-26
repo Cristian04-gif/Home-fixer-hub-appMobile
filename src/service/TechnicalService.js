@@ -16,6 +16,15 @@ export const registerTechnical = async (data) => {
     return response.data;
 };
 
+export const uploadProfilePhoto = async (technicalId, fromData) => {
+    const response = await api.post(`${ENDPOINTS.PROFILE_TECHNICAL}/fixer/${technicalId}/upload-perfile`, fromData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        }
+    });
+    return response.data;
+}
+
 export const updateTechnical = async (id, data) => {
     const response = await api.put(`${ENDPOINTS.PROFILE_TECHNICAL}/fixer/${id}`, data);
     return response.data;

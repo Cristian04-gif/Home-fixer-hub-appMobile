@@ -88,6 +88,7 @@ function RootStack() {
                 headerTitleAlign: 'center',
                 headerStyle: {
                     backgroundColor: colors.primary,
+                    
                 },
                 headerTitleStyle: {
                     fontSize: 25

@@ -5,12 +5,12 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { useResponsive } from "../utils/useResponsive";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import HomeCustomer from "../components/HomeCustomer";
 import Profile from "./Profile";
 import Notifications from "./Notifications";
 import colors from "../utils/colors";
-
+import Location from "./Location";
 import { getRole } from "../storage/AuthStorage";
 
 const Tab = createBottomTabNavigator();
@@ -71,7 +71,7 @@ const Home = () => {
   }, []);
   return (
     <>
-      {role === "CLIENTE" ? (
+      {(role === "cliente" || role === "CLIENTE") ? (
         <Tab.Navigator
           screenOptions={{
             tabBarShowLabel: false,
@@ -86,6 +86,16 @@ const Home = () => {
               headerShown: false,
               tabBarIcon: ({ color, size }) => (
                 <FontAwesome6 name="house" size={size} color={color} />
+              ),
+            }}
+          ></Tab.Screen>
+          <Tab.Screen
+            name="Location"
+            component={Location}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="compass" size={size} color={color} />
               ),
             }}
           ></Tab.Screen>

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList, Pressable, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, FlatList, Pressable, ActivityIndicator, Image } from 'react-native'
 import React, { useState, useEffect } from 'react';
 import useFetch from '../hooks/useFetch';
 import { getTechnicalsByService } from '../service/CatalogService';
@@ -53,22 +53,26 @@ export default function TechniciansForServices({ route }) {
 
     const renderItem = ({ item }) => (
         <Pressable style={styles.card} onPress={() => viewProfile(item, service)}>
-            <Text style={styles.name}>
-                {item.name} {item.lastName}
-            </Text>
+            <Image source={{ uri: item.urlPhotoProfile }} style={styles.img}></Image>
+            <View>
+                <Text style={styles.name}>
+                    {item.name} {item.lastName}
+                </Text>
 
-            <Text>DNI: {item.dni}</Text>
+                <Text style={styles.description}>DNI: {item.dni}</Text>
 
-            <Text>Tarifa de visita: S/. {item.visitFee}</Text>
+                <Text style={styles.description}>Tarifa de visita: S/. {item.visitFee}</Text>
 
-            <Text
-                style={{
-                    color: item.available ? "green" : "red",
-                    marginTop: 5 * responsive.scale,
-                }}
-            >
-                {item.available ? "Disponible" : "No disponible"}
-            </Text>
+                <Text
+                    style={styles.description,{
+                        color: item.available ? "green" : "red",
+                        marginTop: 5 * responsive.scale,
+                    }}
+                >
+                    {item.available ? "Disponible" : "No disponible"}
+                </Text>
+            </View>
+
         </Pressable>
     );
 

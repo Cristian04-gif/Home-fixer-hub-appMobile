@@ -6,6 +6,7 @@ import {
     TextInput,
     ActivityIndicator,
     Pressable,
+    Image
 } from "react-native";
 import React, {
     useState,
@@ -67,7 +68,8 @@ function HomeCustomer() {
     return (
         <View style={styles.container}>
             <View style={styles.logged}>
-                <Text style={styles.welcomeMessage}>Bienvenido, {data.name}</Text>
+                <Image source={{uri: data.urlPhotoProfile}} style={styles.img}></Image>
+                <Text style={styles.welcomeMessage}>Bienvenido, {data.name} {data.lastName}</Text>
             </View>
             <View style={styles.body}>
                 <ListServices></ListServices>

@@ -1,5 +1,7 @@
 import api from "../api/Client";
 import { ENDPOINTS } from "../api/Endpoint";
+import { getToken } from "../storage/AuthStorage";
+
 
 export const getCustomers = async () => {
     const response = await api.get(ENDPOINTS.PROFILE_CUSTOMER);
@@ -19,6 +21,28 @@ export const getCustomersByUserId = async (userId) => {
 export const registerCustomer = async (data) => {
     const response = await api.post(`${ENDPOINTS.PROFILE_CUSTOMER}/customer`, data);
     return response.data;
+};
+
+export const uploadProfilePhoto = async (customerId, formData) => {
+    const token = await getToken();
+
+    const response = await fetch(`http://192.168.101.6:8080/api/profile/customers/customer/${customerId}/upload-perfile`, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        if (response.status === 401) {
+            console.log("Token expirado o inválido en Fetch");
+        }
+        
+        const errorText = await response.text();
+        throw new Error(`Error en el servidor (${response.status}): ${errorText}`);
+    }
+    return await response.json();
 };
 
 export const updateTechnical = async (id, data) => {
