@@ -70,20 +70,28 @@ cd Home-fixer-hub-appMobile
 ### Instalar dependencias
 
 ```bash
-npm install
+pnpm install
 ```
+
 ## Dependencias
 
 ```bash
 "dependencies": {
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "@react-navigation/bottom-tabs": "^7.16.1",
+    "@react-navigation/elements": "^2.9.18",
     "@react-navigation/native": "^7.2.2",
     "@react-navigation/native-stack": "^7.14.10",
-    "expo": "~54.0.33",
+    "axios": "^1.16.1",
+    "expo": "~54.0.0",
     "expo-checkbox": "~5.0.8",
+    "expo-image-picker": "~17.0.11",
     "expo-status-bar": "~3.0.9",
+    "jwt-decode": "^4.0.0",
     "react": "19.1.0",
     "react-native": "0.81.5",
     "react-native-element-dropdown": "^2.12.4",
+    "react-native-maps": "1.20.1",
     "react-native-safe-area-context": "~5.6.0",
     "react-native-screens": "~4.16.0"
   }
@@ -92,11 +100,11 @@ npm install
 ### Navegacion
 
 #### Instalar dependencias:
+
 ```bash
-npm install @react-navigation/native @react-navigation/native-stack
+pnpm install @react-navigation/native @react-navigation/native-stack
 npx expo install react-native-screens react-native-safe-area-context
 ```
-#### Codigo:
 
 **Directorio:**
 
@@ -104,10 +112,54 @@ npx expo install react-native-screens react-native-safe-area-context
 
 ![navigation](./assets/md/navigation.png)
 
-## Ejecucion
+## Estructura
+
+```
+|-src
+|--|-api
+|--|-components
+|--|-hooks
+|--|-screens
+|--|-service
+|--|-storage
+|--|-styles
+|--|-utils
+```
+
+## BackEnd (necesario para acceder a las ENDPOINTS de la carpeta _api_)
+
+### Clonacion del repositorio
 
 ```bash
-npm start
+git clone https://github.com/Cristian04-gif/Home-Fixer-Hub-Backend.git
 ```
-<video src="./assets/md/ejecucion.mp4" controls width="100%"></video>
 
+### Acceder al directorio
+
+```bash
+cd Home-Fixer-Hub-Backend
+```
+
+### Arquitectura de microservicios
+
+```
+|-Home-Fixer-Hub-Backend
+|--|api_gateway
+|--|booking_service (en desarrollo)
+|--|catalog_service
+|--|eureka_server
+|--|identity_service
+|--|profile_service
+|--|review_service (en desarrollo)
+```
+
+## Order de ejecucion
+
+```bash
+eureka_server -> identity_service -> profile_service -> catalog_service -> api_gateway
+```
+
+## Ejemplo de consultas HTTP
+![consultas](./assets/md/ejemplo_consultas.png)
+
+<video src="./assets/md/ejecucion.mp4" controls width="100%"></video>
