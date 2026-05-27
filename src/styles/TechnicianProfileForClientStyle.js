@@ -50,5 +50,18 @@ export const createStyles = ({ scale, font }) =>
             textAlign: 'justify',
             marginBottom: 5 * scale
         },
-        
+        contentImg: {
+            width: '90%',
+        },
+        boxImg: {
+            flexDirection: 'row',
+            gap: 10 * scale,
+            alignItems: 'center'
+        },
+        imgs: {
+            width: 120 * scale,
+            height: 120 * scale,
+            borderRadius: 20*scale
+        }
+
     });

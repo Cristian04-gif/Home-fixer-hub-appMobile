@@ -2,8 +2,9 @@ import { StyleSheet, Text, View, ActivityIndicator, Image } from 'react-native';
 import Reac, { useState, useEffect } from 'react';
 import { getTechnicalAndService } from '../service/CatalogService';
 import { useResponsive } from '../utils/useResponsive';
-import { createStyles } from '../styles/TechnicianProfileStyle';
-export default function TechnicianProfile({ route }) {
+import { createStyles } from '../styles/TechnicianProfileForClientStyle';
+import { getImagesByTechnicalServiceId } from '../service/ImagesService';
+export default function TechnicianProfileForClient({ route }) {
     const responsive = useResponsive();
     const styles = createStyles(responsive);
 
@@ -11,7 +12,7 @@ export default function TechnicianProfile({ route }) {
     const [relatedInfo, setRelatedInfo] = useState({});
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-
+    const [relatedImages, setRelatedImages] = useState([]);
     useEffect(() => {
         handleProfileTechnical();
     }, [])
@@ -22,6 +23,10 @@ export default function TechnicianProfile({ route }) {
             const res = await getTechnicalAndService(profile.id, service.id);
             const data = await res;
             setRelatedInfo(data);
+            const imgs = await getImagesByTechnicalServiceId(data.id);
+            const images = await imgs;
+            console.log(images)
+            setRelatedImages(images);
         } catch (error) {
             setError(error);
         } finally {
@@ -47,7 +52,17 @@ export default function TechnicianProfile({ route }) {
                     <Text style={styles.title}>Sobre mi</Text>
                     <Text style={styles.textDescription}>{relatedInfo.description}</Text>
                     <Text style={styles.textDescription}>Tarifa de visita: S/. {profile.visitFee}</Text>
-                    <Text style={{color: profile.available ? 'green': 'red', fontWeight: '600', fontSize: responsive.font(15)}}>{profile.available ? "Disponible" : "No disponible"}</Text>
+                    <Text style={{ color: profile.available ? 'green' : 'red', fontWeight: '600', fontSize: responsive.font(15) }}>{profile.available ? "Disponible" : "No disponible"}</Text>
+                </View>
+                <View style={styles.contentImg}>
+                    <Text style={[styles.title, {marginBottom: 20*responsive.scale, marginTop: 20*responsive.scale}]}>Fotos de mi trabajo</Text>
+                    <View style={styles.boxImg}>
+                        {relatedImages.map(img => {
+                            return (
+                                <Image key={img.id} source={{ uri: img.url }} style={styles.imgs}></Image>)
+                        })}
+                    </View>
+
                 </View>
             </View>
 

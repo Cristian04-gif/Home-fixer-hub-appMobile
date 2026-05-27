@@ -23,10 +23,10 @@ export const registerCustomer = async (data) => {
     return response.data;
 };
 
-export const uploadProfilePhoto = async (customerId, formData) => {
+export const uploadProfileCustomerPhoto = async (customerId, formData) => {
     const token = await getToken();
 
-    const response = await fetch(`http://192.168.101.6:8080/api/profile/customers/customer/${customerId}/upload-perfile`, {
+    const response = await fetch(`http://10.248.26.143:8080${ENDPOINTS.PROFILE_CUSTOMER}/customer/${customerId}/upload-perfile`, {
         method: 'POST',
         body: formData,
         headers: {
@@ -38,7 +38,7 @@ export const uploadProfilePhoto = async (customerId, formData) => {
         if (response.status === 401) {
             console.log("Token expirado o inválido en Fetch");
         }
-        
+
         const errorText = await response.text();
         throw new Error(`Error en el servidor (${response.status}): ${errorText}`);
     }

@@ -26,39 +26,39 @@ import ListServices from "./ListServices";
 import useFetch from "../hooks/useFetch";
 import { getCatalogServices } from "../service/CatalogService";
 import { getCustomersByUserId } from "../service/CustomerService";
-import { getToken, getUserId } from "../storage/AuthStorage";
-import { decodeToken } from "../utils/jwt";
-
-
-//////////////////////////////
+import { getToken, getUserId, getUser } from "../storage/AuthStorage";
 
 function HomeCustomer() {
     const responsive = useResponsive();
     const styles = createStyles(responsive);
 
-    const [userId, setUserId] = useState("");
     const [data, setData] = useState({});
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true); 
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const handleStorage = async () => {
             try {
-                setLoading(true);
-                const id = await getUserId();
-                setUserId(id);
-                const res = await getCustomersByUserId(id);
-                setData(res);
-                if (res !== null) setLoading(true);
-            } catch (error) {
-                console.error(error);
-                setError(error);
+                const user = await getUser();
+                if (user) {
+                    setData(JSON.parse(user));
+                }
+            } catch (err) {
+                console.error(err);
+                setError(err.message || err);
+            } finally {
+                setLoading(false);
             }
         };
         handleStorage();
     }, []);
-    if (!loading) {
-        return <ActivityIndicator size="large" />;
+
+    if (loading) {
+        return (
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <ActivityIndicator size="large" color={colors.primary} />
+            </View>
+        );
     }
 
     if (error) {
@@ -68,11 +68,15 @@ function HomeCustomer() {
     return (
         <View style={styles.container}>
             <View style={styles.logged}>
-                <Image source={{uri: data.urlPhotoProfile}} style={styles.img}></Image>
-                <Text style={styles.welcomeMessage}>Bienvenido, {data.name} {data.lastName}</Text>
+                {data?.urlPhotoProfile && (
+                    <Image source={{ uri: data.urlPhotoProfile }} style={styles.img} />
+                )}
+                <Text style={styles.welcomeMessage}>
+                    Bienvenido, {data?.name || ""} {data?.lastName || ""}
+                </Text>
             </View>
             <View style={styles.body}>
-                <ListServices></ListServices>
+                <ListServices />
             </View>
         </View>
     );

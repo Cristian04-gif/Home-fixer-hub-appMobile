@@ -20,3 +20,11 @@ export const getTechnicalAndService = async (technicalId, serviceId) => {
     const response = await api.get(`${ENDPOINTS.CATALOG}/public/technical-service/technical/${technicalId}/service/${serviceId}`);
     return response.data;
 }
+
+
+//
+
+export const assignServiceToTechnician = async (data) => {
+    const response = await api.post(`${ENDPOINTS.CATALOG}/skills/assing/fixer`, data);
+    return response.data;
+}

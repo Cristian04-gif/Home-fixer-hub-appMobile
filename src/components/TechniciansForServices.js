@@ -34,7 +34,7 @@ export default function TechniciansForServices({ route }) {
             setLastPage(data.last);
             setPage((prev) => prev + 1);
         } catch (error) {
-            console.log("Error:", error);
+            console.error("Error:", error);
         } finally {
             setLoading(false);
         }
@@ -45,7 +45,7 @@ export default function TechniciansForServices({ route }) {
 
     const navigation = useNavigation();
     const viewProfile = (item, service) => {
-        navigation.navigate("TechnicianProfile", {
+        navigation.navigate("TechnicianProfileForClient", {
             profile: item,
             service: service
         });

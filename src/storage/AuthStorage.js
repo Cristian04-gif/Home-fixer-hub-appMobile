@@ -28,7 +28,7 @@ export const getRole = async () => {
 export const removeRole = async () => {
   await AsyncStorage.removeItem(ROLE_KEY);
 }
-
+////////////////////////////////////////////////////
 
 const USER_ID_KEY = "userId";
 
@@ -43,12 +43,27 @@ export const getUserId = async () => {
 export const removeUserId = async () => {
   await AsyncStorage.removeItem(USER_ID_KEY);
 }
+////////////////////////////////////////////////
+const USER_DATA = "user_data";
+export const saveUser = async (data) => {
+  await AsyncStorage.setItem(USER_DATA, JSON.stringify(data));
+}
 
+export const getUser = async ()=>{
+  return await  AsyncStorage.getItem(USER_DATA);
+} 
+
+export const removeUser = async() =>{
+  await AsyncStorage.removeItem(USER_DATA);
+}
+
+////////////////////////////////////////
 export const logout = async () => {
 
-    await AsyncStorage.multiRemove([
-        ROLE_KEY,
-        USER_ID_KEY,
-        TOKEN_KEY
-    ]);
+  await AsyncStorage.multiRemove([
+    ROLE_KEY,
+    USER_ID_KEY,
+    TOKEN_KEY,
+    USER_DATA
+  ]);
 };

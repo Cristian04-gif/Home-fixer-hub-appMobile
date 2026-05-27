@@ -18,8 +18,10 @@ const REDES_LOGIN = [
 ]
 
 import { login } from '../service/AuthService';
-import { logout, saveRole, saveUserId, saveToken } from '../storage/AuthStorage';
+import { logout, saveRole, saveUserId, saveToken, saveUser } from '../storage/AuthStorage';
 import { decodeToken } from '../utils/jwt';
+import { getCustomersByUserId } from '../service/CustomerService';
+import { gettechnicalByUserId } from '../service/TechnicalService';
 const Login = () => {
     const navigation = useNavigation();
 
@@ -53,9 +55,19 @@ const Login = () => {
             await saveRole(payload.role);
             await saveUserId(payload.userId);
 
+            let profile = null;
+            if (typeUser === "cliente") {
+                profile = await getCustomersByUserId(dataLogin.userId);
+                await saveUser(profile);
+            }
+            if (typeUser === "tecnico") {
+                profile = await gettechnicalByUserId(dataLogin.userId);
+                await saveUser(profile);
+            }
+
             navigation.navigate("Home");
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 

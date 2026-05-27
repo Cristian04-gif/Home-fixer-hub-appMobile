@@ -12,51 +12,9 @@ import Notifications from "./Notifications";
 import colors from "../utils/colors";
 import Location from "./Location";
 import { getRole } from "../storage/AuthStorage";
-
+import HomeTechnical from "../components/HomeTechnical";
+import ProfileTechnical from "../components/ProfileTechnical";
 const Tab = createBottomTabNavigator();
-
-function CustomerNavigation() {
-  return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarShowLabel: false,
-        tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: colors.textSecondary,
-      }}
-    >
-      <Tab.Screen
-        name="HomeCustomer"
-        component={HomeCustomer}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome6 name="house" size={size} color={color} />
-          ),
-        }}
-      ></Tab.Screen>
-      <Tab.Screen
-        name="Notifications"
-        component={Notifications}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="bell" size={size} color={color} />
-          ),
-        }}
-      ></Tab.Screen>
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="user" size={size} color={color} />
-          ),
-        }}
-      ></Tab.Screen>
-    </Tab.Navigator>
-  );
-}
 
 const Home = () => {
   const [role, setRole] = useState("");
@@ -64,6 +22,7 @@ const Home = () => {
   useEffect(() => {
     const loadRole = async () => {
       const rol = await getRole();
+      console.log(rol)
       setRole(rol);
     };
 
@@ -121,7 +80,54 @@ const Home = () => {
           ></Tab.Screen>
         </Tab.Navigator>
       ) : (
-        <Text>Tecnico</Text>
+        <Tab.Navigator
+          screenOptions={{
+            tabBarShowLabel: false,
+            tabBarActiveTintColor: colors.primary,
+            tabBarInactiveTintColor: colors.textSecondary,
+          }}
+        >
+          <Tab.Screen
+            name="HomeTechnical"
+            component={HomeTechnical}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({ color, size }) => (
+                <FontAwesome6 name="house" size={size} color={color} />
+              ),
+            }}
+          ></Tab.Screen>
+          <Tab.Screen
+            name="Location"
+            component={Location}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="compass" size={size} color={color} />
+              ),
+            }}
+          ></Tab.Screen>
+          <Tab.Screen
+            name="Notifications"
+            component={Notifications}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({ color, size }) => (
+                <FontAwesome name="bell" size={size} color={color} />
+              ),
+            }}
+          ></Tab.Screen>
+          <Tab.Screen
+            name="Profile"
+            component={ProfileTechnical}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({ color, size }) => (
+                <FontAwesome name="user" size={size} color={color} />
+              ),
+            }}
+          ></Tab.Screen>
+        </Tab.Navigator>
       )}
     </>
   );

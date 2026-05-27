@@ -14,8 +14,9 @@ import { useResponsive } from "../utils/useResponsive";
 
 //hooks
 import { register } from "../service/AuthService";
-import { registerCustomer, uploadProfilePhoto } from "../service/CustomerService";
-import { saveToken, saveRole, getToken, getRole, saveUserId } from "../storage/AuthStorage";
+import { registerCustomer, uploadProfileCustomerPhoto } from "../service/CustomerService";
+import { registerTechnical, uploadProfileTechnicalPhoto } from "../service/TechnicalService";
+import { saveToken, saveRole, getToken, getRole, saveUserId, saveUser } from "../storage/AuthStorage";
 import { decodeToken } from "../utils/jwt";
 const Registro = () => {
     const responsive = useResponsive();
@@ -71,22 +72,16 @@ const Registro = () => {
             };
 
             const profile = await registerCustomer(registerProfile);
-            console.log(profile)
-            await uploadPhoto(profile.id, dataRegister.photoProfile);
-            navigation.replace("Home");
+            await uploadPhoto(profile.id, dataRegister.photoProfile, dataIdentity.role);
+            navigation.navigate("Home");
 
         } catch (error) {
-
             console.log(error);
-
             console.log(error.response?.data);
-
         }
     };
 
-    const uploadPhoto = async (customerId, imageUri) => {
-        console.log("entro a subir la foto")
-        console.log("image ", imageUri)
+    const uploadPhoto = async (id, imageUri, role) => {
         if (!imageUri) {
             alert("Por favor, selecciona una foto primero")
             return;
@@ -104,9 +99,48 @@ const Registro = () => {
             type: type,
         })
         try {
-            await uploadProfilePhoto(customerId, formData);
+            let fullRegistration = null;
+            if (role.toUpperCase() === "cliente") {
+                fullRegistration = await uploadProfileCustomerPhoto(id, formData);
+            }
+            if (role.toUpperCase() === "tecnico") {
+                fullRegistration = await uploadProfileTechnicalPhoto(id, formData);
+            }
+            await saveUser(JSON.stringify(fullRegistration));
         } catch (error) {
             console.error(error)
+        }
+    }
+
+    const handleRegisterTechnical = async () => {
+        try {
+            const registerIdentity = {
+                email: dataRegister.email,
+                password: dataRegister.password,
+                role: dataRegister.typeUser,
+            };
+
+            const dataidentity = await register(registerIdentity);
+            await saveToken(dataidentity.token);
+
+            const payload = decodeToken(dataidentity.token);
+            await saveRole(payload.role);
+            await saveUserId(payload.userId);
+
+            const registerProfile = {
+                name: dataRegister.name,
+                lastName: dataRegister.lastName,
+                dni: dataRegister.dni,
+                userId: dataIdentity.userId,
+                visitFee: dataRegister.visitFee
+            };
+
+            const profile = await registerTechnical(registerProfile);
+            await uploadPhoto(profile.id, dataRegister.photoProfile, dataidentity.role);
+            navigation.navigate("Home");
+        } catch (error) {
+            console.log(error);
+            console.log(error.response?.data);
         }
     }
 

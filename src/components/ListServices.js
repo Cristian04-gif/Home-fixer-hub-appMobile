@@ -15,9 +15,9 @@ export default function ListServices() {
 
     const navigation = useNavigation();
     const handleTechnicals = (serviceItem) => {
-        navigation.navigate("TechnicalForService", {
+        navigation.navigate('TechnicalForService', {
             service: serviceItem
-        })
+        });
     }
     if (loading) return <ActivityIndicator></ActivityIndicator>
     if (error) return <Text>Error: {error}</Text>
@@ -41,4 +41,3 @@ export default function ListServices() {
     )
 }
 
-const styles = StyleSheet.create({})
