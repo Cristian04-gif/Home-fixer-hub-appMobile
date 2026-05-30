@@ -25,7 +25,6 @@ export default function TechnicianProfileForClient({ route }) {
             setRelatedInfo(data);
             const imgs = await getImagesByTechnicalServiceId(data.id);
             const images = await imgs;
-            console.log(images)
             setRelatedImages(images);
         } catch (error) {
             setError(error);

@@ -13,27 +13,32 @@ export default function ProfileTechnical() {
     const navigation = useNavigation();
     const responsive = useResponsive();
     const styles = createStyles(responsive);
-    const [dataUser, setDataUser] = useState({});
+    const [dataUser, setDataUser] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [servicesTechnical, setServicesTechnical] = useState([]);
 
     const handleStorage = async () => {
-        try {
-            setLoading(true);
-            const data = await getUser();
-            const user = JSON.parse(data);
-            setDataUser(user);
+    try {
+        setLoading(true);
 
-            if (user && user.id) {
-                await handleServices(user.id);
-            }
-        } catch (error) {
-            setError(error);
-        } finally {
-            setLoading(false);
+        const data = await getUser();
+
+        const user = JSON.parse(data);
+
+        setDataUser(user);
+
+        if (user?.id) {
+            await handleServices(user.id);
         }
-    };
+
+    } catch (error) {
+        console.log(error);
+        setError(error);
+    } finally {
+        setLoading(false);
+    }
+};
 
     const handleServices = async (userId) => {
         try {
@@ -45,13 +50,20 @@ export default function ProfileTechnical() {
     };
 
     useEffect(() => {
-        handleStorage();
-    }, []);
+    handleStorage();
+}, []);
 
+useEffect(() => {
+    console.log("Usuario cargado:", dataUser);
+}, [dataUser]);
     const cerrarSesion = async () => {
         await logout();
         navigation.navigate("Welcome");
     };
+
+    if (!dataUser) {
+    return <ActivityIndicator />;
+}
 
     const renderItem = ({ item }) => (
         <View style={styles.serviceItem}>
@@ -101,9 +113,18 @@ export default function ProfileTechnical() {
                     </View>
                 </View>
 
+                
+
                 <View style={styles.professions}>
                     {servicesTechnical.length === 0 ?
-                        <Text>Aun no cuentas con ninguna profesion, añade una para que las personas te puedan encontrar</Text> :
+                        <>
+                            <Text>Aun no cuentas con ninguna profesion, añade una para que las personas te puedan encontrar</Text><Pressable style={styles.newService} onPress={() => navigation.navigate('NewSkillTechnical', {
+                                technicalId: dataUser.id,
+                            })}>
+                                <Entypo name="add-to-list" size={responsive.font(20)} color="white" />
+                                <Text style={styles.textBtnNew}>Añadir Profesión</Text>
+                            </Pressable></>
+                        :
                         <>
                             <Text style={styles.professionsTitle}>Mis profesiones</Text>
                             <FlatList
@@ -124,7 +145,7 @@ export default function ProfileTechnical() {
                 <View style={styles.btns}>
                     <Pressable style={styles.btnEdit}>
                         <Feather name="edit" size={responsive.font(18)} color="white" />
-                        <Text style={[styles.textBtn, {color:'white', marginLeft: 8*responsive.scale}]}>Editar Perfil</Text>
+                        <Text style={[styles.textBtn, { color: 'white', marginLeft: 8 * responsive.scale }]}>Editar Perfil</Text>
                     </Pressable>
                     <Pressable onPress={cerrarSesion} style={styles.btnLogaut}>
                         <Text style={styles.textBtn}>CERRAR SESION</Text>

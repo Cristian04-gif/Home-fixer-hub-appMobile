@@ -68,11 +68,11 @@ const Registro = () => {
                 name: dataRegister.name,
                 lastName: dataRegister.lastName,
                 dni: dataRegister.dni,
-                userId: dataIdentity.userId,
+                userId: payload.userId,
             };
 
             const profile = await registerCustomer(registerProfile);
-            await uploadPhoto(profile.id, dataRegister.photoProfile, dataIdentity.role);
+            await uploadPhoto(profile.id, dataRegister.photoProfile, payload.role);
             navigation.navigate("Home");
 
         } catch (error) {
@@ -87,26 +87,29 @@ const Registro = () => {
             return;
         }
 
-        const formData = new FormData();
-
-        const filename = imageUri.split("/").pop();
-        const match = /\.(\w+)$/.exec(filename || '');
-        const type = match ? `image/${match[1]}` : `image/jpeg`;
-
-        formData.append('file', {
-            uri: imageUri,
-            name: filename,
-            type: type,
-        })
         try {
+
+            const formData = new FormData();
+
+            const filename = imageUri.split("/").pop();
+            const match = /\.(\w+)$/.exec(filename || '');
+            const type = match ? `image/${match[1]}` : `image/jpeg`;
+
+            
+
+            formData.append('file', {
+                uri: imageUri,
+                name: filename,
+                type: type,
+            })
             let fullRegistration = null;
-            if (role.toUpperCase() === "cliente") {
+            if (role === "CLIENTE") {
                 fullRegistration = await uploadProfileCustomerPhoto(id, formData);
             }
-            if (role.toUpperCase() === "tecnico") {
+            if (role === "TECNICO") {
                 fullRegistration = await uploadProfileTechnicalPhoto(id, formData);
             }
-            await saveUser(JSON.stringify(fullRegistration));
+            await saveUser(fullRegistration);
         } catch (error) {
             console.error(error)
         }
@@ -117,7 +120,7 @@ const Registro = () => {
             const registerIdentity = {
                 email: dataRegister.email,
                 password: dataRegister.password,
-                role: dataRegister.typeUser,
+                role: dataRegister.typeUser.toUpperCase(),
             };
 
             const dataidentity = await register(registerIdentity);
@@ -131,12 +134,14 @@ const Registro = () => {
                 name: dataRegister.name,
                 lastName: dataRegister.lastName,
                 dni: dataRegister.dni,
-                userId: dataIdentity.userId,
+                userId: payload.userId,
                 visitFee: dataRegister.visitFee
             };
 
             const profile = await registerTechnical(registerProfile);
-            await uploadPhoto(profile.id, dataRegister.photoProfile, dataidentity.role);
+
+            await uploadPhoto(profile.id, dataRegister.photoProfile.photoProfile, payload.role);
+
             navigation.navigate("Home");
         } catch (error) {
             console.log(error);
@@ -201,7 +206,7 @@ const Registro = () => {
                             styles.btnSeguiente,
                             !esValido && { backgroundColor: "#ccc" },
                         ]}
-                        onPress={() => navigation.navigate("Home")}
+                        onPress={handleRegisterTechnical}
                     >
                         <Text style={{ color: "#fff", fontSize: responsive.font(25) }}>
                             CREAR CUENTA

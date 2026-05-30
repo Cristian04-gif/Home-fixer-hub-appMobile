@@ -6,7 +6,6 @@ import { useResponsive } from '../utils/useResponsive';
 import { createStyles } from '../styles/UploadProfilePictureStyle';
 import colors from '../utils/colors';
 export default function UploadProfilePicture({ onValid, data, typeUser }) {
-    console.log(typeUser)
     const responsive = useResponsive();
     const styles = createStyles(responsive);
     const [imageProfile, setImageProfile] = useState(typeUser === 'tecnico' ? (data || null) : (data.photoProfile || null));
@@ -27,6 +26,7 @@ export default function UploadProfilePicture({ onValid, data, typeUser }) {
             aspect: [1, 1],
             quality: 0.7
         })
+
 
         if (!result.canceled) {
             setImageProfile(result.assets[0].uri);
