@@ -26,7 +26,7 @@ export const registerCustomer = async (data) => {
 export const uploadProfileCustomerPhoto = async (customerId, formData) => {
     const token = await getToken();
 
-    const response = await fetch(`http://192.168.101.12:8080${ENDPOINTS.PROFILE_CUSTOMER}/customer/${customerId}/upload-perfile`, {
+    const response = await fetch(`http://10.248.169.204:8080${ENDPOINTS.PROFILE_CUSTOMER}/customer/${customerId}/upload-perfile`, {
         method: 'POST',
         body: formData,
         headers: {

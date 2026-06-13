@@ -8,6 +8,7 @@ import { getUser } from '../storage/AuthStorage';
 import { useNavigation } from '@react-navigation/native';
 import { useResponsive } from '../utils/useResponsive';
 import { createStyles } from '../styles/NewSkillTechnicalStyle';
+
 export default function NewSkillTechnical({ route }) {
     const responsive = useResponsive();
     const styles = createStyles(responsive);

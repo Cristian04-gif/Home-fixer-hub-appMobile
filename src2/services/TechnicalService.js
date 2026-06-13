@@ -11,9 +11,14 @@ export const getTechnicalById = async (id) => {
     return response.data;
 };
 
-export const gettechnicalByUserId = async (userId) => {
-    const response = await api.get(`${ENDPOINTS.PROFILE_TECHNICAL}/fixer/user/${userId}`);
-    return response.data;
+export const getTechnicalByUserId = async (userId) => {
+    try {
+        const response = await api.get(`${ENDPOINTS.PROFILE_TECHNICAL}/fixer/user/${userId}`);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+
 }
 
 export const registerTechnical = async (data) => {
@@ -24,7 +29,7 @@ export const registerTechnical = async (data) => {
 export const uploadProfileTechnicalPhoto = async (technicalId, formData) => {
     const tokken = await getToken();
 
-    const response = await fetch(`http://192.168.101.12:8080${ENDPOINTS.PROFILE_TECHNICAL}/fixer/${technicalId}/upload-perfile`, {
+    const response = await fetch(`http://10.248.169.204:8080${ENDPOINTS.PROFILE_TECHNICAL}/fixer/${technicalId}/upload-perfile`, {
         method: 'POST',
         body: formData,
         headers: { 'Authorization': `Bearer ${tokken}`, },
