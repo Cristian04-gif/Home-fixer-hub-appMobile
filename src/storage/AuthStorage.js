@@ -10,9 +10,6 @@ export const getToken = async () => {
   return await AsyncStorage.getItem(TOKEN_KEY);
 };
 
-export const removeToken = async () => {
-  await AsyncStorage.removeItem(TOKEN_KEY);
-};
 
 /////////////////////////////////
 const ROLE_KEY = "role_user";
@@ -25,9 +22,6 @@ export const getRole = async () => {
   return await AsyncStorage.getItem(ROLE_KEY);
 }
 
-export const removeRole = async () => {
-  await AsyncStorage.removeItem(ROLE_KEY);
-}
 ////////////////////////////////////////////////////
 
 const USER_ID_KEY = "userId";
@@ -40,18 +34,17 @@ export const getUserId = async () => {
   return await AsyncStorage.getItem(USER_ID_KEY);
 }
 
-export const removeUserId = async () => {
-  await AsyncStorage.removeItem(USER_ID_KEY);
-}
 ////////////////////////////////////////////////
 const USER_DATA = "user_data";
 export const saveUser = async (data) => {
   await AsyncStorage.setItem(USER_DATA, JSON.stringify(data));
 }
 
-export const getUser = async ()=>{
-  return await  AsyncStorage.getItem(USER_DATA);
-} 
+export const getUser = async () => {
+  const user = await AsyncStorage.getItem(USER_DATA);
+
+  return user ? JSON.parse(user) : null;
+}
 
 export const removeUser = async() =>{
   await AsyncStorage.removeItem(USER_DATA);

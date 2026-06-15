@@ -1,8 +1,9 @@
 export const ENDPOINTS = {
-    LOGIN: "/auth/login",
-    REGISTER: "/auth/register",
+    LOGIN: "/api/auth/login",
+    REGISTER: "/api/auth/register",
     PROFILE_CUSTOMER: "/api/profile/customers",
     PROFILE_TECHNICAL: "/api/profile/technicals",
-    CATALOG: '/api/catalog'
+    CATALOG: '/api/catalog',
+    BOOKING: '/api/bookings'
     
 };

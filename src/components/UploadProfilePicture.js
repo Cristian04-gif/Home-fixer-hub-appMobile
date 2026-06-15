@@ -2,9 +2,10 @@ import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import * as ImagePicker from 'expo-image-picker';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { useResponsive } from '../utils/useResponsive';
-import { createStyles } from '../styles/UploadProfilePictureStyle';
+import { useResponsive } from '../hooks/useResponsive';
+import { createStyles } from '../styles/UploadProfilePicture.style';
 import colors from '../utils/colors';
+
 export default function UploadProfilePicture({ onValid, data, typeUser }) {
     const responsive = useResponsive();
     const styles = createStyles(responsive);
