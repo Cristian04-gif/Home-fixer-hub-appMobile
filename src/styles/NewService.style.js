@@ -15,6 +15,17 @@ export const createStyles = ({ scale, font }) =>
         inputGroup: {
             marginBottom: scale * 20,
         },
+        dropdown: {
+            height: scale * 48,
+            backgroundColor: colors.white,
+            borderRadius: scale * 10,
+            borderWidth: scale * 1,
+            borderColor: colors.border,
+            paddingHorizontal: scale * 14,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+        },
         label: {
             fontSize: font(14),
             color: colors.textPrimary,
@@ -36,17 +47,7 @@ export const createStyles = ({ scale, font }) =>
             paddingTop: scale * 12,
             paddingBottom: scale * 12,
         },
-        dropdownTrigger: {
-            height: scale * 48,
-            backgroundColor: colors.white,
-            borderRadius: scale * 10,
-            borderWidth: scale * 1,
-            borderColor: colors.border,
-            paddingHorizontal: scale * 14,
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-        },
+       
         inputText: {
             fontSize: font(15),
             color: colors.textPrimary,

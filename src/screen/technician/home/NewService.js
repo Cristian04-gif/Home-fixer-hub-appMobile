@@ -1,36 +1,80 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   ScrollView,
   TextInput,
   TouchableOpacity,
   StatusBar, Image
 } from 'react-native';
 import { ChevronDown, Plus, ArrowLeft } from 'lucide-react-native';
-import { useNavigation } from "@react-navigation/native";
 import { useResponsive } from '../../../hooks/useResponsive';
 import { createStyles } from '../../../styles/NewService.style';
+import { Dropdown } from 'react-native-element-dropdown';
+import { getCatalogServices } from '../../../services/CatalogService';
+import { assignServiceToTechnician } from '../../../services/CatalogService';
+import { getUser } from '../../../storage/AuthStorage'
 import * as ImagePicker from 'expo-image-picker';
-
+import { useNavigation } from "@react-navigation/native";
 import colors from '../../../utils/colors';
 
 export default function NewService() {
+  const navigation = useNavigation();
   const responsive = useResponsive();
   const styles = createStyles(responsive);
-  const navigation = useNavigation();
   // ESTADOS DEL FORMULARIO
+  const [services, setServices] = useState([])
+  const [error, setError] = useState(null);
   const [categoria, setCategoria] = useState('');
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
-  const [precio, setPrecio] = useState('');
+  const [precio, setPrecio] = useState(0.00);
   const [images, setImages] = useState([]);
 
-  const handleGuardar = () => {
-    // Aquí iría la lógica para conectar con tu backend o agregar al estado global
-    console.log({ categoria, nombre, descripcion, precio, duracion });
+  const [esValido, setEsValido] = useState(false);
+  useEffect(() => {
+    const handleService = async () => {
+      try {
+        const servs = await getCatalogServices();
+        if (servs) {
+          setServices(servs);
+        } else {
+          console.error("no se pudo consultar los servicios")
+        }
+      } catch (error) {
+        setError(error)
+      }
+
+    }
+    handleService();
+  }, [])
+
+  useEffect(() => {
+    const onvalid = categoria.length > 0 && nombre.length > 0 && descripcion.length > 0 && precio > 0.00 && images.length > 0;
+    setEsValido(onvalid)
+  }, [categoria, nombre, descripcion, precio, images])
+
+  const handleGuardar = async () => {
+    const tech = await getUser();
+
+    const data = {
+      name: nombre,
+      technicalId: tech.id,
+      serviceId: categoria,
+      description: descripcion,
+      basePrice: precio,
+      images: images
+    }
+
+    try {
+      console.log("funcion de fuardar")
+      await assignServiceToTechnician(data);
+      navigation.navigate("Dashboard")
+    } catch (error) {
+      console.log(error)
+    }
+
   };
 
   const pickImage = async () => {
@@ -51,21 +95,38 @@ export default function NewService() {
     }
   }
 
+  if (error) {
+    return <Text>Error al consultar las categorias de servicio: {error}</Text>
+  }
+  const renderItem = item => {
+    return (
+      <View style={styles.dropdown}>
+        <Text style={styles.inputText}>{item.name}</Text>
+      </View>
+
+    )
+  }
+
+
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" />
+    <View style={styles.container}>
       {/* FORMULARIO DESLIZABLE */}
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
 
         {/* SELECCIONA UNA CATEGORÍA */}
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Selecciona una categoría</Text>
-          <TouchableOpacity style={styles.dropdownTrigger} activeOpacity={0.7}>
-            <Text style={[styles.inputText, !categoria && styles.placeholderText]}>
-              {categoria || 'Seleccionar categoría'}
-            </Text>
-            <ChevronDown size={responsive.font(20)} color="#8E8E93" />
-          </TouchableOpacity>
+          <Dropdown
+            style={styles.dropdown}
+            data={services}
+            maxHeight={300}
+            valueField="id"
+            labelField={'name'}
+            placeholder='Seleccionar categoria'
+            value={categoria}
+            onChange={item => { setCategoria(item.id) }}
+            renderItem={renderItem}
+          />
         </View>
 
         {/* NOMBRE DEL SERVICIO */}
@@ -129,11 +190,11 @@ export default function NewService() {
 
       {/* BOTÓN DE ACCIÓN FIJO INFERIOR */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.submitButton} onPress={handleGuardar} activeOpacity={0.8}>
+        <TouchableOpacity style={styles.submitButton} onPress={handleGuardar} activeOpacity={0.8} >
           <Text style={styles.submitButtonText}>Guardar servicio</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

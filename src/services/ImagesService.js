@@ -8,9 +8,10 @@ export const getImagesByTechnicalServiceId = async (technicalServiceId) => {
 }
 
 export const assignImagesToTechnicianAndServiceRelationships = async (technicalServiceId, formData) => {
+    console.log("service")
     const token = await getToken();
 
-    const response = await fetch(`http://10.248.169.204:8080${ENDPOINTS.CATALOG}/images/fixer/technical-service/${technicalServiceId}/ipload-images`, {
+    const response = await fetch(`http://192.168.101.5:8080${ENDPOINTS.CATALOG}/images/fixer/technical-service/${technicalServiceId}/ipload-images`, {
         method: 'POST',
         body: formData,
         headers: { 'Authorization': `Bearer ${token}`, },
@@ -23,5 +24,6 @@ export const assignImagesToTechnicianAndServiceRelationships = async (technicalS
         const errorText = await response.text();
         throw new Error(`Error en el servidor (${response.status}): ${errorText}`);
     }
+
     return await response.json();
 }

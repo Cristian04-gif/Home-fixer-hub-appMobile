@@ -25,7 +25,7 @@ export const login = async (data) => {
         await saveRole(role);
 
 
-        await saveUser(JSON.stringify(user));
+        await saveUser(user);
         await saveUserId(userId);
         return response.data;
     } catch (error) {

@@ -14,7 +14,7 @@ import { createStyles } from '../../../styles/MyServices.style';
 import colors from '../../../utils/colors';
 
 export default function MyServices({ route }) {
-  const { services } = route.params;
+  const { services, colorService } = route.params;
   const responsive = useResponsive();
   const styles = createStyles(responsive);
   const navigation = useNavigation();
@@ -31,42 +31,49 @@ export default function MyServices({ route }) {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="dark-content" />
       {/* CUERPO CON SCROLL */}
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
 
-        {servicios.map((servicio) => (
-          <View key={servicio.id} style={styles.card}>
-            {/* Fila superior: Icono, Info y Precio */}
-            <View style={styles.cardHeader}>
-              <View style={[styles.iconCircle, { backgroundColor: servicio.color }]}>
-                <Text>{servicio.iconService}</Text>
+        {services.map((servicio) => {
+          const color = colorService.find(
+            col => col.nombre === servicio.nameService
+          );
+
+          return (
+            <View key={servicio.id} style={styles.card}>
+              {/* Fila superior: Icono, Info y Precio */}
+              <View style={styles.cardHeader}>
+                <View style={[styles.iconCircle, { backgroundColor: color?.fondo || "#EEEEEE", }]}>
+                  <Text style={styles.iconText}>{servicio.iconService}</Text>
+                </View>
+
+                <View style={styles.infoContainer}>
+                  <View style={styles.tagCategoria}>
+                    <Text style={styles.tagText}>{servicio.typeService}</Text>
+                  </View>
+                  <Text style={styles.serviceName}>{servicio.nameService}</Text>
+                  <Text style={styles.serviceDescription}>{servicio.description}</Text>
+                </View>
+
+                <Text style={styles.priceText}>S/. {servicio.basePrice}</Text>
               </View>
 
-              <View style={styles.infoContainer}>
-                <Text style={styles.serviceName}>{servicio.nameService}</Text>
-                <Text style={styles.serviceDescription}>{servicio.description}</Text>
+              {/* Fila inferior: Switch de Activo */}
+              <View style={styles.cardFooter}>
+                <Text style={[styles.activoText, { color: servicio.available ? colors.enable : colors.disable }]}>
+                  {servicio.available ? 'Activo' : 'Inactivo'}
+                </Text>
+                <Switch
+                  trackColor={{ false: colors.textSecondary, true: colors.enable }}
+                  thumbColor={colors.white}
+                  ios_backgroundColor="#E9E9EA"
+                  onValueChange={() => toggleService(servicio.id)}
+                  value={servicio.available}
+                  style={styles.switchScale}
+                />
               </View>
-
-              <Text style={styles.priceText}>S/. {servicio.basePrice}</Text>
-            </View>
-
-            {/* Fila inferior: Switch de Activo */}
-            <View style={styles.cardFooter}>
-              <Text style={[styles.activoText, { color: servicio.available ? colors.enable : colors.disable }]}>
-                {servicio.available ? 'Activo' : 'Inactivo'}
-              </Text>
-              <Switch
-                trackColor={{ false: colors.textSecondary, true: colors.enable }}
-                thumbColor={colors.white}
-                ios_backgroundColor="#E9E9EA"
-                onValueChange={() => toggleService(servicio.id)}
-                value={servicio.available}
-                style={styles.switchScale}
-              />
-            </View>
-          </View>
-        ))}
+            </View>)
+        })}
 
       </ScrollView>
 

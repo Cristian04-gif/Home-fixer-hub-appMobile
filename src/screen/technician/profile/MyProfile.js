@@ -81,7 +81,6 @@ export default function MyProfile() {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" />
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
 
         {/* HEADER AZUL SUPERIOR */}
@@ -117,7 +116,7 @@ export default function MyProfile() {
         </View>
 
         {/* DISPONIBILIDAD */}
-        <Availability styles={styles} technical={technical} enabled={actualizarEstado}></Availability>
+        <Availability styles={styles} technical={technical} enabled={actualizarEstado} enable={isEnabled}></Availability>
 
         {/* SERVICIOS QUE OFRECE */}
         <ListServices styles={styles} services={myServices}></ListServices>

@@ -10,6 +10,7 @@ import {
 import { useState, useEffect } from 'react'
 import { getServicesForTechnical } from '../../services/TechnicalService';
 import { useNavigation } from "@react-navigation/native";
+import colors from '../../utils/colors';
 export default function ListServices({ styles, services }) {
     const navigation = useNavigation();
 
@@ -21,12 +22,34 @@ export default function ListServices({ styles, services }) {
     // Calculamos cuántos servicios quedan ocultos para el botón "+X"
     const serviciosOcultosCount = services.length - LIMITE_INICIAL;
 
+    const colorService = [
+        {
+            nombre: "Mecanico",
+            fondo: "#D6EAF8",
+        },
+        {
+            nombre: "Plomero",
+            fondo: "#D4F1F9",
+        },
+        {
+            nombre: "Jardinero",
+            fondo: "#D5F5E3",
+        },
+        {
+            nombre: "Gasfitero",
+            fondo: "#D1F2EB",
+        },
+        {
+            nombre: "Electricista",
+            fondo: "#FCF3CF",
+        }
+    ]
 
     return (
         <View style={styles.servicesSection}>
             <View style={styles.rowJustified}>
                 <Text style={styles.statsTitle}>Mis servicios</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('MyServices', { services: services })}>
+                <TouchableOpacity onPress={() => navigation.navigate('MyServices', { services: services, colorService: colorService})}>
                     <Text style={styles.viewAllText}>Ver todos</Text>
                 </TouchableOpacity>
             </View>
@@ -34,16 +57,33 @@ export default function ListServices({ styles, services }) {
             <View style={styles.servicesGrid}>
 
                 {/* Mapeamos solo los servicios visibles */}
-                {serviciosVisibles.map((servicio) => (
-                    <View key={servicio.id} style={styles.serviceItemContainer}>
-                        <View style={[styles.iconCircle, { backgroundColor: servicio.color }]}>
-                            <Text>{servicio.iconService}</Text>
+                {serviciosVisibles.map((servicio) => {
+                    const color = colorService.find(
+                        col => col.nombre === servicio.nameService
+                    );
+
+                    return (
+                        <View key={servicio.id} style={styles.serviceItemContainer}>
+                            <View
+                                style={[
+                                    styles.iconCircle,
+                                    {
+                                        backgroundColor: color?.fondo || "#EEEEEE",
+                                    }
+                                ]}
+                            >
+                                <Text style={styles.iconText}>{servicio.iconService}</Text>
+                            </View>
+
+                            <Text
+                                style={styles.serviceText}
+                                numberOfLines={1}
+                            >
+                                {servicio.typeService}
+                            </Text>
                         </View>
-                        <Text style={styles.serviceText} numberOfLines={1}>
-                            {servicio.nameService}
-                        </Text>
-                    </View>
-                ))}
+                    );
+                })}
 
                 {/* BOTÓN DINÁMICO DE "VER MÁS" (+X) */}
                 {/* Solo se muestra si NO estamos enseñando todos y si realmente hay servicios ocultos */}

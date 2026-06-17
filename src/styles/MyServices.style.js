@@ -34,10 +34,27 @@ export const createStyles = ({ scale, font }) => StyleSheet.create({
         borderRadius: scale * 12,
         justifyContent: 'center',
         alignItems: 'center',
+        borderRadius: scale*15
+    },
+    iconText: {
+        fontSize: font(15),
     },
     infoContainer: {
         flex: 1,
         paddingHorizontal: scale * 12,
+    },
+    tagCategoria: {
+        backgroundColor: colors.border,
+        alignSelf: 'flex-start',
+        paddingHorizontal: scale * 8,
+        paddingVertical: scale * 2,
+        borderRadius: scale * 6,
+        marginBottom: scale * 4,
+    },
+    tagText: {
+        fontSize: font(11),
+        color: '#3A3A3C',
+        fontWeight: '500',
     },
     serviceName: {
         fontSize: font(15),

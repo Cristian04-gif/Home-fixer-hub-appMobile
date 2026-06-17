@@ -15,7 +15,7 @@ import { createStyles } from '../../../styles/Dashboard.style';
 import colors from '../../../utils/colors';
 
 import { getUser } from '../../../storage/AuthStorage'
-import { dahsboardTechnical } from '../../../services/DahsboardTechnicalService'
+import { dahsboardTechnical } from '../../../services/DahsboardService'
 import { getServicesForTechnical } from '../../../services/TechnicalService'
 import { changeAvailability } from '../../../services/TechnicalService';
 
@@ -60,11 +60,36 @@ export default function Dashboard() {
 
   useEffect(() => {
     handleInfo();
+  }, [])
+
+
+  const nuevoServicio = async (completed) => {
+    if (completed) {
+      try {
+        const rawTech = await getUser();
+
+        const tech = rawTech;
+        setTecnical(tech);
+
+        if (tech && tech.id) {
+
+          const myServ = await getServicesForTechnical(tech.id);
+          setMyServices(myServ);
+        } else {
+          console.error("El objeto técnico no contiene un ID válido");
+        }
+      } catch (error) {
+        console.error("Error al parsear o cargar info del técnico:", error);
+      }
+    }
+  }
+
+  useEffect(() => {
+
   }, [isEnabled])
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="dark-content" />
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
 
@@ -137,7 +162,7 @@ export default function Dashboard() {
         </View>
 
         {/* DISPONIBILIDAD */}
-        <Availability styles={styles} technical={technical} enabled={actualizarEstado}></Availability>
+        <Availability styles={styles} technical={technical} enabled={actualizarEstado} enable={isEnabled}></Availability>
 
         {/* MIS SERVICIOS */}
         <ListServices styles={styles} services={myServices}></ListServices>

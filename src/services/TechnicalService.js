@@ -3,6 +3,7 @@ import { ENDPOINTS } from "../api/Endpoint";
 import { getToken } from "../storage/AuthStorage";
 
 import { getServiceById } from '../services/CatalogService'
+import { getLocation } from '../hooks/useLocation'
 export const getTechnicals = async () => {
     const response = await api.get(ENDPOINTS.PROFILE_TECHNICAL);
     return response.data;
@@ -31,7 +32,7 @@ export const registerTechnical = async (data) => {
 export const uploadProfileTechnicalPhoto = async (technicalId, formData) => {
     const tokken = await getToken();
 
-    const response = await fetch(`http://10.248.169.204:8080${ENDPOINTS.PROFILE_TECHNICAL}/fixer/${technicalId}/upload-perfile`, {
+    const response = await fetch(`http://192.168.101.5:8080${ENDPOINTS.PROFILE_TECHNICAL}/fixer/${technicalId}/upload-perfile`, {
         method: 'POST',
         body: formData,
         headers: { 'Authorization': `Bearer ${tokken}`, },
@@ -71,3 +72,11 @@ export const getServicesForTechnical = async (technicalId) => {
 
     return skills.data;
 };
+
+
+///////////
+export const queriesForTechnician = async (technicalId) => {
+    const {latitude, longitude} = await getLocation();
+    const response = await api.get(`${ENDPOINTS.BOOKING}/fixer/${technicalId}?lat1=${latitude}&lon1=${longitude}`);
+    return response.data;
+}

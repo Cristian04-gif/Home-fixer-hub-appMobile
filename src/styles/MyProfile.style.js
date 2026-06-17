@@ -140,6 +140,9 @@ export const createStyles = ({ scale, font }) => StyleSheet.create({
         alignItems: 'center',
         marginBottom: scale * 6,
     },
+    iconText: {
+        fontSize: font(15),
+    },
     serviceText: {
         fontSize: font(10),
         color: colors.textPrimary,

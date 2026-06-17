@@ -210,8 +210,11 @@ export const createStyles = ({ scale, font }) => StyleSheet.create({
         alignItems: 'center',
         marginBottom: scale * 8,
     },
+    iconText: {
+        fontSize: font(15),
+    },
     serviceText: {
-        fontSize: font(10),
+        fontSize: font(11),
         color: '#3A3A3C',
         textAlign: 'center',
     },
