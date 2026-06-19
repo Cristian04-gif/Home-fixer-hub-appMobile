@@ -30,23 +30,29 @@ export const registerTechnical = async (data) => {
 };
 
 export const uploadProfileTechnicalPhoto = async (technicalId, formData) => {
-    const tokken = await getToken();
+    try {
+        console.log("service de photos")
+        const tokken = await getToken();
 
-    const response = await fetch(`http://192.168.101.5:8080${ENDPOINTS.PROFILE_TECHNICAL}/fixer/${technicalId}/upload-perfile`, {
-        method: 'POST',
-        body: formData,
-        headers: { 'Authorization': `Bearer ${tokken}`, },
-    });
+        const response = await fetch(`http://10.248.242.30:8080${ENDPOINTS.PROFILE_TECHNICAL}/fixer/${technicalId}/upload-perfile`, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Authorization': `Bearer ${tokken}`, },
+        });
 
-    if (!response.ok) {
-        if (response.status === 401) {
-            console.log('Token expirado o invalido en Fetch');
+        if (!response.ok) {
+            if (response.status === 401) {
+                console.log('Token expirado o invalido en Fetch');
+            }
+
+            const errorText = await response.text();
+            throw new Error(`Error en el servidor (${response.status}): ${errorText}`);
         }
-
-        const errorText = await response.text();
-        throw new Error(`Error en el servidor (${response.status}): ${errorText}`);
+        return await response.json();
+    } catch (error) {
+        console.error(error)
     }
-    return await response.json();
+
 }
 
 export const updateTechnical = async (id, data) => {
@@ -76,7 +82,7 @@ export const getServicesForTechnical = async (technicalId) => {
 
 ///////////
 export const queriesForTechnician = async (technicalId) => {
-    const {latitude, longitude} = await getLocation();
+    const { latitude, longitude } = await getLocation();
     const response = await api.get(`${ENDPOINTS.BOOKING}/fixer/${technicalId}?lat1=${latitude}&lon1=${longitude}`);
     return response.data;
 }

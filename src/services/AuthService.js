@@ -43,12 +43,12 @@ export const register = async (data) => {
     const responseIdentity = await api.post(ENDPOINTS.REGISTER, registerIdentity);
 
     const token = responseIdentity.data.token;
+    await saveToken(token);
     const userId = responseIdentity.data.userId;
 
     const payload = await decodeToken(token);
     const role = payload.role;
 
-    let user = null;
     if (role === "CLIENTE") {
         const registerProfile = {
             name: data.name,
@@ -57,29 +57,38 @@ export const register = async (data) => {
             userId: userId,
         }
         const responseprofile = await registerCustomer(registerProfile);
-        user = await uploadPhoto(responseprofile.id, data.photoProfile, role);
+        const techId = responseprofile.id;
+        if (techId) {
+            console.log(techId)
+            await uploadPhoto(techId, data.photoProfile, role);
+        }
     } else if (role === "TECNICO") {
         const registerProfile = {
             name: data.name,
             lastName: data.lastName,
             dni: data.dni,
-            userId: userId,
-            visitFee: data.visitFee
+            userId: userId
         };
         const responseprofile = await registerTechnical(registerProfile);
-        user = await uploadPhoto(responseprofile.id, data.photoProfile, role);
+        const techId = responseprofile.id;
+        if (techId) {
+            console.log(techId)
+            await uploadPhoto(techId, data.photoProfile, role);
+        }
+
     } else {
-        console.log("No es del rol definido")
+        console.error("No es del rol definido")
     }
 
-    await saveToken(token);
+
     await saveRole(role);
     await saveUserId(userId);
-    await saveUser(JSON.stringify(user))
+
 
 };
 
 const uploadPhoto = async (id, imageUri, role) => {
+    console.log(imageUri)
     if (!imageUri) {
         alert("Por favor, selecciona una foto primero")
         return;
@@ -88,10 +97,13 @@ const uploadPhoto = async (id, imageUri, role) => {
     try {
 
         const formData = new FormData();
-
-        const filename = imageUri.split("/").pop();
+        console.log("image: ", imageUri)
+        console.log(imageUri.photoProfile)
+        const filename = imageUri.split('/').pop();
         const match = /\.(\w+)$/.exec(filename || '');
         const type = match ? `image/${match[1]}` : `image/jpeg`;
+        console.log("filename: ", filename)
+
 
         formData.append('file', {
             uri: imageUri,
@@ -105,8 +117,16 @@ const uploadPhoto = async (id, imageUri, role) => {
         if (role === "TECNICO") {
             fullRegistration = await uploadProfileTechnicalPhoto(id, formData);
         }
+        console.log(fullRegistration)
+        if (!fullRegistration) {
+            return;
+        }
+
         await saveUser(fullRegistration);
     } catch (error) {
-        console.error(error)
+        console.log("ERROR COMPLETO");
+        console.log(error);
+        console.log(error.response);
+        console.log(error.message);
     }
 }

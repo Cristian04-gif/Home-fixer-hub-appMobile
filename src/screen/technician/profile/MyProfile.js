@@ -48,7 +48,7 @@ export default function MyProfile() {
   const handleInfo = async () => {
     try {
       const rawTech = await getUser();
-
+      console.log("tecnico ", rawTech)
       const tech = rawTech;
 
       setTechnical(tech);

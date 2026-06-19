@@ -8,10 +8,9 @@ export const getImagesByTechnicalServiceId = async (technicalServiceId) => {
 }
 
 export const assignImagesToTechnicianAndServiceRelationships = async (technicalServiceId, formData) => {
-    console.log("service")
     const token = await getToken();
 
-    const response = await fetch(`http://192.168.101.5:8080${ENDPOINTS.CATALOG}/images/fixer/technical-service/${technicalServiceId}/ipload-images`, {
+    const response = await fetch(`http://10.248.242.30:8080${ENDPOINTS.CATALOG}/images/fixer/technical-service/${technicalServiceId}/ipload-images`, {
         method: 'POST',
         body: formData,
         headers: { 'Authorization': `Bearer ${token}`, },

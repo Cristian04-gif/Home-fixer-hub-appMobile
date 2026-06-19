@@ -144,6 +144,8 @@ export const createStyles = ({ scale, font }) => StyleSheet.create({
     statItemLabel: {
         fontSize: font(14),
         color: colors.textSecondary,
+                textAlign: 'center'
+
     },
     statItemValue: {
         fontSize: font(16),
@@ -222,5 +224,25 @@ export const createStyles = ({ scale, font }) => StyleSheet.create({
         fontSize: font(14),
         fontWeight: '600',
         color: '#3A3A3C',
+    },
+    buttonContainer: {
+        backgroundColor: 'rgba(250, 250, 250, 0.9)', // Fondo semitransparente detrás del botón
+        paddingHorizontal: scale * 20,
+        paddingBottom: scale * 24,
+        paddingTop: scale * 12,
+        gap: scale*10
+    },
+    addButton: {
+        backgroundColor: colors.primary, // El mismo azul pizarra del dashboard
+        borderRadius: scale * 12,
+        height: scale * 50,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    addButtonText: {
+        color: colors.white,
+        fontSize: font(15),
+        fontWeight: '600',
     },
 })

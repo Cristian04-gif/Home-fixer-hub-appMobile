@@ -127,13 +127,19 @@ export default function Applications() {
   return (
     <View style={styles.container}>
 
-      {/* 3. IMPLEMENTACIÓN DEL FLATLIST */}
-      <FlatList
-        data={solicitudes}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.flatListContent}
-      />
+      {solicitudes.length === 0 ?
+        <>
+        <Text>Por el momento no tienes solicitudes</Text>
+        </> : <>
+          {/* 3. IMPLEMENTACIÓN DEL FLATLIST */}
+          <FlatList
+            data={solicitudes}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.flatListContent}
+          /></>}
+
+
     </View>)
 }

@@ -12,8 +12,8 @@ export const getServiceById = async (id) => {
     return response.data;
 }
 
-export const getTechnicalsByService = async (serviceId, pageNumber) => {
-    const response = await api.get(`${ENDPOINTS.CATALOG}/public/service/${serviceId}/tecnicals?pageNumber=${pageNumber}`);
+export const getTechnicalsByService = async (serviceId) => {
+    const response = await api.get(`${ENDPOINTS.CATALOG}/public/service/${serviceId}/tecnicals`);
     return response.data;
 }
 
@@ -26,7 +26,6 @@ export const getTechnicalAndService = async (technicalId, serviceId) => {
 //
 
 export const assignServiceToTechnician = async (data) => {
-    console.log("asignar habilidad ", data)
     const body = {
         name: data.name,
         technicalId: data.technicalId,
@@ -37,12 +36,8 @@ export const assignServiceToTechnician = async (data) => {
 
     try {
         const response = await api.post(`${ENDPOINTS.CATALOG}/skills/assing/fixer`, body);
-        console.log("response 1: ", response.data)
         const technicalServiceId = response.data.id;
-        console.log("id ",technicalServiceId)
         if (technicalServiceId !== null) {
-            console.log("id ",technicalServiceId)
-            console.log("condicional")
             await uploadImages(technicalServiceId, data.images);
         }
     } catch (error) {

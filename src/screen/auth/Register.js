@@ -11,7 +11,7 @@ import UploadProfilePicture from "../../components/UploadProfilePicture";
 // styles
 import { createStyles } from "../../styles/Register.style";
 import { useResponsive } from "../../hooks/useResponsive";
-
+import { register } from "../../services/AuthService";
 
 const Register = () => {
     const responsive = useResponsive();
@@ -44,7 +44,14 @@ const Register = () => {
         setPaso(paso + 1);
     };
 
-    
+    const registerUser = async () => {
+        try {
+            await register(dataRegister)
+        } catch (error) {
+            console.error(error)
+        }
+        
+    }
 
     return (
         <View style={styles.container}>
@@ -81,7 +88,7 @@ const Register = () => {
                             styles.btnSeguiente,
                             !esValido && { backgroundColor: "#ccc" }
                         ]}
-                        onPress={handleRegisterCustomer}
+                        onPress={registerUser}
                     >
                         <Text style={{ color: "#fff", fontSize: responsive.font(25) }}>
                             CREAR CUENTA
@@ -103,7 +110,7 @@ const Register = () => {
                             styles.btnSeguiente,
                             !esValido && { backgroundColor: "#ccc" },
                         ]}
-                        onPress={handleRegisterTechnical}
+                        onPress={registerUser}
                     >
                         <Text style={{ color: "#fff", fontSize: responsive.font(25) }}>
                             CREAR CUENTA

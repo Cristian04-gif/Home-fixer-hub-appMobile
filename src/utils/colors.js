@@ -8,7 +8,7 @@ const colors = {
     star: '#F4B400',
     border: '#E5E7E9',
     white: "#FFF",
-    enable: '#4CD964',
+    enable: '#34C759',
     disable: '#FF3B30',
     placeholder: '#A9A9B0'
 };
