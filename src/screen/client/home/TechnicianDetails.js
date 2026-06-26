@@ -3,7 +3,6 @@ import {
     StyleSheet,
     Text,
     View,
-    SafeAreaView,
     ScrollView,
     Image,
     TouchableOpacity,
@@ -24,7 +23,7 @@ export default function TechnicianDetails({ route }) {
 
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <StatusBar barStyle="light-content" />
 
             {/* CUERPO CON SCROLL PARA LA INFORMACIÓN */}
@@ -128,7 +127,7 @@ export default function TechnicianDetails({ route }) {
                     <Text style={styles.textSolicitar}>Solicitar servicio</Text>
                 </TouchableOpacity>
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 

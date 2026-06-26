@@ -3,7 +3,6 @@ import {
     StyleSheet,
     Text,
     View,
-    SafeAreaView,
     FlatList,
     Image,
     TouchableOpacity,
@@ -66,7 +65,7 @@ export default function TechniciansAvailable({ route }) {
     );
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
 
             {/* ENCABEZADO DE LA LISTA (Filtros y Contador) */}
             <View style={styles.headerContainer}>
@@ -102,7 +101,7 @@ export default function TechniciansAvailable({ route }) {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.flatListContent}
             />
-        </SafeAreaView>
+        </View>
     );
 }
 

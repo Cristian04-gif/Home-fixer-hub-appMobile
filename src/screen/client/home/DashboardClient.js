@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   ScrollView,
   TextInput,
   TouchableOpacity,
@@ -66,7 +65,7 @@ export default function DashboardClient() {
     { nombre: 'Ver más', color: '#F2F2F7', icono: <Text style={{ fontSize: 14, fontWeight: '600', color: '#3A3A3C' }}>+2</Text>, esBotonMas: true },
   ];
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
 
         {/* HEADER */}
@@ -156,6 +155,6 @@ export default function DashboardClient() {
         </View>
 
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }

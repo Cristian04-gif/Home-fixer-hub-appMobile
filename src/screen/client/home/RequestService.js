@@ -3,7 +3,6 @@ import {
     StyleSheet,
     Text,
     View,
-    SafeAreaView,
     ScrollView,
     TextInput,
     TouchableOpacity,
@@ -61,7 +60,7 @@ export default function RequestService({ route }) {
         }
     }
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
 
             {/* FORMULARIO CON SCROLL */}
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
@@ -165,6 +164,6 @@ export default function RequestService({ route }) {
                     >Enviar solicitud</Text>
                 </TouchableOpacity>
             </View>
-        </SafeAreaView>
+        </View>
     );
 }

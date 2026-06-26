@@ -3,7 +3,6 @@ import {
     StyleSheet,
     Text,
     View,
-    SafeAreaView,
     FlatList,
     TextInput,
     TouchableOpacity,
@@ -49,7 +48,7 @@ export default function ServiceCatalog({ route }) {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <StatusBar barStyle="dark-content" />
 
             {/* BARRA DE BÚSQUEDA */}
@@ -77,7 +76,7 @@ export default function ServiceCatalog({ route }) {
                     <Text style={styles.emptyText}>No se encontraron servicios disponibles</Text>
                 }
             />
-        </SafeAreaView>
+        </View>
     );
 }
 

@@ -2,11 +2,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import colors from '../utils/colors'
 import HomeStack from './stackTechnical/HomeStack'
 import RequestStack from './stackTechnical/RequestStack';
+import JobsStack from './stackTechnical/JobsStack';
 import ProfileStack from './stackTechnical/ProfileStack';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 const Tab = createBottomTabNavigator();
 export default function TechnicalNavigator() {
     return (
@@ -27,12 +28,19 @@ export default function TechnicalNavigator() {
                         <MaterialCommunityIcons name="clipboard-clock" size={size} color={color} />
                     ),
                 }}></Tab.Screen>
+                <Tab.Screen name='Jobs' component={JobsStack} options={{
+                    headerShown: false,
+                    tabBarIcon: ({ color, size }) => (
+                        <FontAwesome5 name="shipping-fast" size={size} color={color} />
+                    ),
+                }}></Tab.Screen>
                 <Tab.Screen name='Profile' component={ProfileStack} options={{
                     headerShown: false,
                     tabBarIcon: ({ color, size }) => (
                         <FontAwesome6 name="user-large" size={size} color={color} />
                     ),
                 }}></Tab.Screen>
+                
             </Tab.Navigator>
     )
 }

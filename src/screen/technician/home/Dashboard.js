@@ -109,7 +109,7 @@ export default function Dashboard() {
         </View>
 
         {/* SOLICITUDES NUEVAS (CARD PRINCIPAL) */}
-        <TouchableOpacity style={styles.mainCard}>
+        <TouchableOpacity style={styles.mainCard} onPress={() => navigation.navigate('Applications')}>
           <View style={styles.mainCardContent}>
             <Text style={styles.mainCardTitle}>Solicitudes nuevas</Text>
             <Text style={styles.mainCardNumber}>{dashboard.pendingQueries}</Text>
@@ -123,10 +123,10 @@ export default function Dashboard() {
 
         {/* EN PROGRESO & COMPLETADOS */}
         <View style={styles.row}>
-          <View style={styles.halfCard}>
-            <Text style={styles.cardLabel}>En Proceso</Text>
+          <TouchableOpacity style={styles.halfCard} onPress={() => navigation.navigate("MyJobs")}>
+            <Text style={styles.cardLabel}>Pendientes</Text>
             <Text style={styles.cardNumberBlue}>{dashboard.processRequests}</Text>
-          </View>
+          </TouchableOpacity>
           <View style={styles.halfCard}>
             <View style={styles.rowJustified}>
               <Text style={styles.cardLabel}>Completados</Text>

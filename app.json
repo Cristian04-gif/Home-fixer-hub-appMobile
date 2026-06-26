@@ -12,15 +12,25 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "ios": {
-      "supportsTablet": true
-    },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.tuusuario.proymobile",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCQl6FfHCVwHcZbjaifXaa8mQKAJ1ZARss"
+        }
+      }
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleItentifier": "com.tuusuario.proymobile",
+      "config": {
+        "googleMapsApiKey": "AIzaSyCQl6FfHCVwHcZbjaifXaa8mQKAJ1ZARss"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -34,7 +34,7 @@ export const uploadProfileTechnicalPhoto = async (technicalId, formData) => {
         console.log("service de photos")
         const tokken = await getToken();
 
-        const response = await fetch(`http://10.248.242.30:8080${ENDPOINTS.PROFILE_TECHNICAL}/fixer/${technicalId}/upload-perfile`, {
+        const response = await fetch(`http://192.168.101.12:8080${ENDPOINTS.PROFILE_TECHNICAL}/fixer/${technicalId}/upload-perfile`, {
             method: 'POST',
             body: formData,
             headers: { 'Authorization': `Bearer ${tokken}`, },
@@ -84,5 +84,31 @@ export const getServicesForTechnical = async (technicalId) => {
 export const queriesForTechnician = async (technicalId) => {
     const { latitude, longitude } = await getLocation();
     const response = await api.get(`${ENDPOINTS.BOOKING}/fixer/${technicalId}?lat1=${latitude}&lon1=${longitude}`);
+    return response.data;
+}
+
+export const acceptQuery = async (bookingId) => {
+    const response = await api.put(`${ENDPOINTS.BOOKING}/${bookingId}/fixer/accept`);
+    return response.data;
+}
+
+export const rejectQuery = async (bookingId) => {
+    const response = await api.put(`${ENDPOINTS.BOOKING}/${bookingId}/fixer/reject`);
+    return response.data;
+}
+
+// jobs
+export const getJobsTechnical = async (technicalId) => {
+    const response = await api.get(`${ENDPOINTS.BOOKING}/jobs/fixer/${technicalId}`);
+    return response.data;
+}
+
+export const startWork = async (bookingId) => {
+    const response = await api.put(`${ENDPOINTS.BOOKING}/job/${bookingId}/start`)
+    return response.data;
+}
+
+export const cancelWork = async(bookingId) =>{
+    const response = await api.put(`${ENDPOINTS.BOOKING}/job/${bookingId}/cancel`);
     return response.data;
 }

@@ -4,6 +4,7 @@ import { getToken } from "../storage/AuthStorage";
 
 import { getLocation } from '../hooks/useLocation';
 import { getUser } from "../storage/AuthStorage";
+
 export const registerBooking = async (data) => {
     try {
         const { latitude, longitude } = await getLocation();

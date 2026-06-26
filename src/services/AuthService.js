@@ -1,7 +1,7 @@
 import { Import } from "lucide-react-native";
 import api from "../api/Client";
 import { ENDPOINTS } from "../api/Endpoint";
-import { saveToken, saveRole, saveUser, saveUserId } from "../../src/storage/AuthStorage";
+import { saveToken, saveRole, saveUser, saveUserId, getToken } from "../../src/storage/AuthStorage";
 import { getCustomersByUserId, registerCustomer, uploadProfileCustomerPhoto } from "./CustomerService";
 import { getTechnicalByUserId, registerTechnical, uploadProfileTechnicalPhoto } from "./TechnicalService";
 import { decodeToken } from "../utils/jwt";
@@ -129,4 +129,17 @@ const uploadPhoto = async (id, imageUri, role) => {
         console.log(error.response);
         console.log(error.message);
     }
+}
+
+export const refreshToken = async () => {
+    try {
+        const token = await getToken();
+        console.log("token: ", token)
+        const response = await api.post(ENDPOINTS.REFRESH_TOKEN);
+
+    } catch (error) {
+
+    }
+
+
 }
