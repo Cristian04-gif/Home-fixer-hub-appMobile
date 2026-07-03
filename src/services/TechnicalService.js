@@ -4,6 +4,9 @@ import { getToken } from "../storage/AuthStorage";
 
 import { getServiceById } from '../services/CatalogService'
 import { getLocation } from '../hooks/useLocation'
+
+const host ='http://192.168.101.9:8080';
+
 export const getTechnicals = async () => {
     const response = await api.get(ENDPOINTS.PROFILE_TECHNICAL);
     return response.data;
@@ -34,7 +37,7 @@ export const uploadProfileTechnicalPhoto = async (technicalId, formData) => {
         console.log("service de photos")
         const tokken = await getToken();
 
-        const response = await fetch(`http://192.168.101.12:8080${ENDPOINTS.PROFILE_TECHNICAL}/fixer/${technicalId}/upload-perfile`, {
+        const response = await fetch(`${host}${ENDPOINTS.PROFILE_TECHNICAL}/fixer/${technicalId}/upload-perfile`, {
             method: 'POST',
             body: formData,
             headers: { 'Authorization': `Bearer ${tokken}`, },
@@ -110,5 +113,12 @@ export const startWork = async (bookingId) => {
 
 export const cancelWork = async(bookingId) =>{
     const response = await api.put(`${ENDPOINTS.BOOKING}/job/${bookingId}/cancel`);
+    return response.data;
+}
+
+
+//notification
+export const savePushTokenTechnical = async (technicalId, pushToken) => {
+    const response = await api.put(`${ENDPOINTS.PROFILE_TECHNICAL}/notification/fixer/${technicalId}?pushToken=${pushToken}`);
     return response.data;
 }

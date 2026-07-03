@@ -68,11 +68,10 @@ export default function NewService() {
     }
 
     try {
-      console.log("funcion de fuardar")
       await assignServiceToTechnician(data);
       navigation.navigate("Dashboard")
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
 
   };

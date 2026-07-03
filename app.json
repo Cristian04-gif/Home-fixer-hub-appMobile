@@ -19,6 +19,7 @@
       },
       "edgeToEdgeEnabled": true,
       "package": "com.tuusuario.proymobile",
+      "googleServicesFile": "./google-services.json",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyCQl6FfHCVwHcZbjaifXaa8mQKAJ1ZARss"
@@ -34,6 +35,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "32813461-2d62-4c03-ba46-aa80a9d6ead7"
+      }
+    },
+    "owner": "cristian04"
   }
 }

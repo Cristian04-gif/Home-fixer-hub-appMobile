@@ -41,7 +41,6 @@ export default function DetailsMyJob({ route }) {
     fetchTrabajoDetalle();
   }, []);
 
-  // 2. ACTUALIZAR EL ENUM EN LA DB (PATCH)
   const handleAvanzarEstado = async () => {
     if (trabajo.inquiryStatus === 'FINALIZADA') return;
 
@@ -60,7 +59,6 @@ export default function DetailsMyJob({ route }) {
 
       const horaActualStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).toLowerCase();
 
-      // Modificación del estado local en base al nuevo Enum
       setTrabajo((prev) => ({
         ...prev,
         inquiryStatus: siguienteStatus,
@@ -82,8 +80,6 @@ export default function DetailsMyJob({ route }) {
     return <View style={[styles.container, styles.center]}><ActivityIndicator size="large" color="#3A6B88" /></View>;
   }
 
-  // 3. MAPEO DE VISUALIZACIÓN BASADO EN TU ENUM
-  // Definimos cómo se ve el componente en base al string exacto de la base de datos
   const obtenerConfigSegunEnum = () => {
     switch (trabajo.inquiryStatus) {
       case 'ACEPTADA':
@@ -116,7 +112,6 @@ export default function DetailsMyJob({ route }) {
 
   const uiConfig = obtenerConfigSegunEnum();
 
-  // Matriz de los 3 pasos de tu negocio
   const pasosTimeline = [
     { id: 'ACEPTADA', titulo: 'Trabajo Aceptado', index: 0 },
     { id: 'EN_PROCESO', titulo: 'Trabajo en proceso', index: 1 },

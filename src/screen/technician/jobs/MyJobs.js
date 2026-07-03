@@ -20,13 +20,12 @@ export default function MyJobs() {
   const responsive = useResponsive();
   const styles = createStyles(responsive);
   const navigation = useNavigation();
-  const [activeTab, setActiveTab] = useState('progreso'); // 'progreso' o 'historial'
+  const [activeTab, setActiveTab] = useState('progreso'); 
   const [trabajos, setTrabajos] = useState([]);
   const [clientes, setClientes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
-  // 1. CONSULTA HTTP: OBTENER LISTADO DE TRABAJOS (GET)
   const fetchTrabajos = async () => {
     setLoading(true);
     try {
@@ -56,7 +55,6 @@ export default function MyJobs() {
     }
   };
 
-  // Escucha el cambio de pestaña para volver a consultar a la API
   useEffect(() => {
     fetchTrabajos();
   }, [activeTab]);
@@ -66,7 +64,6 @@ export default function MyJobs() {
     fetchTrabajos();
   };
 
-  // 2. RENDER DE TARJETAS INDIVIDUALES (CARD)
   const renderTrabajoCard = ({ item }) => {
     const cl = clientes.find(c => c.id === item.customerId);
     const fecha = formatDate(item.modificationDate);

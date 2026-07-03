@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "555299519868",
+    "project_id": "homefixerpush",
+    "storage_bucket": "homefixerpush.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:555299519868:android:8456b5d81aa16d45efb8f9",
+        "android_client_info": {
+          "package_name": "com.tuusuario.proymobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeha0nLIhw04KYI27pcrwy-XvSGJfzrHY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -16,12 +16,12 @@ import colors from '../../../utils/colors';
 
 import { getUser } from '../../../storage/AuthStorage'
 import { dahsboardTechnical } from '../../../services/DahsboardService'
-import { getServicesForTechnical } from '../../../services/TechnicalService'
+import { getServicesForTechnical, savePushTokenTechnical } from '../../../services/TechnicalService'
 import { changeAvailability } from '../../../services/TechnicalService';
 
 import ListServices from '../../../components/technical/ListServices';
 import Availability from '../../../components/technical/Availability';
-
+import { registerForPushNotificationsAsync } from '../../../services/NotificationService';
 export default function Dashboard() {
   const navigation = useNavigation();
   const responsive = useResponsive();
@@ -55,6 +55,18 @@ export default function Dashboard() {
       }
     } catch (error) {
       console.error("Error al parsear o cargar info del técnico:", error);
+    }
+  }
+
+  const handleNotification = async () => {
+    try {
+      const pushToken = await registerForPushNotificationsAsync();
+      const rawTech = await getUser();
+      if (rawTech && rawTech.id && pushToken) {
+        savePushTokenTechnical(rawTech.id, pushToken);
+      }
+    } catch (error) {
+      console.error(error)
     }
   }
 

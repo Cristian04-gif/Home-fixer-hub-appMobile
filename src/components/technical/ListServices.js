@@ -15,12 +15,9 @@ import colors from '../../utils/colors';
 export default function ListServices({ styles, services }) {
     const navigation = useNavigation();
 
-    // 3. LÓGICA DE RECORTE
     const LIMITE_INICIAL = 4;
-    // Si 'mostrarTodos' es false, cortamos el arreglo de 0 a 4. Si es true, pasa completo.
     const serviciosVisibles = services.slice(0, LIMITE_INICIAL);
 
-    // Calculamos cuántos servicios quedan ocultos para el botón "+X"
     const serviciosOcultosCount = services.length - LIMITE_INICIAL;
 
     const colorService = [
@@ -68,7 +65,6 @@ export default function ListServices({ styles, services }) {
 
                     <View style={styles.servicesGrid}>
 
-                        {/* Mapeamos solo los servicios visibles */}
                         {serviciosVisibles.map((servicio) => {
                             const color = colorService.find(
                                 col => col.nombre === servicio.nameService
@@ -97,8 +93,6 @@ export default function ListServices({ styles, services }) {
                             );
                         })}
 
-                        {/* BOTÓN DINÁMICO DE "VER MÁS" (+X) */}
-                        {/* Solo se muestra si NO estamos enseñando todos y si realmente hay servicios ocultos */}
                         {serviciosOcultosCount > 0 && (
                             <TouchableOpacity
                                 style={styles.serviceItemContainer}

@@ -12,5 +12,3 @@ export default function AppNavigator() {
 
   )
 }
-
-const styles = StyleSheet.create({})

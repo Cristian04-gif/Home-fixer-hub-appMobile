@@ -11,8 +11,6 @@ export default function UploadProfilePicture({ onValid, data, typeUser }) {
     const styles = createStyles(responsive);
     const [imageProfile, setImageProfile] = useState(typeUser === 'TECNICO' ? (data || null) : (data.photoProfile || null));
 
-
-
     const selectImage = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
 

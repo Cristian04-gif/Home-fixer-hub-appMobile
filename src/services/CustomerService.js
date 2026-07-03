@@ -2,6 +2,7 @@ import api from "../api/Client";
 import { ENDPOINTS } from "../api/Endpoint";
 import { getToken } from "../storage/AuthStorage";
 
+const host = 'http://192.168.101.9:8080';
 
 export const getCustomers = async () => {
     const response = await api.get(ENDPOINTS.PROFILE_CUSTOMER);
@@ -26,7 +27,7 @@ export const registerCustomer = async (data) => {
 export const uploadProfileCustomerPhoto = async (customerId, formData) => {
     const token = await getToken();
 
-    const response = await fetch(`http://192.168.101.12:8080${ENDPOINTS.PROFILE_CUSTOMER}/customer/${customerId}/upload-perfile`, {
+    const response = await fetch(`${host}${ENDPOINTS.PROFILE_CUSTOMER}/customer/${customerId}/upload-perfile`, {
         method: 'POST',
         body: formData,
         headers: {
@@ -54,3 +55,19 @@ export const deletetechnical = async (id) => {
     const response = await api.delete(`${ENDPOINTS.PROFILE_CUSTOMER}/customer/${id}`);
     return response.data;
 };
+
+
+/// notification
+export const savePushTokenCustomer = async (customerId, pushToken) => {
+    const response = await api.put(`${ENDPOINTS.PROFILE_CUSTOMER}/notification/customer/${customerId}?pushToken=${pushToken}`);
+    return response.data;
+}
+
+
+
+// consultas
+
+export const getCustomerRequests = async(customerId) => {
+    const response = await api.get(`${ENDPOINTS.BOOKING}/customer/${customerId}`);
+    return response.data;
+}

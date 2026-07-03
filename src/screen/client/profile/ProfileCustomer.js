@@ -29,54 +29,34 @@ import { createStyles } from '../../../styles/MyProfile.style';
 import colors from '../../../utils/colors';
 import { useAuth } from '../../../context/AuthContext';
 import { getUser } from '../../../storage/AuthStorage';
-import { getServicesForTechnical } from '../../../services/TechnicalService';
-import ListServices from '../../../components/technical/ListServices';
-import Availability from '../../../components/technical/Availability';
-export default function MyProfile() {
+export default function ProfileCustomer() {
   const {logoutContext} = useAuth();
   const responsive = useResponsive();
   const styles = createStyles(responsive);
   const navigation = useNavigation();
 
-  const [technical, setTechnical] = useState({});
-  const [isEnabled, setIsEnabled] = useState(technical.available || true);
-  const [myServices, setMyServices] = useState([]);
+  const [customer, setCustomer] = useState({});
 
-  const actualizarEstado = (data) => {
-    setIsEnabled(data);
-  }
+
 
   const handleInfo = async () => {
     try {
-      const rawTech = await getUser();
-      const tech = rawTech;
+      const rawCustomer = await getUser();
+      const cust = rawCustomer;
 
-      setTechnical(tech);
+      setCustomer(cust);
 
-      if (tech && tech.id) {
-        const myServ = await getServicesForTechnical(tech.id);
-        setMyServices(myServ);
-      } else {
-        console.error("El objeto técnico no contiene un ID válido");
-      }
+
     } catch (error) {
-      console.error("Error al parsear o cargar info del técnico:", error);
+      console.error("Error al parsear o cargar info del cliente:", error);
     }
   }
 
   useEffect(() => {
     handleInfo();
-  }, [isEnabled])
+  }, [])
 
 
-   const cerrarSesion = async () => {
-    try {
-      await logoutContext();
-      
-    } catch (error) {
-      console.error(error)
-    }
-  }
 
   // 1. LISTA DE OPCIONES DEL MENÚ INFERIOR
   const opcionesMenu = [
@@ -86,6 +66,14 @@ export default function MyProfile() {
     { id: '4', titulo: 'Configuración', icono: <Settings size={responsive.font(22)} color={colors.textPrimary} /> },
   ];
 
+  const cerrarSesion = async () => {
+    try {
+      await logoutContext();
+      
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -104,7 +92,7 @@ export default function MyProfile() {
           {/* Avatar con botón de editar */}
           <View style={styles.avatarContainer}>
             <Image
-              source={{ uri: technical.urlPhotoProfile }} // Cambia por tu recurso local o URL real de Carlos
+              source={{ uri: customer.urlPhotoProfile }} // Cambia por tu recurso local o URL real de Carlos
               style={styles.avatar}
             />
             <TouchableOpacity style={styles.editButton} activeOpacity={0.9}>
@@ -112,22 +100,17 @@ export default function MyProfile() {
             </TouchableOpacity>
           </View>
 
-          {/* Información del técnico */}
-          <Text style={styles.nameText}>{technical.name} {technical.lastName}</Text>
-          <Text style={styles.roleText}>Técnico</Text>
+          {/* Información del cliente */}
+          <Text style={styles.nameText}>{customer.name} {customer.lastName}</Text>
+          <Text style={styles.roleText}>Cliente</Text>
 
           <View style={styles.ratingRow}>
             <Text style={styles.star}>⭐</Text>
-            <Text style={styles.ratingText}>{technical.averageRating} </Text>
+            <Text style={styles.ratingText}>{customer.averageRating} </Text>
             <Text style={styles.reviewsText}></Text>
           </View>
         </View>
 
-        {/* DISPONIBILIDAD */}
-        <Availability styles={styles} technical={technical} enabled={actualizarEstado} enable={isEnabled}></Availability>
-
-        {/* SERVICIOS QUE OFRECE */}
-        <ListServices styles={styles} services={myServices}></ListServices>
 
         {/* MENÚ DE OPCIONES DE CONFIGURACIÓN */}
         <View style={styles.menuContainer}>
@@ -147,15 +130,15 @@ export default function MyProfile() {
         </View>
 
         {/* BOTÓN DE CERRAR SESION */}
-                <View style={styles.bottomContainer}>
-                  <TouchableOpacity
-                    style={styles.btnLogaut}
-                    onPress={cerrarSesion}
-                    activeOpacity={0.8}
-                  >
-                    <Text style={styles.btnLogautText}>Cerrar Sesion</Text>
-                  </TouchableOpacity>
-                </View>
+        <View style={styles.bottomContainer}>
+          <TouchableOpacity
+            style={styles.btnLogaut}
+            onPress={cerrarSesion}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.btnLogautText}>Cerrar Sesion</Text>
+          </TouchableOpacity>
+        </View>
 
       </ScrollView>
     </View>

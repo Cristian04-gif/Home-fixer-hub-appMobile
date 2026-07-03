@@ -29,6 +29,8 @@ import { useNavigation } from "@react-navigation/native";
 import colors from '../../../utils/colors';
 import { getUser } from '../../../storage/AuthStorage';
 import { getCatalogServices } from '../../../services/CatalogService';
+import { registerForPushNotificationsAsync } from '../../../services/NotificationService';
+import { savePushTokenCustomer } from '../../../services/CustomerService';
 export default function DashboardClient() {
   const responsive = useResponsive();
   const styles = createStyles(responsive);
@@ -50,8 +52,21 @@ export default function DashboardClient() {
     }
   }
 
+  const handleNotification = async () => {
+    try {
+      const pushToken = await registerForPushNotificationsAsync();
+      const rawUser = await getUser();
+      if (rawUser && rawUser.id && pushToken) {
+        savePushTokenCustomer(rawUser.id, pushToken);
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   useEffect(() => {
-    handleInfo()
+    handleInfo();
+    handleNotification();
   }, [])
   // 1. ARREGLO DE OBJETOS PARA LAS CATEGORÍAS (Grid de 2 filas)
   const categorias = [
@@ -110,7 +125,7 @@ export default function DashboardClient() {
         {/* SECCIÓN CATEGORÍAS */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Categorías</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('ServiceCatalog', {services: catalog, simbolos: categorias})}>
+          <TouchableOpacity onPress={() => navigation.navigate('ServiceCatalog', { services: catalog, simbolos: categorias })}>
             <Text style={styles.viewAllText}>Ver todas</Text>
           </TouchableOpacity>
         </View>

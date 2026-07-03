@@ -2,9 +2,12 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
-const GOOGLE_MAPS_APIKEY = 'AIzaSyCQl6FfHCVwHcZbjaifXaa8mQKAJ1ZARss';
+import { getGoogleMapsKey } from '../../config/env';
+
 
 export default function MapRoute({ styles, coordenadas }) {
+    const GOOGLE_MAPS_APIKEY = getGoogleMapsKey();
+
     return (
         < View style={styles.mapContainer} >
             <MapView
@@ -27,7 +30,6 @@ export default function MapRoute({ styles, coordenadas }) {
                     </View>
                 </Marker>
 
-                {/* Trazado de línea de ruta (Polylines) */}
                 <MapViewDirections
                     origin={coordenadas.origenTecnico}
                     destination={coordenadas.destinoCliente}

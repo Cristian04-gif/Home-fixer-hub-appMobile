@@ -14,13 +14,14 @@ import { createStyles } from '../../../styles/Applications.style';
 import { getUser } from '../../../storage/AuthStorage';
 import { queriesForTechnician } from '../../../services/TechnicalService';
 import { getCustomersId } from '../../../services/CustomerService';
+import { acceptQuery } from '../../../services/TechnicalService';
 export default function Applications() {
   const responsive = useResponsive();
   const styles = createStyles(responsive);
   const navigation = useNavigation();
   const [solicitudes, setSolicitudes] = useState([]);
   const [customers, setCustomers] = useState([])
-
+  const [acceptQuery, setAceptQuery] = useState(false);
     const handleBookings = async () => {
       try {
         const tech = await getUser();
@@ -44,8 +45,15 @@ export default function Applications() {
     }
 
 
-    const handleAceptar = (id) => {
-      console.log(`Solicitud {id} aceptada`);
+    const handleAceptar = async(id) => {
+      try {
+            const res = await acceptQuery(id);
+            if(res){
+              setAceptQuery(true);
+            }
+          } catch (error) {
+            console.error(error);
+          }
     };
 
     const handleRechazar = (id) => {
@@ -54,7 +62,8 @@ export default function Applications() {
 
     useEffect(() => {
       handleBookings();
-    }, [])
+      if(acceptQuery) setAceptQuery(false);
+    }, [acceptQuery])
 
     const icons = [
       {

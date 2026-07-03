@@ -118,7 +118,7 @@ export const createStyles = ({ scale, font }) => StyleSheet.create({
         fontWeight: 'bold',
         color: colors.textPrimary,
     },
-     viewAllText: {
+    viewAllText: {
         fontSize: font(13),
         color: '#007AFF',
         fontWeight: '500',
@@ -185,7 +185,7 @@ export const createStyles = ({ scale, font }) => StyleSheet.create({
         backgroundColor: 'rgba(250, 250, 250, 0.9)', // Fondo semitransparente detrás del botón
         paddingHorizontal: scale * 20,
         paddingBottom: scale * 24,
-        gap: scale*10
+        gap: scale * 10
     },
     addButton: {
         backgroundColor: colors.primary, // El mismo azul pizarra del dashboard
@@ -204,5 +204,27 @@ export const createStyles = ({ scale, font }) => StyleSheet.create({
         fontSize: font(14),
         color: colors.textSecondary,
         textAlign: 'center'
+    },
+    bottomContainer: {
+        position: 'absolute',
+        bottom: scale * -50,
+        left: 0,
+        right: 0,
+        paddingHorizontal: scale * 20,
+        paddingTop: scale * 12,
+        paddingBottom: scale * 24,
+    },
+    btnLogaut: {
+        height: scale * 48,
+        borderRadius: scale * 12,
+        borderWidth: scale * 1,
+        borderColor: colors.disable,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    btnLogautText: {
+        color: colors.disable,
+        fontSize: font(15),
+        fontWeight: '600',
     },
 })
