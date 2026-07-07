@@ -31,6 +31,7 @@ import { getUser } from '../../../storage/AuthStorage';
 import { getCatalogServices } from '../../../services/CatalogService';
 import { registerForPushNotificationsAsync } from '../../../services/NotificationService';
 import { savePushTokenCustomer } from '../../../services/CustomerService';
+import { useSymbols } from '../../../hooks/useSymbols';
 export default function DashboardClient() {
   const responsive = useResponsive();
   const styles = createStyles(responsive);
@@ -68,17 +69,7 @@ export default function DashboardClient() {
     handleInfo();
     handleNotification();
   }, [])
-  // 1. ARREGLO DE OBJETOS PARA LAS CATEGORÍAS (Grid de 2 filas)
-  const categorias = [
-    { nombre: 'Electricidad', color: '#EBF7EE', icono: <Zap size={responsive.font(22)} color="#34C759" /> },
-    { nombre: 'Plomeria', color: '#E8F2FF', icono: <Droplet size={responsive.font(22)} color="#007AFF" /> },
-    { nombre: 'Mecanica', color: '#FDF6ED', icono: <Hammer size={responsive.font(22)} color="#A27B5C" /> },
-    { nombre: 'Pintura', color: '#E8F8F5', icono: <Brush size={responsive.font(22)} color="#1ABC9C" /> },
-    { nombre: 'Cerrajeria', color: '#F2F2F7', icono: <Lock size={responsive.font(22)} color="#636E72" /> },
-    { nombre: 'Jardineria', color: '#EAF9E7', icono: <Leaf size={responsive.font(22)} color="#4A7C59" /> },
-    { nombre: 'Limpieza', color: '#E8F2FF', icono: <Sparkles size={responsive.font(22)} color="#007AFF" /> },
-    { nombre: 'Ver más', color: '#F2F2F7', icono: <Text style={{ fontSize: 14, fontWeight: '600', color: '#3A3A3C' }}>+2</Text>, esBotonMas: true },
-  ];
+
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
@@ -125,7 +116,7 @@ export default function DashboardClient() {
         {/* SECCIÓN CATEGORÍAS */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Categorías</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('ServiceCatalog', { services: catalog, simbolos: categorias })}>
+          <TouchableOpacity onPress={() => navigation.navigate('ServiceCatalog', { services: catalog })}>
             <Text style={styles.viewAllText}>Ver todas</Text>
           </TouchableOpacity>
         </View>
@@ -133,11 +124,11 @@ export default function DashboardClient() {
         {/* GRID DE CATEGORÍAS */}
         <View style={styles.categoriesGrid}>
           {catalog.map((item) => {
-            const simbolo = categorias.find(col => col.nombre === item.name);
+            const {value} = useSymbols(item.name, responsive);
             return (
               <TouchableOpacity key={item.id} style={styles.categoryItem} activeOpacity={0.7}>
-                <View style={[styles.iconCircle, { backgroundColor: simbolo.color }]}>
-                  {simbolo.icono}
+                <View style={[styles.iconCircle, { backgroundColor: value.color }]}>
+                  {value.icono}
                 </View>
                 <Text style={styles.categoryText} numberOfLines={1}>
                   {item.name}

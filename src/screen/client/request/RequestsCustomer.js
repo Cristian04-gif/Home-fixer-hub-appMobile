@@ -31,6 +31,7 @@ import { getCustomerRequests } from '../../../services/CustomerService';
 import { getUser } from '../../../storage/AuthStorage';
 import { getTechnicalById } from '../../../services/TechnicalService';
 import { formatDate } from '../../../hooks/formatDate';
+import { useSymbols } from '../../../hooks/useSymbols';
 export default function RequestsCustomer() {
     const responsive = useResponsive();
     const styles = createStyles(responsive);
@@ -64,13 +65,10 @@ export default function RequestsCustomer() {
 
                 const tecnicoPromises = res.map(request => fetchTech(request.technicalId));
                 const techs = await Promise.all(tecnicoPromises);
-                if (techs){
+                if (techs) {
                     setTecnicos(techs)
                 }
             }
-
-
-
 
         } catch (error) {
             console.error("Error al obtener las solicitudes de la API:", error);
@@ -95,47 +93,21 @@ export default function RequestsCustomer() {
     const totalTodas = solicitudes.length;
     const totalEnCurso = solicitudes.filter(i => i.inquiryStatus === 'EN_PROCESO').length;
     const totalCompletadas = solicitudes.filter(i => i.inquiryStatus === 'FINALIZADA').length;
-
-
-    const categorias = [
-        { nombre: 'Electricidad', color: '#EBF7EE', icono: <Zap size={responsive.font(22)} color="#34C759" /> },
-        { nombre: 'Plomeria', color: '#E8F2FF', icono: <Droplet size={responsive.font(22)} color="#007AFF" /> },
-        { nombre: 'Mecanica', color: '#FDF6ED', icono: <Hammer size={responsive.font(22)} color="#A27B5C" /> },
-        { nombre: 'Pintura', color: '#E8F8F5', icono: <Brush size={responsive.font(22)} color="#1ABC9C" /> },
-        { nombre: 'Cerrajeria', color: '#F2F2F7', icono: <Lock size={responsive.font(22)} color="#636E72" /> },
-        { nombre: 'Jardineria', color: '#EAF9E7', icono: <Leaf size={responsive.font(22)} color="#4A7C59" /> },
-        { nombre: 'Limpieza', color: '#E8F2FF', icono: <Sparkles size={responsive.font(22)} color="#007AFF" /> },
-        { nombre: 'Ver más', color: '#F2F2F7', icono: <Text style={{ fontSize: 14, fontWeight: '600', color: '#3A3A3C' }}>+2</Text>, esBotonMas: true },
-    ];
-    // Asignación de iconos dinámicos de tu ecosistema
-    const renderIcono = (categoria) => {
-        switch (categoria) {
-            case 'Electricidad': return <Zap size={responsive.font(20)} color="#D97706" />;
-            case 'Plomería': return <Droplet size={responsive.font(20)} color="#007AFF" />;
-            case 'Carpintería': return <Hammer size={responsive.font(20)} color="#A27B5C" />;
-            case 'Jardineria': return <Leaf size={responsive.font(22)} color="#4A7C59" />;
-            default: return <Zap size={responsive.font(20)} color="#8E8E93" />;
-        }
-    };
-
-    const getBgIconColor = (categoria) => {
-        if (categoria === 'Electricidad') return '#FDF6ED';
-        if (categoria === 'Plomería') return '#E8F2FF';
-        if (categoria === 'Jardineria') return "#EAF9E7";
-        return '#EAF9E7'; // Carpintería / Otros
-    };
+   
 
     // 4. RENDERIZADO DE CADA TARJETA DE SOLICITUD
     const renderItem = ({ item }) => {
         const tech = tecnicos.find(t => t.id === item.technicalId);
         const fecha = formatDate(item.modificationDate);
+        const { value } = useSymbols(item.serviceType, responsive);
+
         return (
             <View style={styles.card}>
                 {/* Fila superior de la tarjeta */}
                 <View style={styles.cardHeader}>
                     <View style={styles.headerLeft}>
-                        <View style={[styles.iconCircle, { backgroundColor: getBgIconColor(item.serviceType) }]}>
-                            {renderIcono(item.serviceType)}
+                        <View style={[styles.iconCircle, { backgroundColor: value.color }]}>
+                            {value.icono}
                         </View>
                         <View style={styles.titleContainer}>
                             <Text style={styles.categoriaText}>{item.serviceType}</Text>
@@ -168,7 +140,7 @@ export default function RequestsCustomer() {
                 <TouchableOpacity
                     style={styles.detailButton}
                     activeOpacity={0.6}
-                    onPress={() => navigation.navigate("RecuestDetail",{request: item, technical: tech, fecha: fecha})}
+                    onPress={() => navigation.navigate("RecuestDetail", { request: item, technical: tech, fecha: fecha, simbolo: value })}
                 >
                     <Text style={styles.detailButtonText}>Ver detalle</Text>
                     <ArrowRight size={responsive.font(16)} color={colors.primary} style={{ marginLeft: 4 }} />

@@ -12,36 +12,15 @@ import { useState, useEffect } from 'react'
 import { getServicesForTechnical } from '../../services/TechnicalService';
 import { useNavigation } from "@react-navigation/native";
 import colors from '../../utils/colors';
-export default function ListServices({ styles, services }) {
+import { useSymbols } from '../../hooks/useSymbols'
+
+export default function ListServices({ styles, services, responsive }) {
     const navigation = useNavigation();
 
     const LIMITE_INICIAL = 4;
     const serviciosVisibles = services.slice(0, LIMITE_INICIAL);
 
     const serviciosOcultosCount = services.length - LIMITE_INICIAL;
-
-    const colorService = [
-        {
-            nombre: "Mecanico",
-            fondo: "#D6EAF8",
-        },
-        {
-            nombre: "Plomero",
-            fondo: "#D4F1F9",
-        },
-        {
-            nombre: "Jardinero",
-            fondo: "#D5F5E3",
-        },
-        {
-            nombre: "Gasfitero",
-            fondo: "#D1F2EB",
-        },
-        {
-            nombre: "Electricista",
-            fondo: "#FCF3CF",
-        }
-    ]
 
     return (
         <View style={styles.servicesSection}>
@@ -58,7 +37,7 @@ export default function ListServices({ styles, services }) {
                 <>
                     <View style={styles.rowJustified}>
                         <Text style={styles.statsTitle}>Mis servicios</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('MyServices', { services: services, colorService: colorService })}>
+                        <TouchableOpacity onPress={() => navigation.navigate('MyServices', { services: services })}>
                             <Text style={styles.viewAllText}>Ver todos</Text>
                         </TouchableOpacity>
                     </View>
@@ -66,21 +45,19 @@ export default function ListServices({ styles, services }) {
                     <View style={styles.servicesGrid}>
 
                         {serviciosVisibles.map((servicio) => {
-                            const color = colorService.find(
-                                col => col.nombre === servicio.nameService
-                            );
-
+                            
+                            const { value } = useSymbols(servicio.typeService, responsive);
                             return (
                                 <View key={servicio.id} style={styles.serviceItemContainer}>
                                     <View
                                         style={[
                                             styles.iconCircle,
                                             {
-                                                backgroundColor: color?.fondo || "#EEEEEE",
+                                                backgroundColor: value.color,
                                             }
                                         ]}
                                     >
-                                        <Text style={styles.iconText}>{servicio.iconService}</Text>
+                                        {value.icono}
                                     </View>
 
                                     <Text

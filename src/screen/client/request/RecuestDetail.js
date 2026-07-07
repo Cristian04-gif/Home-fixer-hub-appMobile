@@ -32,9 +32,9 @@ import { useResponsive } from '../../../hooks/useResponsive';
 import { createStyles } from '../../../styles/RecuestDetail.style';
 import { useNavigation } from "@react-navigation/native";
 import colors from '../../../utils/colors';
-
-export default function RecuestDetail({route}) {
-    const {request, technical, fecha} = route.params;
+import { cancelQuery } from '../../../services/CustomerService';
+export default function RecuestDetail({ route }) {
+    const { request, technical, fecha, simbolo } = route.params;
     const responsive = useResponsive();
     const styles = createStyles(responsive);
     const navigation = useNavigation();
@@ -53,10 +53,10 @@ export default function RecuestDetail({route}) {
             default: return <Zap size={responsive.font(20)} color="#8E8E93" />;
         }
     };
-    
+
 
     // 2. PETICIÓN HTTP: CANCELAR SOLICITUD (POST / PATCH / DELETE)
-    const handleCancelarSolicitud = () => {
+    const handleCancelarSolicitud = async () => {
         Alert.alert(
             'Cancelar solicitud',
             '¿Estás seguro de que deseas cancelar esta solicitud de servicio?',
@@ -68,13 +68,13 @@ export default function RecuestDetail({route}) {
                     onPress: async () => {
                         setCancelando(true);
                         try {
-                            // 🟢 Reemplaza con tu llamada de mutación real:
-                            // const response = await fetch(`https://tu-api.com/api/solicitudes/${solicitudId}/cancelar`, { method: 'POST' });
-                            // if (response.ok) { ... }
+                            const res = await cancelQuery(request.id);
+                            if (res) {
+                                await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulando red
+                                Alert.alert('Éxito', 'La solicitud ha sido cancelada correctamente.');
+                                navigation.navigate("RequestsCustomer")
+                            }
 
-                            await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulando red
-                            Alert.alert('Éxito', 'La solicitud ha sido cancelada correctamente.');
-                            // Aquí agregarías la navegación hacia atrás: navigation.goBack();
                         } catch (error) {
                             Alert.alert('Error', 'Ocurrió un problema al procesar la cancelación.');
                         } finally {
@@ -86,7 +86,7 @@ export default function RecuestDetail({route}) {
         );
     };
 
-   
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -97,8 +97,8 @@ export default function RecuestDetail({route}) {
                 {/* ENCABEZADO DE CATEGORÍA Y STATUS */}
                 <View style={styles.topStatusRow}>
                     <View style={styles.categoryLeft}>
-                        <View style={styles.iconContainer}>
-                            {renderIcono(request.serviceType)}
+                        <View style={[styles.iconContainer, { backgroundColor: simbolo.color }]}>
+                            {simbolo.icono}
                         </View>
                         <View style={styles.categoryTexts}>
                             <Text style={styles.textCategory}>{request.serviceType}</Text>
@@ -147,7 +147,7 @@ export default function RecuestDetail({route}) {
                         <Text style={styles.infoLabel}>Precio acordado</Text>
                         <Text style={styles.infoValuePrice}>S/.{request.totalAmount}.00</Text>
                     </View>
-                    
+
                 </View>
 
             </ScrollView>

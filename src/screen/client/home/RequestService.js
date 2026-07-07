@@ -107,36 +107,6 @@ export default function RequestService({ route }) {
                     </View>
                 </View>
 
-                {/* CAMPO 2: DIRECCIÓN 
-                <View style={styles.formGroup}>
-                    <Text style={styles.label}>Dirección</Text>
-                    <TouchableOpacity style={styles.selectorInput} activeOpacity={responsive.scale * 0.7}>
-                        <View style={styles.selectorLeft}>
-                            <Text style={styles.selectorMainText}>Av. Siempre Viva 123</Text>
-                            <Text style={styles.selectorSubText}>A 1.2 km de ti</Text>
-                        </View>
-                        <MapPin size={responsive.font(20)} color={colors.primary} />
-                    </TouchableOpacity>
-                </View>*/}
-
-                {/* CAMPO 3: FECHA Y HORA PREFERIDA 
-                <View style={styles.formGroup}>
-                    <Text style={styles.label}>Fecha y hora preferida</Text>
-                    <TouchableOpacity style={styles.selectorInputRow} activeOpacity={responsive.scale * 0.7}>
-                        <Text style={styles.placeholderText}>Seleccionar fecha</Text>
-                        <Calendar size={responsive.font(20)} color={colors.textPrimary} />
-                    </TouchableOpacity>
-                </View>*/}
-
-                {/* CAMPO 4: AGREGAR FOTOS (OPCIONAL)
-                <View style={styles.formGroup}>
-                    <Text style={styles.label}>Agrega fotos <Text style={styles.optionalLabel}>(opcional)</Text></Text>
-                    <TouchableOpacity style={styles.dashedUploadBox} activeOpacity={responsive.scale * 0.6}>
-                        <Plus size={24} color={colors.primary} />
-                        <Text style={styles.uploadText}>Agregar fotos</Text>
-                    </TouchableOpacity>
-                </View> */}
-
                 {/* CAMPO 5: PRESUPUESTO ESTIMADO */}
                 <View style={styles.formGroup}>
                     <Text style={styles.label}>Presupuesto estimado</Text>

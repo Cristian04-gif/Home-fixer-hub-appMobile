@@ -44,7 +44,6 @@ export const createStyles = ({ scale, font }) => StyleSheet.create({
         width: scale * 46,
         height: scale * 46,
         borderRadius: scale * 14,
-        backgroundColor: colors.background,
         justifyContent: 'center',
         alignItems: 'center',
     },

@@ -5,7 +5,7 @@ import { getToken } from "../storage/AuthStorage";
 import { getServiceById } from '../services/CatalogService'
 import { getLocation } from '../hooks/useLocation'
 
-const host ='http://192.168.101.9:8080';
+const host ='http://192.168.101.6:8080';
 
 export const getTechnicals = async () => {
     const response = await api.get(ENDPOINTS.PROFILE_TECHNICAL);
@@ -108,6 +108,11 @@ export const getJobsTechnical = async (technicalId) => {
 
 export const startWork = async (bookingId) => {
     const response = await api.put(`${ENDPOINTS.BOOKING}/job/${bookingId}/start`)
+    return response.data;
+}
+
+export const finishWork = async (bookingId) =>{
+    const response = await api.put(`${ENDPOINTS.BOOKING}/job/${bookingId}/finish`);
     return response.data;
 }
 

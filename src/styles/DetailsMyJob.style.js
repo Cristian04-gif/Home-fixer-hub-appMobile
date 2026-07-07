@@ -3,88 +3,161 @@ import colors from "../utils/colors";
 
 export const createStyles = ({ scale, font }) =>
     StyleSheet.create({
-        container: { flex: 1, backgroundColor: "#FFF" },
-        center: { justifyContent: "center", alignItems: "center" },
+        container: {
+            flex: 1,
+            backgroundColor: colors.white
+        },
+        center: {
+            justifyContent: "center",
+            alignItems: "center"
+        },
         navBar: {
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            paddingHorizontal: 16,
-            paddingVertical: 12,
+            paddingHorizontal: scale * 16,
+            paddingVertical: scale * 12,
         },
-        navButton: { padding: 4 },
-        navTitle: { fontSize: 17, fontWeight: "bold", color: "#1C1C1E" },
-        scrollContent: { paddingBottom: 100 },
-
+        navButton: {
+            padding: scale * 4
+        },
+        navTitle: {
+            fontSize: font(17),
+            fontWeight: "bold",
+            color: colors.textPrimary
+        },
+        scrollContent: {
+            paddingBottom: scale * 100
+        },
         headerCard: {
-            borderWidth: 1,
-            borderColor: "#E5E5EA",
-            borderRadius: 16,
-            padding: 16,
-            marginHorizontal: 20,
-            marginTop: 8,
-            backgroundColor: "#FFF",
+            borderWidth: scale * 1,
+            borderColor: colors.border,
+            borderRadius: scale * 16,
+            padding: scale * 16,
+            marginHorizontal: scale * 20,
+            marginTop: scale * 8,
+            backgroundColor: colors.white,
         },
-        badgeContainer: { flexDirection: "row", marginBottom: 8 },
-        badge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 6 },
-        badgeAzul: { backgroundColor: "#E8F2FF" },
-        badgeVerde: { backgroundColor: "#EBF7EE" },
-        badgeText: { fontSize: 12, fontWeight: "600" },
-        badgeTextAzul: { color: "#3A6B88" },
-        badgeTextVerde: { color: "#34C759" },
+        badgeContainer: {
+            flexDirection: "row",
+            marginBottom: scale * 8
+        },
+        badge: {
+            paddingHorizontal: scale * 10,
+            paddingVertical: scale * 4,
+            borderRadius: scale * 6
+        },
+        badgeAzul: {
+            backgroundColor: "#E8F2FF"
+        },
+        badgeVerde: {
+            backgroundColor: "#EBF7EE"
+        },
+        badgeText: {
+            fontSize: font(12),
+            fontWeight: "600"
+        },
+        badgeTextAzul: {
+            color: "#3A6B88"
+        },
+        badgeTextVerde: {
+            color: "#34C759"
+        },
 
         jobTitle: {
-            fontSize: 18,
+            fontSize: font(18),
             fontWeight: "bold",
-            color: "#1C1C1E",
-            marginBottom: 4,
+            color: colors.textPrimary,
+            marginBottom: scale * 4,
         },
-        customerText: { fontSize: 14, color: "#6E6E73", marginBottom: 2 },
-        darkText: { color: "#1C1C1E", fontWeight: "500" },
-        addressText: { fontSize: 14, color: "#8E8E93" },
+        customerText: {
+            fontSize: font(14),
+            color: colors.textSecondary,
+            marginBottom: scale * 2
+        },
+        darkText: {
+            color: colors.textPrimary,
+            fontWeight: "500"
+        },
+        addressText: {
+            fontSize: font(14),
+            color: colors.placeholder
+        },
         sectionLabel: {
-            fontSize: 14,
+            fontSize: font(14),
             fontWeight: "bold",
-            color: "#1C1C1E",
-            paddingHorizontal: 20,
-            marginTop: 24,
-            marginBottom: 12,
+            color: colors.textPrimary,
+            paddingHorizontal: scale * 20,
+            marginTop: scale * 24,
+            marginBottom: scale * 12,
         },
 
-        infoContainer: { paddingHorizontal: 20 },
+        infoContainer: {
+            paddingHorizontal: scale * 20
+        },
         infoRow: {
             flexDirection: "row",
             justifyContent: "space-between",
-            paddingVertical: 10,
-            borderBottomWidth: 1,
-            borderColor: "#F2F2F7",
+            paddingVertical: scale * 10,
+            borderBottomWidth: scale * 1,
+            borderColor: colors.border,
         },
-        infoKey: { fontSize: 14, color: "#6E6E73" },
-        infoValue: { fontSize: 14, color: "#1C1C1E", fontWeight: "500" },
-        priceValue: { fontSize: 15, fontWeight: "bold", color: "#1C1C1E" },
+        infoKey: {
+            fontSize: font(14),
+            color: colors.textSecondary
+        },
+        infoValue: {
+            fontSize: font(14),
+            color: colors.textPrimary,
+            fontWeight: "500"
+        },
+        priceValue: {
+            fontSize: font(15),
+            fontWeight: "bold",
+            color: colors.textPrimary
+        },
 
         /* ESTILOS TIMELINE */
-        timelineContainer: { paddingHorizontal: 20, marginTop: 4 },
-        timelineNode: { flexDirection: "row", height: 60 },
-        leftTimelineColumn: { alignItems: "center", width: 30 },
-        connectorLine: {
-            width: 2,
-            flex: 1,
-            backgroundColor: "#E5E5EA",
-            marginVertical: 4,
+        timelineContainer: {
+            paddingHorizontal: scale * 20,
+            marginTop: scale * 4
         },
-        connectorActive: { backgroundColor: "#4CAF50" },
+        timelineNode: {
+            flexDirection: "row",
+            height: scale * 60
+        },
+        leftTimelineColumn: {
+            alignItems: "center",
+            width: scale * 30
+        },
+        connectorLine: {
+            width: scale * 2,
+            flex: scale * 1,
+            backgroundColor: colors.border,
+            marginVertical: scale * 4,
+        },
+        connectorActive: {
+            backgroundColor: colors.enable
+        },
         rightTimelineColumn: {
             flex: 1,
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "flex-start",
-            marginLeft: 12,
-            paddingTop: 1,
+            marginLeft: scale * 12,
+            paddingTop: scale * 1,
         },
-        statusTitle: { fontSize: 15, fontWeight: "600" },
-        mutedText: { color: "#8E8E93" },
-        statusTime: { fontSize: 13, color: "#8E8E93" },
+        statusTitle: {
+            fontSize: font(15),
+            fontWeight: "600"
+        },
+        mutedText: {
+            color: colors.placeholder
+        },
+        statusTime: {
+            fontSize: font(13),
+            color: colors.placeholder
+        },
 
         /* BOTÓN INFERIOR */
         bottomContainer: {
@@ -92,18 +165,22 @@ export const createStyles = ({ scale, font }) =>
             bottom: 0,
             left: 0,
             right: 0,
-            backgroundColor: "#FFF",
-            paddingHorizontal: 20,
-            paddingTop: 12,
-            paddingBottom: 24,
-            borderTopWidth: 1,
-            borderColor: "#F2F2F7",
+            backgroundColor: colors.white,
+            paddingHorizontal: scale * 20,
+            paddingTop: scale * 12,
+            paddingBottom: scale * 24,
+            borderTopWidth: scale * 1,
+            borderColor: colors.border,
         },
         mainActionButton: {
-            height: 48,
-            borderRadius: 12,
+            height: scale * 48,
+            borderRadius: scale * 12,
             justifyContent: "center",
             alignItems: "center",
         },
-        mainActionButtonText: { color: "#FFF", fontSize: 16, fontWeight: "600" },
+        mainActionButtonText: {
+            color: colors.white,
+            fontSize: font(16),
+            fontWeight: "600"
+        },
     });

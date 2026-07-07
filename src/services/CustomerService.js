@@ -2,7 +2,7 @@ import api from "../api/Client";
 import { ENDPOINTS } from "../api/Endpoint";
 import { getToken } from "../storage/AuthStorage";
 
-const host = 'http://192.168.101.9:8080';
+const host = 'http://192.168.101.6:8080';
 
 export const getCustomers = async () => {
     const response = await api.get(ENDPOINTS.PROFILE_CUSTOMER);
@@ -70,4 +70,9 @@ export const savePushTokenCustomer = async (customerId, pushToken) => {
 export const getCustomerRequests = async(customerId) => {
     const response = await api.get(`${ENDPOINTS.BOOKING}/customer/${customerId}`);
     return response.data;
+}
+
+export const cancelQuery = async (bookingId) =>{
+    const response = await api.put(`${ENDPOINTS.BOOKING}/${bookingId}/cancel`);
+    return response.status;
 }

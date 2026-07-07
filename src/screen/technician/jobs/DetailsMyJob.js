@@ -14,7 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useResponsive } from '../../../hooks/useResponsive';
 import { createStyles } from '../../../styles/DetailsMyJob.style';
 import colors from '../../../utils/colors';
-
+import { startWork, finishWork } from '../../../services/TechnicalService';
 export default function DetailsMyJob({ route }) {
   const { detail, cliente, fecha } = route.params;
 
@@ -46,14 +46,12 @@ export default function DetailsMyJob({ route }) {
 
     setActualizando(true);
     try {
-      // Determinamos cuál es el siguiente paso del ENUM
       const siguienteStatus = trabajo.inquiryStatus === 'ACEPTADA' ? 'EN_PROCESO' : 'FINALIZADA';
-
-      // const response = await fetch(`https://tu-api.com/api/tecnico/trabajos/${trabajoId}`, {
-      //   method: 'PATCH',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ status: siguienteStatus }) // Enviamos el enum crudo
-      // });
+      if (siguienteStatus === "EN_PROCESO") {
+        await startWork(detail.id);
+      } else if (siguienteStatus === "FINALIZADA") {
+        await finishWork(detail.id);
+      }
 
       await new Promise((resolve) => setTimeout(resolve, 800));
 

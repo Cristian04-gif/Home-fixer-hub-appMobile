@@ -127,7 +127,7 @@ export default function MyProfile() {
         <Availability styles={styles} technical={technical} enabled={actualizarEstado} enable={isEnabled}></Availability>
 
         {/* SERVICIOS QUE OFRECE */}
-        <ListServices styles={styles} services={myServices}></ListServices>
+        <ListServices styles={styles} services={myServices} responsive={responsive}></ListServices>
 
         {/* MENÚ DE OPCIONES DE CONFIGURACIÓN */}
         <View style={styles.menuContainer}>

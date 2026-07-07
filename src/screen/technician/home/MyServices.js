@@ -12,9 +12,9 @@ import { useNavigation } from "@react-navigation/native";
 import { useResponsive } from '../../../hooks/useResponsive';
 import { createStyles } from '../../../styles/MyServices.style';
 import colors from '../../../utils/colors';
-
+import { useSymbols } from '../../../hooks/useSymbols';
 export default function MyServices({ route }) {
-  const { services, colorService } = route.params;
+  const { services } = route.params;
   const responsive = useResponsive();
   const styles = createStyles(responsive);
   const navigation = useNavigation();
@@ -35,16 +35,13 @@ export default function MyServices({ route }) {
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
 
         {services.map((servicio) => {
-          const color = colorService.find(
-            col => col.nombre === servicio.nameService
-          );
-
+          const {value} = useSymbols(servicio.typeService, responsive)
           return (
             <View key={servicio.id} style={styles.card}>
               {/* Fila superior: Icono, Info y Precio */}
               <View style={styles.cardHeader}>
-                <View style={[styles.iconCircle, { backgroundColor: color?.fondo || "#EEEEEE", }]}>
-                  <Text style={styles.iconText}>{servicio.iconService}</Text>
+                <View style={[styles.iconCircle, { backgroundColor: value.color }]}>
+                  {value.icono}
                 </View>
 
                 <View style={styles.infoContainer}>

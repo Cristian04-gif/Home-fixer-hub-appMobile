@@ -119,10 +119,6 @@ export default function TechnicianDetails({ route }) {
 
             {/* BARRA FIJA INFERIOR DE ACCIONES */}
             <View style={styles.fixedBottomBar}>
-                <TouchableOpacity style={styles.btnMensaje} activeOpacity={responsive.scale * 0.7}>
-                    <Text style={styles.textMensaje}>Mensaje</Text>
-                </TouchableOpacity>
-
                 <TouchableOpacity style={styles.btnSolicitar} activeOpacity={responsive.scale * 0.8} onPress={() => navigation.navigate('RequestService', {tech: technical, serv: service})}>
                     <Text style={styles.textSolicitar}>Solicitar servicio</Text>
                 </TouchableOpacity>

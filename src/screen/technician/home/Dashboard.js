@@ -177,7 +177,7 @@ export default function Dashboard() {
         <Availability styles={styles} technical={technical} enabled={actualizarEstado} enable={isEnabled}></Availability>
 
         {/* MIS SERVICIOS */}
-        <ListServices styles={styles} services={myServices}></ListServices>
+        <ListServices styles={styles} services={myServices} responsive={responsive}></ListServices>
 
       </ScrollView>
     </View>

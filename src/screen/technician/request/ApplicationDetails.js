@@ -18,7 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useResponsive } from '../../../hooks/useResponsive';
 import { createStyles } from "../../../styles/ApplicationDetails.style";
 import colors from "../../../utils/colors";
-import { acceptQuery } from "../../../services/TechnicalService";
+import { acceptQuery,rejectQuery } from "../../../services/TechnicalService";
 export default function ApplicationDetails({ route }) {
   const responsive = useResponsive();
   const styles = createStyles(responsive);
@@ -54,15 +54,26 @@ export default function ApplicationDetails({ route }) {
     fetchSolicitudTecnico();
   }, []);
 
-  const handleAcceptQuery = async () =>{
-    
+  const handleAcceptQuery = async () => {
+
     try {
       const res = await acceptQuery(details.id);
-      if(res){
-        navigation.goBack();
+      if (res) {
+        navigation.navigate("Applications");
       }
     } catch (error) {
-      
+
+    }
+  }
+
+  const handleRejectQuery = async() =>{
+    try {
+      const res = await rejectQuery(details.id);
+      if (res) {
+        navigation.navigate("Applications");
+      }
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -133,7 +144,7 @@ export default function ApplicationDetails({ route }) {
       <View style={styles.bottomFixedBar}>
         <TouchableOpacity
           style={[styles.btnRechazar, procesandoAccion && { opacity: responsive.scale * 0.5 }]}
-          onPress={() => handleResponderSolicitud(false)}
+          onPress={handleRejectQuery}
           disabled={procesandoAccion}
           activeOpacity={0.7}
         >

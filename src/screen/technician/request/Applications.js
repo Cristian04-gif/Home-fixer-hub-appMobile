@@ -14,14 +14,15 @@ import { createStyles } from '../../../styles/Applications.style';
 import { getUser } from '../../../storage/AuthStorage';
 import { queriesForTechnician } from '../../../services/TechnicalService';
 import { getCustomersId } from '../../../services/CustomerService';
-import { acceptQuery } from '../../../services/TechnicalService';
+import { acceptQuery,rejectQuery } from '../../../services/TechnicalService';
+import {formatDate} from '../../../hooks/formatDate'
 export default function Applications() {
   const responsive = useResponsive();
   const styles = createStyles(responsive);
   const navigation = useNavigation();
   const [solicitudes, setSolicitudes] = useState([]);
   const [customers, setCustomers] = useState([])
-  const [acceptQuery, setAceptQuery] = useState(false);
+  const [actionButton, setActionButton] = useState(false);
     const handleBookings = async () => {
       try {
         const tech = await getUser();
@@ -49,21 +50,29 @@ export default function Applications() {
       try {
             const res = await acceptQuery(id);
             if(res){
-              setAceptQuery(true);
+              setActionButton(true);
             }
           } catch (error) {
             console.error(error);
           }
     };
 
-    const handleRechazar = (id) => {
-      setSolicitudes(prev => prev.filter(item => item.id !== id));
+    const handleRechazar = async (id) => {
+      try {
+            const res = await rejectQuery(id);
+            if(res){
+              setActionButton(true);
+            }
+          } catch (error) {
+            console.error(error);
+          }
+      //setSolicitudes(prev => prev.filter(item => item.id !== id));
     };
 
     useEffect(() => {
       handleBookings();
-      if(acceptQuery) setAceptQuery(false);
-    }, [acceptQuery])
+      if(actionButton) setActionButton(false);
+    }, [actionButton])
 
     const icons = [
       {
@@ -96,6 +105,7 @@ export default function Applications() {
     const renderItem = ({ item }) => {
       const cliente = customers.find(cli => cli.id == item.customerId)
       const simbolo = icons.find(ic => ic.categoria === item.serviceType);
+      const fecha = formatDate(item.inquiryDate);
       return (
         <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("ApplicationDetails", { details: item, client: cliente })}>
 
@@ -112,7 +122,7 @@ export default function Applications() {
               <Text style={styles.tituloText}>{item.title}</Text>
             </View>
 
-            <Text style={styles.horaText}>{item.inquiryDate}</Text>
+            <Text style={styles.horaText}>{fecha.fechaFormateada}</Text>
           </View>
 
           {/* CUERPO DE TARJETA */}

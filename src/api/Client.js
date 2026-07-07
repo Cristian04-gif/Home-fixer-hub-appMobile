@@ -1,5 +1,5 @@
 import axios from "axios";
-const host = 'http://192.168.101.9:8080';
+const host = 'http://192.168.101.6:8080';
 const api = axios.create({
     baseURL: host,
     timeout: 10000,

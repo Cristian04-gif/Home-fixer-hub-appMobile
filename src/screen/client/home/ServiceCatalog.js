@@ -13,8 +13,9 @@ import { useResponsive } from '../../../hooks/useResponsive';
 import { createStyles } from '../../../styles/ServiceCatalog.style';
 import { useNavigation } from "@react-navigation/native";
 import colors from '../../../utils/colors';
+import { useSymbols } from '../../../hooks/useSymbols';
 export default function ServiceCatalog({ route }) {
-    const { services, simbolos } = route.params;
+    const { services } = route.params;
     const responsive = useResponsive();
     const styles = createStyles(responsive);
     const navigation = useNavigation();
@@ -29,11 +30,11 @@ export default function ServiceCatalog({ route }) {
 
     // 3. RENDERIZADO DE CADA TARJETA
     const renderItem = ({ item }) => {
-        const color = simbolos.find(col => col.nombre == item.name)
+        const {value} = useSymbols(item.name, responsive);
         return (
             <TouchableOpacity style={styles.card} activeOpacity={responsive.scale * 0.7} onPress={() => navigation.navigate('TechniciansAvailable', {serviceId: item.id, cantidad: item.techNum, serviceName: item.name})}>
-                <View style={[styles.iconCircle, { backgroundColor: color.color }]}>
-                    {color.icono}
+                <View style={[styles.iconCircle, { backgroundColor: value.color }]}>
+                    {value.icono}
                 </View>
 
                 <View style={styles.infoContainer}>
