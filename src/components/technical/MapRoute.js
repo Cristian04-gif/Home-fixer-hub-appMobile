@@ -38,7 +38,7 @@ export default function MapRoute({ styles, coordenadas }) {
                     strokeColor="#007AFF"
                     optimizeWaypoints={true}
                     onError={(errorMessage) => {
-                        console.log('Error en ruta: ', errorMessage);
+                        console.error('Error en ruta: ', errorMessage);
                     }}
                 />
             </MapView>

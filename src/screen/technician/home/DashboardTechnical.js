@@ -22,7 +22,7 @@ import { changeAvailability } from '../../../services/TechnicalService';
 import ListServices from '../../../components/technical/ListServices';
 import Availability from '../../../components/technical/Availability';
 import { registerForPushNotificationsAsync } from '../../../services/NotificationService';
-export default function Dashboard() {
+export default function DashboardTechnical() {
   const navigation = useNavigation();
   const responsive = useResponsive();
   const styles = createStyles(responsive);
@@ -37,7 +37,7 @@ export default function Dashboard() {
   }
 
 
-  const handleInfo = async () => {
+  const handleInfoTechnical = async () => {
     try {
       const rawTech = await getUser();
 
@@ -54,7 +54,7 @@ export default function Dashboard() {
         console.error("El objeto técnico no contiene un ID válido");
       }
     } catch (error) {
-      console.error("Error al parsear o cargar info del técnico:", error);
+      console.error("Error al parsear o cargar info del técnico dashboard:", error);
     }
   }
 
@@ -71,7 +71,7 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
-    handleInfo();
+    handleInfoTechnical();
   }, [])
 
 
@@ -157,10 +157,7 @@ export default function Dashboard() {
             <Text style={styles.miniLabel}>(Este mes)</Text>
           </View>
 
-          <View style={[styles.rowJustified, { marginTop: responsive.scale * 16 }]}>
-            <Text style={styles.statItemLabel}>Ingresos</Text>
-            <Text style={styles.statItemValue}>$1,250.00</Text>
-          </View>
+          
 
           <View style={styles.divider} />
 

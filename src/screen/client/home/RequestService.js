@@ -56,7 +56,7 @@ export default function RequestService({ route }) {
         const book = await registerBooking(data);
         if (book){
             Alert.alert("Se registro su solicitud")
-            navigation.navigate("Dashboard")
+            navigation.navigate("DashboardClient")
         }
     }
     return (

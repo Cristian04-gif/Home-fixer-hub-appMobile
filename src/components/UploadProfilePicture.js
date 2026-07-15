@@ -9,7 +9,7 @@ import colors from '../utils/colors';
 export default function UploadProfilePicture({ onValid, data, typeUser }) {
     const responsive = useResponsive();
     const styles = createStyles(responsive);
-    const [imageProfile, setImageProfile] = useState(typeUser === 'TECNICO' ? (data || null) : (data.photoProfile || null));
+    const [imageProfile, setImageProfile] = useState(data.photoProfile || null);
 
     const selectImage = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();

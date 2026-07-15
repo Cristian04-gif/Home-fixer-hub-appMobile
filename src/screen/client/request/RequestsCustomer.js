@@ -41,7 +41,7 @@ export default function RequestsCustomer() {
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
 
-    const [tabActiva, setTabActiva] = useState('todas');
+    const [tabActiva, setTabActiva] = useState('EN_PROCESO');
 
     const fetchTech = async (techId) => {
         return await getTechnicalById(techId);
@@ -53,10 +53,7 @@ export default function RequestsCustomer() {
         else setLoading(true);
 
         try {
-            // 🟢 Reemplaza esto con tu llamada real a la API:
-            // const response = await fetch('https://tu-api.com/api/solicitudes');
-            // const json = await response.json();
-            // setSolicitudes(json);
+            
             const customer = await getUser();
             if (customer && customer.id) {
                 const customerId = customer.id;
@@ -155,15 +152,6 @@ export default function RequestsCustomer() {
             {/* TABS DE FILTRADO (ESTILO MOCKUP) */}
             <View style={styles.tabsContainer}>
                 <TouchableOpacity
-                    style={[styles.tab, tabActiva === 'todas' && styles.tabActiva]}
-                    onPress={() => setTabActiva('todas')}
-                >
-                    <Text style={[styles.tabText, tabActiva === 'todas' && styles.tabTextActivo]}>
-                        Todas ({totalTodas})
-                    </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
                     style={[styles.tab, tabActiva === 'EN_PROCESO' && styles.tabActiva]}
                     onPress={() => setTabActiva('EN_PROCESO')}
                 >
@@ -172,6 +160,16 @@ export default function RequestsCustomer() {
                     </Text>
                 </TouchableOpacity>
 
+                <TouchableOpacity
+                    style={[styles.tab, tabActiva === 'todas' && styles.tabActiva]}
+                    onPress={() => setTabActiva('todas')}
+                >
+                    <Text style={[styles.tabText, tabActiva === 'todas' && styles.tabTextActivo]}>
+                        Todas ({totalTodas})
+                    </Text>
+                </TouchableOpacity>
+
+                
                 <TouchableOpacity
                     style={[styles.tab, tabActiva === 'FINALIZADA' && styles.tabActiva]}
                     onPress={() => setTabActiva('FINALIZADA')}
@@ -195,7 +193,6 @@ export default function RequestsCustomer() {
                         keyExtractor={(item) => item.id}
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={styles.flatListContent}
-                        // Funcionalidad Pull-to-Refresh HTTP
                         onRefresh={() => fetchSolicitudes(true)}
                         refreshing={refreshing}
                         ListEmptyComponent={

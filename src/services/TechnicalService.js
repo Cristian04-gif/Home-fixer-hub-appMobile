@@ -5,7 +5,7 @@ import { getToken } from "../storage/AuthStorage";
 import { getServiceById } from '../services/CatalogService'
 import { getLocation } from '../hooks/useLocation'
 
-const host ='http://192.168.101.6:8080';
+const host = 'http://192.168.101.10:8080';
 
 export const getTechnicals = async () => {
     const response = await api.get(ENDPOINTS.PROFILE_TECHNICAL);
@@ -22,7 +22,7 @@ export const getTechnicalByUserId = async (userId) => {
         const response = await api.get(`${ENDPOINTS.PROFILE_TECHNICAL}/fixer/user/${userId}`);
         return response.data;
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 
 }
@@ -34,7 +34,6 @@ export const registerTechnical = async (data) => {
 
 export const uploadProfileTechnicalPhoto = async (technicalId, formData) => {
     try {
-        console.log("service de photos")
         const tokken = await getToken();
 
         const response = await fetch(`${host}${ENDPOINTS.PROFILE_TECHNICAL}/fixer/${technicalId}/upload-perfile`, {

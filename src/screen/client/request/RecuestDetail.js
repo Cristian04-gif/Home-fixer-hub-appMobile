@@ -152,21 +152,34 @@ export default function RecuestDetail({ route }) {
 
             </ScrollView>
 
-            {/* BOTÓN DE CANCELACIÓN INFERIOR */}
-            <View style={styles.bottomContainer}>
-                <TouchableOpacity
-                    style={styles.btnCancel}
-                    onPress={handleCancelarSolicitud}
-                    disabled={cancelando}
-                    activeOpacity={0.8}
-                >
-                    {cancelando ? (
-                        <ActivityIndicator size="small" color={colors.disable} />
-                    ) : (
-                        <Text style={styles.btnCancelText}>Cancelar solicitud</Text>
-                    )}
-                </TouchableOpacity>
-            </View>
+            {request.inquiryStatus === "FINALIZADA" ?
+                <>
+                    <View style={styles.bottomContainer}>
+                        <View style={styles.boxFinaly}>
+                            <Text style={styles.txtFinaly}>Solicitud de {request.title} completada</Text>
+                        </View>
+
+                    </View>
+                </>
+                :
+                <View style={styles.bottomContainer}>
+                    <TouchableOpacity
+                        style={styles.btnCancel}
+                        onPress={handleCancelarSolicitud}
+                        disabled={cancelando}
+                        activeOpacity={0.8}
+                    >
+                        {cancelando ? (
+                            <ActivityIndicator size="small" color={colors.disable} />
+                        ) : (
+                            <Text style={styles.btnCancelText}>Cancelar solicitud</Text>
+                        )}
+                    </TouchableOpacity>
+                </View>
+            }
+
+
+
         </SafeAreaView>
     );
 }

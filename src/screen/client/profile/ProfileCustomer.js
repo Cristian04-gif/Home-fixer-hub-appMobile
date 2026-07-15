@@ -25,7 +25,7 @@ import {
 
 import { useNavigation } from "@react-navigation/native";
 import { useResponsive } from '../../../hooks/useResponsive';
-import { createStyles } from '../../../styles/MyProfile.style';
+import { createStyles } from '../../../styles/ProfileCustomer.syle'
 import colors from '../../../utils/colors';
 import { useAuth } from '../../../context/AuthContext';
 import { getUser } from '../../../storage/AuthStorage';

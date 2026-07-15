@@ -2,6 +2,8 @@ import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
 import { Platform } from 'react-native';
 
+import api from '../api/Client';
+import { ENDPOINTS } from '../api/Endpoint';
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
         shouldShowAlert: true,
@@ -37,7 +39,6 @@ export async function registerForPushNotificationsAsync() {
         try {
             const expoTokenResponse = await Notifications.getExpoPushTokenAsync();
             token = expoTokenResponse.data;
-            console.log("¡ÉXITO! Tu Push Token Real es: ", token);
         } catch (error) {
             console.warn("Error leyendo el token: ", error.message);
             token = null;
@@ -48,3 +49,12 @@ export async function registerForPushNotificationsAsync() {
 
     return token;
 }
+
+
+
+//consulta al back
+export const registerReview = async (data) => {
+    const response = await api.post(`${ENDPOINTS.REVIEW}/customer`, data);
+    return response.status;
+
+} 

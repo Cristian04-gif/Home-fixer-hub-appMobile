@@ -9,7 +9,6 @@ export default function BottomTabNavigator() {
     const typeRole = async () => {
         try {
             const rol = await getRole();
-            console.log("rol de usuario: ", rol)
             setRole(rol);
         } catch (error) {
             console.error(error)
@@ -19,10 +18,10 @@ export default function BottomTabNavigator() {
     useEffect(() => {
         typeRole();
     }, [])
-    console.log("rol: ", role)
     return (
         <>
-            {role === "CLIENTE" ? <CustomerNavigator /> : <TechnicalNavigator />}
+            {role === 'CLIENTE' && <CustomerNavigator />}
+            {role === "TECNICO" && <TechnicalNavigator />}
         </>
     )
 }

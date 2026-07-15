@@ -5,6 +5,7 @@ export const ENDPOINTS = {
     PROFILE_CUSTOMER: "/api/profile/clients",
     PROFILE_TECHNICAL: "/api/profile/technicals",
     CATALOG: '/api/catalog',
-    BOOKING: '/api/bookings'
+    BOOKING: '/api/bookings',
+    REVIEW: '/api/reviews'
     
 };

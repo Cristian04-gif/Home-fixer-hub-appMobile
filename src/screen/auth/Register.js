@@ -12,6 +12,7 @@ import UploadProfilePicture from "../../components/UploadProfilePicture";
 import { createStyles } from "../../styles/Register.style";
 import { useResponsive } from "../../hooks/useResponsive";
 import { register } from "../../services/AuthService";
+import { useAuth } from '../../context/AuthContext';
 
 const Register = () => {
     const responsive = useResponsive();
@@ -44,13 +45,15 @@ const Register = () => {
         setPaso(paso + 1);
     };
 
+    const { loginContext } = useAuth();
     const registerUser = async () => {
         try {
-            await register(dataRegister)
+            const res = await register(dataRegister)
+            await loginContext(res)
         } catch (error) {
             console.error(error)
         }
-        
+
     }
 
     return (
@@ -98,10 +101,9 @@ const Register = () => {
                     null}
 
                 {(paso === 3 && dataRegister.typeUser == "TECNICO") ? (
-                    <RegistroPaso3Tecnico
-                        onValid={actualizarValidacion}
-                        data={dataRegister}
-                    ></RegistroPaso3Tecnico>
+                    <>
+                        <Text style={{ fontSize: responsive.font(22), fontWeight: '600' }}>Foto de perfil</Text>
+                        <UploadProfilePicture onValid={actualizarValidacion} data={dataRegister} typeUser={dataRegister.typeUser}></UploadProfilePicture></>
                 ) : null}
                 {paso === 3 && dataRegister.typeUser === "TECNICO" && (
                     <Pressable

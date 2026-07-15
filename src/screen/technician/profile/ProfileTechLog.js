@@ -25,19 +25,18 @@ import {
 
 import { useNavigation } from "@react-navigation/native";
 import { useResponsive } from '../../../hooks/useResponsive';
-import { createStyles } from '../../../styles/MyProfile.style';
+import { createStyles } from '../../../styles/ProfileTechLog.style';
 import colors from '../../../utils/colors';
 import { useAuth } from '../../../context/AuthContext';
 import { getUser } from '../../../storage/AuthStorage';
 import { getServicesForTechnical } from '../../../services/TechnicalService';
 import ListServices from '../../../components/technical/ListServices';
 import Availability from '../../../components/technical/Availability';
-export default function MyProfile() {
+export default function ProfileTechLog() {
   const {logoutContext} = useAuth();
   const responsive = useResponsive();
   const styles = createStyles(responsive);
   const navigation = useNavigation();
-
   const [technical, setTechnical] = useState({});
   const [isEnabled, setIsEnabled] = useState(technical.available || true);
   const [myServices, setMyServices] = useState([]);

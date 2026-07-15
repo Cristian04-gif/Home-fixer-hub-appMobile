@@ -2,7 +2,7 @@ import api from "../api/Client";
 import { ENDPOINTS } from "../api/Endpoint";
 import { getToken } from "../storage/AuthStorage";
 
-const host = 'http://192.168.101.6:8080';
+const host = 'http://192.168.101.10:8080';
 
 export const getCustomers = async () => {
     const response = await api.get(ENDPOINTS.PROFILE_CUSTOMER);

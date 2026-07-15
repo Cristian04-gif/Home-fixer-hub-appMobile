@@ -49,6 +49,7 @@ export const register = async (data) => {
     const payload = await decodeToken(token);
     const role = payload.role;
 
+    let localUser;
     if (role === "CLIENTE") {
         const registerProfile = {
             name: data.name,
@@ -59,8 +60,7 @@ export const register = async (data) => {
         const responseprofile = await registerCustomer(registerProfile);
         const techId = responseprofile.id;
         if (techId) {
-            console.log(techId)
-            await uploadPhoto(techId, data.photoProfile, role);
+            localUser = await uploadPhoto(techId, data.photoProfile, role);
         }
     } else if (role === "TECNICO") {
         const registerProfile = {
@@ -72,8 +72,7 @@ export const register = async (data) => {
         const responseprofile = await registerTechnical(registerProfile);
         const techId = responseprofile.id;
         if (techId) {
-            console.log(techId)
-            await uploadPhoto(techId, data.photoProfile, role);
+            localUser =await uploadPhoto(techId, data.photoProfile, role);
         }
 
     } else {
@@ -84,11 +83,10 @@ export const register = async (data) => {
     await saveRole(role);
     await saveUserId(userId);
 
-
+    return localUser;
 };
 
 const uploadPhoto = async (id, imageUri, role) => {
-    console.log(imageUri)
     if (!imageUri) {
         alert("Por favor, selecciona una foto primero")
         return;
@@ -97,12 +95,9 @@ const uploadPhoto = async (id, imageUri, role) => {
     try {
 
         const formData = new FormData();
-        console.log("image: ", imageUri)
-        console.log(imageUri.photoProfile)
         const filename = imageUri.split('/').pop();
         const match = /\.(\w+)$/.exec(filename || '');
         const type = match ? `image/${match[1]}` : `image/jpeg`;
-        console.log("filename: ", filename)
 
 
         formData.append('file', {
@@ -117,24 +112,22 @@ const uploadPhoto = async (id, imageUri, role) => {
         if (role === "TECNICO") {
             fullRegistration = await uploadProfileTechnicalPhoto(id, formData);
         }
-        console.log(fullRegistration)
         if (!fullRegistration) {
             return;
         }
 
         await saveUser(fullRegistration);
+        return fullRegistration;
     } catch (error) {
-        console.log("ERROR COMPLETO");
-        console.log(error);
-        console.log(error.response);
-        console.log(error.message);
+        console.error(error);
+        console.error(error.response);
+        console.error(error.message);
     }
 }
 
 export const refreshToken = async () => {
     try {
         const token = await getToken();
-        console.log("token: ", token)
         const response = await api.post(ENDPOINTS.REFRESH_TOKEN);
 
     } catch (error) {

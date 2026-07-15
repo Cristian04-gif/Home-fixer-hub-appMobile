@@ -69,7 +69,7 @@ export default function NewService() {
 
     try {
       await assignServiceToTechnician(data);
-      navigation.navigate("Dashboard")
+      navigation.navigate("DashboardTechnical")
     } catch (error) {
       console.error(error)
     }

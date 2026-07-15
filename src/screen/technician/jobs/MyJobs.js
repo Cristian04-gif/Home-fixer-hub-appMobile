@@ -20,7 +20,7 @@ export default function MyJobs() {
   const responsive = useResponsive();
   const styles = createStyles(responsive);
   const navigation = useNavigation();
-  const [activeTab, setActiveTab] = useState('progreso'); 
+  const [activeTab, setActiveTab] = useState('EN_PROCESO');
   const [trabajos, setTrabajos] = useState([]);
   const [clientes, setClientes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,20 +32,15 @@ export default function MyJobs() {
       const tech = await getUser();
       const res = await getJobsTechnical(tech.id);
 
-      const mockProgreso = res.filter(job => job.inquiryStatus === 'EN_PROCESO')
 
-      const mockHistorial = res.filter(job => job.inquiryStatus === 'FINALIZADA')
+      if (res.length > 0) {
 
-      const mockAceptada = res.filter(job => job.inquiryStatus === 'ACEPTADA')
-      const mockMostrar = activeTab === 'progreso' ? mockProgreso : activeTab === 'aceptados' ? mockAceptada : mockHistorial;
-
-      if (mockMostrar.length > 0) {
         const clis = await Promise.all(
-          mockMostrar.map(cli => getCustomersId(cli.customerId))
+          res.map(cli => getCustomersId(cli.customerId))
         );
         setClientes(clis)
       }
-      setTrabajos(mockMostrar);
+      setTrabajos(res);
       // --------------------------------------------
     } catch (error) {
       console.error('Error cargando trabajos:', error);
@@ -55,9 +50,22 @@ export default function MyJobs() {
     }
   };
 
+  const mockProgreso = trabajos.filter(job => job.inquiryStatus === 'EN_PROCESO').length
+
+  const mockHistorial = trabajos.filter(job => job.inquiryStatus === 'FINALIZADA').length
+
+  const mockAceptada = trabajos.filter(job => job.inquiryStatus === 'ACEPTADA').length
+
+
+
+
   useEffect(() => {
     fetchTrabajos();
-  }, [activeTab]);
+  }, []);
+
+  const solicitudesFiltradas = trabajos.filter(item => {
+    return item.inquiryStatus === activeTab;
+  });
 
   const handleRefresh = () => {
     setRefreshing(true);
@@ -67,11 +75,11 @@ export default function MyJobs() {
   const renderTrabajoCard = ({ item }) => {
     const cl = clientes.find(c => c.id === item.customerId);
     const fecha = formatDate(item.modificationDate);
-    
+
     return (<TouchableOpacity
       style={styles.card}
       activeOpacity={responsive.scale * 0.7}
-      onPress={() => navigation.navigate('DetailsMyJob', {detail: item, cliente: cl, fecha: fecha})}
+      onPress={() => navigation.navigate('DetailsMyJob', { detail: item, cliente: cl, fecha: fecha })}
     >
       <View style={styles.cardMainContent}>
         <Text style={styles.cardTitle}>{item.title}</Text>
@@ -108,31 +116,31 @@ export default function MyJobs() {
       {/* CONTROL DE PESTAÑAS (TABS) */}
       <View style={styles.tabContainer}>
         <TouchableOpacity
-          style={[styles.tabButton, activeTab === 'progreso' && styles.activeTabButton]}
-          onPress={() => setActiveTab('progreso')}
+          style={[styles.tabButton, activeTab === 'EN_PROCESO' && styles.activeTabButton]}
+          onPress={() => setActiveTab('EN_PROCESO')}
           activeOpacity={0.9}
         >
-          <Text style={[styles.tabText, activeTab === 'progreso' && styles.activeTabText]}>
-            En progreso ({activeTab === 'progreso' ? trabajos.length : 0})
+          <Text style={[styles.tabText, activeTab === 'EN_PROCESO' && styles.activeTabText]}>
+            En progreso ({mockProgreso})
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.tabButton, activeTab === 'aceptados' && styles.activeTabButton]}
-          onPress={() => setActiveTab('aceptados')}
+          style={[styles.tabButton, activeTab === 'ACEPTADA' && styles.activeTabButton]}
+          onPress={() => setActiveTab('ACEPTADA')}
           activeOpacity={0.9}
         >
-          <Text style={[styles.tabText, activeTab === 'aceptados' && styles.activeTabText]}>
-            Aceptados
+          <Text style={[styles.tabText, activeTab === 'ACEPTADA' && styles.activeTabText]}>
+            Aceptados ({mockAceptada})
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.tabButton, activeTab === 'historial' && styles.activeTabButton]}
-          onPress={() => setActiveTab('historial')}
+          style={[styles.tabButton, activeTab === 'FINALIZADA' && styles.activeTabButton]}
+          onPress={() => setActiveTab('FINALIZADA')}
           activeOpacity={0.9}
         >
-          <Text style={[styles.tabText, activeTab === 'historial' && styles.activeTabText]}>
-            Historial
+          <Text style={[styles.tabText, activeTab === 'FINALIZADA' && styles.activeTabText]}>
+            Historial ({mockHistorial})
           </Text>
         </TouchableOpacity>
       </View>
@@ -144,7 +152,7 @@ export default function MyJobs() {
         </View>
       ) : (
         <FlatList
-          data={trabajos}
+          data={solicitudesFiltradas}
           keyExtractor={(item) => item.id}
           renderItem={renderTrabajoCard}
           contentContainerStyle={styles.listContent}

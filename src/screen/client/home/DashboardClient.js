@@ -39,7 +39,8 @@ export default function DashboardClient() {
 
   const [customer, setCustomer] = useState({})
   const [catalog, setCatalog] = useState([]);
-  const handleInfo = async () => {
+
+  const handleInfoCustomer = async () => {
     try {
       const rawUser = await getUser();
       setCustomer(rawUser);
@@ -57,7 +58,7 @@ export default function DashboardClient() {
     try {
       const pushToken = await registerForPushNotificationsAsync();
       const rawUser = await getUser();
-      if (rawUser && rawUser.id && pushToken) {
+      if (rawUser && rawUser.id) {
         savePushTokenCustomer(rawUser.id, pushToken);
       }
     } catch (error) {
@@ -66,7 +67,7 @@ export default function DashboardClient() {
   }
 
   useEffect(() => {
-    handleInfo();
+    handleInfoCustomer();
     handleNotification();
   }, [])
 
@@ -124,7 +125,7 @@ export default function DashboardClient() {
         {/* GRID DE CATEGORÍAS */}
         <View style={styles.categoriesGrid}>
           {catalog.map((item) => {
-            const {value} = useSymbols(item.name, responsive);
+            const { value } = useSymbols(item.name, responsive);
             return (
               <TouchableOpacity key={item.id} style={styles.categoryItem} activeOpacity={0.7}>
                 <View style={[styles.iconCircle, { backgroundColor: value.color }]}>

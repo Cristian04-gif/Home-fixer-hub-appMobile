@@ -15,7 +15,8 @@ import { getUser } from '../../../storage/AuthStorage';
 import { queriesForTechnician } from '../../../services/TechnicalService';
 import { getCustomersId } from '../../../services/CustomerService';
 import { acceptQuery,rejectQuery } from '../../../services/TechnicalService';
-import {formatDate} from '../../../hooks/formatDate'
+import {formatDate} from '../../../hooks/formatDate';
+import { useSymbols } from '../../../hooks/useSymbols';
 export default function Applications() {
   const responsive = useResponsive();
   const styles = createStyles(responsive);
@@ -74,45 +75,19 @@ export default function Applications() {
       if(actionButton) setActionButton(false);
     }, [actionButton])
 
-    const icons = [
-      {
-        categoria: 'Electricista',
-        colorBg: '#FDF6ED',
-        icono: <Zap size={responsive.font(22)} color="#D97706" />,
-      },
-      {
-        categoria: 'Plomeria',
-        colorBg: '#E8F2FF',
-        icono: <Droplet size={responsive.font(22)} color="#007AFF" />,
-      },
-      {
-        categoria: 'Carpintería',
-        colorBg: '#FDF6ED',
-        icono: <Hammer size={responsive.font(22)} color="#A27B5C" />,
-      },
-      {
-        categoria: 'Jardineria',
-        colorBg: '#D5F5E3',
-        icono: <Leaf size={responsive.font(22)} color="#58D68D" />,
-      },
-      {
-        categoria: 'Mecanica',
-        colorBg: '#D6EAF8',
-        icono: <Car size={responsive.font(22)} color="#5DADE2" />,
-      },
-    ]
+    
 
     const renderItem = ({ item }) => {
       const cliente = customers.find(cli => cli.id == item.customerId)
-      const simbolo = icons.find(ic => ic.categoria === item.serviceType);
+      const { value } = useSymbols(item.serviceType, responsive);
       const fecha = formatDate(item.inquiryDate);
       return (
         <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("ApplicationDetails", { details: item, client: cliente })}>
 
           {/* ENCABEZADO DE TARJETA */}
           <View style={styles.cardHeader}>
-            <View style={[styles.iconCircle, { backgroundColor: simbolo.colorBg }]}>
-              {simbolo.icono}
+            <View style={[styles.iconCircle, { backgroundColor: value.color }]}>
+              {value.icono}
             </View>
 
             <View style={styles.headerTextContainer}>

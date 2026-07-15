@@ -48,7 +48,6 @@ const Login = () => {
             email: email,
             password: password
         }
-        console.log("login")
         const inicioSesion = await login(dataLogin);
         
         await loginContext(inicioSesion);

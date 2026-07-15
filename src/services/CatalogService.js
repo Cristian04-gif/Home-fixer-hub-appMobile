@@ -47,13 +47,11 @@ export const assignServiceToTechnician = async (data) => {
 
 
 const uploadImages = async (technicalServiceId, images) => {
-    console.log("id fotos ",technicalServiceId)
     
     if (images.length === 0) {
         Alert.alert('No hay imágenes', 'Selecciona al menos una imagen primero.')
         return;
     }
-    console.log("subir fotos, ", technicalServiceId, images)
     try {
         const formData = new FormData();
 
